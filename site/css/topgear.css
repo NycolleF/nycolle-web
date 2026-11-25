@@ -1362,3 +1362,358 @@ main > .letreiro {
   .hero-fundo, .hero-mascote, .balao, .selo-giratorio svg,
   .letreiro-trilho, .video-play::before, .whats-flutuante::before { animation: none; }
 }
+
+
+/* =========================================================
+   15. TOQUE DE FAMÍLIA
+   As peças que deixam o site autoral: letra à mão, polaroides,
+   carta assinada, comparação, conversa de WhatsApp e dica do Guilherme
+   ========================================================= */
+
+/* Letra "escrita à mão" (fonte Caveat). Usada só em notas curtas, como bilhete */
+.nota-mao {
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  color: var(--tg-vermelho);
+}
+
+.hero-nota {
+  margin: -6px 0 14px;
+  color: var(--tg-dourado);
+  font-size: clamp(1.4rem, 2vw + 0.6rem, 1.9rem);
+  transform: rotate(-2deg);
+  transform-origin: left;
+}
+.js .hero-nota[data-revelar] { transform: translateY(28px) rotate(-2deg); }
+.js .hero-nota[data-revelar].visivel { transform: rotate(-2deg); }
+
+/* ----- Polaroides ----- */
+figure.polaroide {
+  position: relative;
+  overflow: visible;          /* deixa a fita adesiva sair para fora da foto */
+  padding: 12px 12px 0;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 30px 50px -28px rgba(11, 31, 51, 0.55), 0 2px 6px rgba(11, 31, 51, 0.08);
+  transform: rotate(-2.5deg);
+}
+.js figure.polaroide[data-revelar] { transform: translateY(28px) rotate(-2.5deg); }
+.js figure.polaroide[data-revelar].visivel { transform: rotate(-2.5deg); }
+
+figure.polaroide img {
+  aspect-ratio: 4 / 5;
+  border-radius: 2px;
+}
+figure.polaroide figcaption {
+  padding: 10px 4px 14px;
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--tg-azul);
+}
+/* Pedaço de fita adesiva em cima */
+figure.polaroide::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  z-index: 2;
+  width: 110px;
+  height: 30px;
+  background: rgba(232, 220, 203, 0.85);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transform: translateX(-50%) rotate(3deg);
+}
+
+figure.foto-pequena.polaroide {
+  position: absolute;     /* a regra da polaroide põe "relative": aqui ela precisa ficar solta no canto */
+  width: 48%;
+  padding: 8px 8px 0;
+  border: 0;
+  aspect-ratio: auto;
+}
+.foto-pequena.polaroide img { aspect-ratio: 1; }
+.foto-pequena.polaroide figcaption { font-size: 1.2rem; padding: 6px 4px 10px; }
+.foto-pequena.polaroide::before { width: 70px; height: 22px; top: -10px; }
+.polaroide-torta,
+.js .polaroide-torta[data-revelar].visivel { transform: rotate(4deg); }
+.js .polaroide-torta[data-revelar] { transform: translateY(28px) rotate(4deg); }
+
+/* ----- Carta dos sócios ----- */
+.carta p { color: var(--tg-texto); }
+
+.frase-familia {
+  margin: 26px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--tg-vermelho);
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: clamp(1.2rem, 1.2vw + 0.9rem, 1.5rem);
+  line-height: 1.4;
+  color: var(--tg-azul);
+}
+
+.valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+.valores li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--cor-borda);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--tg-azul);
+}
+
+/* Assinatura dos dois, com um risquinho embaixo */
+.carta .assinatura {
+  display: inline-block;
+  margin: 0;
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 1;
+  color: var(--tg-azul);
+  transform: rotate(-3deg);
+}
+.assinatura::after {
+  content: "";
+  display: block;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 3px;
+  background: var(--tg-vermelho);
+  transform: rotate(-2deg) scaleX(0.9);
+  transform-origin: left;
+}
+
+/* ----- Dica do Guilherme ----- */
+.dica {
+  position: relative;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+  align-items: end;
+  margin-top: 48px;
+  padding: 28px 32px 0 16px;
+  border-radius: var(--raio);
+  background: var(--tg-creme);
+  border: 2px dashed var(--tg-areia);
+  overflow: hidden;
+}
+/* Só o rosto e o peito do mascote aparecem, como se ele estivesse espiando */
+.dica img {
+  width: 150px;
+  height: 190px;
+  object-fit: cover;
+  object-position: 50% 12%;
+}
+.dica > div { padding-bottom: 28px; }
+.dica .nota-mao { margin-bottom: 4px; font-size: 1.8rem; }
+.dica p:not(.nota-mao) { color: var(--tg-texto); }
+.dica a { font-weight: 700; text-decoration: none; }
+.dica a::after { content: " →"; }
+
+@media (max-width: 600px) {
+  .dica { grid-template-columns: 90px 1fr; gap: 14px; padding: 20px 18px 0 8px; }
+  .dica img { width: 90px; height: 130px; }
+}
+
+/* ----- Por aí × aqui ----- */
+.comparar { background: var(--tg-creme); }
+
+.comparar-tabela {
+  overflow: hidden;
+  border-radius: var(--raio);
+  border: 1px solid var(--cor-borda);
+  background: #fff;
+}
+.comparar-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.comparar-linha + .comparar-linha { border-top: 1px solid var(--cor-borda); }
+.comparar-linha span {
+  position: relative;
+  padding: 20px 24px 20px 56px;
+}
+/* Coluna "por aí": apagadinha, com um x cinza */
+.comparar-linha span:first-child { color: var(--tg-texto-suave); }
+.comparar-linha:not(.comparar-cabeca) span::before {
+  position: absolute;
+  left: 20px;
+  top: 19px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.comparar-linha:not(.comparar-cabeca) span:first-child::before {
+  content: "✕";
+  background: #ece6dd;
+  color: #8a8478;
+}
+/* Coluna "aqui": fundo azul clarinho e um ✓ vermelho */
+.comparar-linha span:last-child {
+  background: #f3f6fa;
+  color: var(--tg-azul);
+  font-weight: 500;
+}
+.comparar-linha:not(.comparar-cabeca) span:last-child::before {
+  content: "✓";
+  background: var(--tg-vermelho);
+  color: #fff;
+}
+.comparar-cabeca span {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.comparar-cabeca span:last-child { background: var(--tg-azul); color: #fff; }
+
+@media (max-width: 640px) {
+  .comparar-linha span { padding: 16px 14px 16px 46px; font-size: 0.95rem; }
+  .comparar-linha:not(.comparar-cabeca) span::before { left: 12px; top: 16px; }
+  .comparar-cabeca span { padding-left: 14px; }
+}
+
+/* ----- Conversa de WhatsApp de exemplo ----- */
+.celular-conversa {
+  position: sticky;
+  top: 110px;
+}
+.conversa-nota {
+  margin: 0 0 6px 24px;
+  transform: rotate(-3deg);
+}
+.conversa {
+  overflow: hidden;
+  max-width: 400px;
+  border-radius: 30px;
+  border: 8px solid var(--tg-azul);
+  background: #efe7dc;
+  box-shadow: var(--sombra);
+}
+.conversa-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #0f5b4a;           /* verde-escuro de app de mensagem */
+  color: #fff;
+}
+.conversa-topo img { border-radius: 50%; background: #fff; }
+.conversa-topo strong { display: block; line-height: 1.1; }
+.conversa-topo small { opacity: 0.85; font-size: 0.75rem; }
+
+.conversa-msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 16px 14px 20px;
+  list-style: none;
+}
+.msg {
+  position: relative;
+  max-width: 82%;
+  padding: 8px 12px 20px;
+  border-radius: 14px;
+  font-size: 0.93rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+.msg time {
+  position: absolute;
+  right: 10px;
+  bottom: 3px;
+  font-size: 0.68rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+.msg-loja {
+  align-self: flex-start;
+  background: #fff;
+  border-top-left-radius: 4px;
+}
+.msg-cliente {
+  align-self: flex-end;
+  background: #d9fdd3;
+  border-top-right-radius: 4px;
+}
+.msg-foto img {
+  margin: -2px -6px 8px;
+  width: calc(100% + 12px);
+  max-width: none;
+  border-radius: 10px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Com JS: as mensagens chegam uma por uma, como numa conversa de verdade */
+.js .celular-conversa .msg {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+}
+.js .celular-conversa.visivel .msg {
+  animation: chegar-msg 0.5s var(--suave) forwards;
+  animation-delay: calc(0.5s + var(--n) * 0.75s);
+}
+@keyframes chegar-msg {
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 860px) {
+  .celular-conversa { position: static; }
+  .conversa { margin: 0 auto; }
+}
+
+/* ----- Frase do cliente no Espaço Top ----- */
+figure.frase-cliente {
+  max-width: 760px;
+  margin: 0 0 44px;
+  overflow: visible;
+  border-radius: 0;
+}
+.frase-cliente blockquote {
+  margin: 0 0 10px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: clamp(1.3rem, 1.6vw + 0.9rem, 1.8rem);
+  line-height: 1.35;
+  color: #fff;
+}
+.frase-cliente figcaption {
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--tg-dourado);
+}
+
+.rodape-final .nota-mao { font-size: 1.25rem; color: var(--tg-dourado); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .celular-conversa .msg { opacity: 1; transform: none; animation: none; }
+}
+
+/* Celular: a polaroide pequena fica por cima do canto da grande.
+   A legenda da grande vai para a esquerda para não ficar tapada */
+@media (max-width: 820px) {
+  figure.foto-pequena.polaroide { width: 40%; }
+  .estrutura-fotos > .polaroide:first-child figcaption { text-align: left; padding-right: 44%; font-size: 1.3rem; }
+}
