@@ -14,7 +14,7 @@
   <!-- Fontes do Google: Fraunces (títulos, serifa elegante) e DM Sans (textos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap">
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/topgear.css">
@@ -75,6 +75,7 @@
 
     <nav aria-label="Menu principal">
       <ul id="menu-lista" class="menu-lista">
+        <li><a href="#historia">Nossa história</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
         <li><a href="#espaco">Espaço Top</a></li>
@@ -107,7 +108,9 @@
 
         <!-- data-palavras: o JS separa o título em palavras, que entram uma de cada vez -->
         <h1 data-palavras>Teu carro em boas mãos. <em>E tu também.</em></h1>
-        <p class="hero-sub" data-revelar style="--atraso: 0.6s">Da troca de óleo à revisão completa, a gente cuida do teu veículo com transparência e técnica. Tu acompanha tudo por fotos e vídeos, em tempo real.</p>
+        <!-- Nota "escrita à mão": é o que dá cara de família, e não de franquia -->
+        <p class="nota-mao hero-nota" data-revelar style="--atraso: 0.5s">uma oficina de família, em Rio Grande, desde 2019</p>
+        <p class="hero-sub" data-revelar style="--atraso: 0.6s">A gente é a Deborah, o Guilherme e uma equipe que trata o teu carro como se fosse nosso. Da troca de óleo à revisão completa, tu acompanha tudo por foto e vídeo, sem precisar entender de mecânica.</p>
 
         <div class="hero-botoes" data-revelar style="--atraso: 0.75s">
           <a class="btn btn-principal btn-brilho"
@@ -165,17 +168,20 @@
       </ul>
     </section>
 
-    <!-- ===================== 4. ESTRUTURA ===================== -->
-    <section class="estrutura">
+    <!-- ===================== 4. NOSSA HISTÓRIA ===================== -->
+    <!-- A seção que tira o site do "genérico": quem são as pessoas por trás da oficina.
+         A foto vira uma polaroide com fita adesiva e legenda escrita à mão -->
+    <section class="estrutura historia" id="historia">
       <div class="estrutura-fotos">
-        <!-- data-paralaxe: a foto anda um pouquinho mais devagar que a página -->
-        <figure class="foto-grande" data-revelar>
-          <img src="img/topgear/oficina-socio-900.jpg" alt="Sócio da TopGear de braços cruzados dentro da oficina, com elevadores vermelhos e carros ao fundo"
-               width="900" height="1112" loading="lazy" data-paralaxe>
+        <figure class="polaroide" data-revelar>
+          <img src="img/topgear/oficina-socio-900.jpg" alt="Guilherme Gonçalves, sócio da TopGear, de braços cruzados e boné da oficina, com os elevadores vermelhos ao fundo"
+               width="900" height="1112" loading="lazy">
+          <figcaption>Guilherme, o nosso engenheiro mecânico</figcaption>
         </figure>
-        <figure class="foto-pequena" data-revelar style="--atraso: 0.2s">
-          <img src="img/topgear/diagnostico-800.jpg" alt="Mecânico fazendo diagnóstico eletrônico num carro branco de capô aberto"
+        <figure class="foto-pequena polaroide polaroide-torta" data-revelar style="--atraso: 0.2s">
+          <img src="img/topgear/diagnostico-800.jpg" alt="Mecânico da TopGear fazendo diagnóstico eletrônico num carro branco de capô aberto"
                width="800" height="800" loading="lazy">
+          <figcaption>diagnóstico no scanner</figcaption>
         </figure>
         <!-- Selo redondo que gira devagar. O texto curvo é um SVG -->
         <div class="selo-giratorio" aria-hidden="true">
@@ -187,16 +193,22 @@
         </div>
       </div>
 
-      <div class="estrutura-texto">
-        <p class="etiqueta" data-revelar>Centro automotivo completo</p>
-        <h2 data-revelar style="--atraso: 0.1s">Mais que uma oficina. <em>Um centro automotivo completo.</em></h2>
-        <p data-revelar style="--atraso: 0.2s">São seis elevadores e uma equipe treinada para o teu carro não ficar parado esperando vaga. Nenhum serviço começa sem a tua aprovação: primeiro a gente explica, depois executa.</p>
-        <ul class="lista-check" data-revelar style="--atraso: 0.3s">
-          <li>Diagnóstico eletrônico com scanner</li>
-          <li>Orçamento por escrito, item por item</li>
-          <li>Fotos e vídeos do serviço direto no teu WhatsApp</li>
-          <li>Histórico do teu carro registrado a cada visita</li>
-        </ul>
+      <!-- A carta: texto em primeira pessoa, assinado pelos dois sócios -->
+      <div class="estrutura-texto carta">
+        <p class="etiqueta" data-revelar>Nossa história</p>
+        <h2 data-revelar style="--atraso: 0.1s">A gente não queria abrir <em>só mais uma oficina.</em></h2>
+        <div data-revelar style="--atraso: 0.2s">
+          <p>Em 2019, a gente resolveu criar em Rio Grande o lugar que a gente mesmo queria encontrar quando o carro dava problema: onde ninguém te enrola, ninguém te olha torto por não entender de mecânica e tu sabe exatamente o que está sendo feito.</p>
+          <p>O Guilherme é engenheiro mecânico e especialista em câmbio automático: é ele que encara os problemas mais cabeludos. A Deborah é administradora e cuida para que cada cliente seja atendido como gostaria de ser. Junto com a nossa equipe, são seis elevadores trabalhando para o teu carro não ficar parado esperando vaga.</p>
+          <blockquote class="frase-familia">“Cuidar do teu carro como se fosse nosso. E cuidar de ti como se fosse da família.”</blockquote>
+          <ul class="valores" aria-label="Nossos valores">
+            <li>Honestidade</li>
+            <li>Transparência</li>
+            <li>Cordialidade</li>
+            <li>Respeito</li>
+          </ul>
+          <p class="assinatura">Deborah e Guilherme</p>
+        </div>
       </div>
     </section>
 
@@ -294,6 +306,54 @@
           </div>
         </article>
       </div>
+
+      <!-- Dica do Guilherme: o mascote (que é o Guilherme desenhado) dando um conselho de quem entende -->
+      <aside class="dica" data-revelar>
+        <img src="img/topgear/mascote-640.png" alt="" width="640" height="960" loading="lazy">
+        <div>
+          <p class="nota-mao">Dica do Guilherme</p>
+          <p>Câmbio automático dando tranco, demorando para engatar ou patinando? Não espera piorar: quanto antes a gente olha, mais barato costuma sair. E se for só o fluido, melhor ainda.</p>
+          <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Meu%20c%C3%A2mbio%20autom%C3%A1tico%20est%C3%A1%20estranho.%20Podem%20dar%20uma%20olhada%3F"
+             target="_blank" rel="noopener">Contar o que meu câmbio está fazendo</a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ===================== 5b. POR AÍ × AQUI ===================== -->
+    <!-- Comparação bem-humorada com o que o cliente já viveu em outras oficinas.
+         Sem citar ninguém: é a experiência comum, e o jeito TopGear de resolver -->
+    <section class="comparar">
+      <div class="cabeca-secao">
+        <p class="etiqueta" data-revelar>Por que a TopGear</p>
+        <h2 data-revelar style="--atraso: 0.1s">Tu já passou por isso. <em>Aqui é diferente.</em></h2>
+      </div>
+
+      <div class="comparar-tabela" role="table" aria-label="Comparação entre o que acontece por aí e o que acontece na TopGear">
+        <div class="comparar-linha comparar-cabeca" role="row">
+          <span role="columnheader">Por aí</span>
+          <span role="columnheader">Aqui na TopGear</span>
+        </div>
+        <div class="comparar-linha" role="row" data-revelar>
+          <span role="cell">Tu liga para saber do carro e ninguém sabe dizer como está.</span>
+          <span role="cell">Tu recebe foto e vídeo do teu carro no elevador, direto no WhatsApp.</span>
+        </div>
+        <div class="comparar-linha" role="row" data-revelar>
+          <span role="cell">O orçamento vem “de cabeça” e muda no fim.</span>
+          <span role="cell">Orçamento item por item, e nada começa sem o teu ok.</span>
+        </div>
+        <div class="comparar-linha" role="row" data-revelar>
+          <span role="cell">Explicam tudo com palavras que ninguém entende.</span>
+          <span role="cell">A gente mostra a peça e explica do jeito que tu entende.</span>
+        </div>
+        <div class="comparar-linha" role="row" data-revelar>
+          <span role="cell">Tu espera numa cadeira de plástico, olhando a parede.</span>
+          <span role="cell">Sinuca, fliperama e café enquanto o carro fica pronto.</span>
+        </div>
+        <div class="comparar-linha" role="row" data-revelar>
+          <span role="cell">Tu sai sem saber direito o que foi feito.</span>
+          <span role="cell">Tu leva o laudo com fotos de tudo: é o histórico do teu carro.</span>
+        </div>
+      </div>
     </section>
 
     <!-- ===================== 6. ATENDIMENTO + COMO FUNCIONA ===================== -->
@@ -328,16 +388,27 @@
         </ul>
       </div>
 
-      <!-- Passo a passo numerado: uma <ol> (lista em ordem) é o certo para etapas -->
-      <div class="passos">
-        <h3 class="passos-titulo" data-revelar>Como funciona</h3>
-        <ol>
-          <li data-revelar><strong>Chama no WhatsApp</strong> e conta o que o carro está fazendo.</li>
-          <li data-revelar style="--atraso: 0.1s"><strong>Diagnóstico e orçamento</strong>, item por item.</li>
-          <li data-revelar style="--atraso: 0.2s"><strong>Tu aprova</strong> e só então o serviço começa.</li>
-          <li data-revelar style="--atraso: 0.3s"><strong>Acompanha tudo</strong> por fotos e vídeos em tempo real.</li>
-          <li data-revelar style="--atraso: 0.4s"><strong>Retira o carro</strong> com o laudo fotográfico na mão.</li>
-        </ol>
+      <!-- Conversa de EXEMPLO no WhatsApp: mostra, em vez de só dizer, como o cliente acompanha o serviço.
+           As mensagens aparecem uma de cada vez quando o celular entra na tela (classe "visivel") -->
+      <div class="celular-conversa" data-revelar>
+        <p class="nota-mao conversa-nota">é assim que tu acompanha ↓</p>
+        <div class="conversa">
+          <div class="conversa-topo">
+            <img src="img/topgear/logo.webp" alt="" width="36" height="36">
+            <div><strong>TopGear</strong><small>Exemplo de conversa</small></div>
+          </div>
+          <ol class="conversa-msgs">
+            <li class="msg msg-loja" style="--n: 0">Bom dia! Teu carro já subiu no elevador. Agora é com a gente 🔧<time>08:14</time></li>
+            <li class="msg msg-loja msg-foto" style="--n: 1">
+              <img src="img/topgear/freios.webp" alt="Foto de exemplo: mecânico de luvas mostrando a pastilha de freio" width="300" height="280" loading="lazy">
+              Olha a pastilha da frente: já está no fim. Te mando o orçamento?<time>09:02</time>
+            </li>
+            <li class="msg msg-cliente" style="--n: 2">Manda sim!<time>09:05</time></li>
+            <li class="msg msg-loja" style="--n: 3">Tá aqui, item por item. Só começamos com o teu ok 👍<time>09:11</time></li>
+            <li class="msg msg-cliente" style="--n: 4">Pode fazer. Vou ali jogar um fliperama 😄<time>09:13</time></li>
+            <li class="msg msg-loja" style="--n: 5">Pronto! O laudo com as fotos de tudo já está contigo. Pode vir buscar.<time>11:40</time></li>
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -346,8 +417,14 @@
       <div class="cabeca-secao">
         <p class="etiqueta etiqueta-clara" data-revelar>Espaço Top</p>
         <h2 data-revelar style="--atraso: 0.1s">Aqui tu não espera. <em>Tu aproveita.</em></h2>
-        <p data-revelar style="--atraso: 0.2s">Enquanto o carro está no elevador, tu joga uma sinuca, desafia alguém no fliperama ou toma um café.</p>
+        <p data-revelar style="--atraso: 0.2s">Enquanto o carro está no elevador, tu joga uma sinuca, desafia alguém no fliperama ou toma um café. Pode trazer as crianças: tem cliente que já fez da revisão um programa de pai e filha.</p>
       </div>
+
+      <!-- Frase real de um cliente (avaliação do Google), em destaque -->
+      <figure class="frase-cliente" data-revelar>
+        <blockquote>“Não é todo dia que consigo cuidar de meu carro enquanto jogo uma partida de street fighter com minha filha. Nota MIL.”</blockquote>
+        <figcaption>Alex Xavier, cliente, no Google</figcaption>
+      </figure>
 
       <div class="espaco-grade">
         <figure class="espaco-foto" data-revelar>
@@ -613,7 +690,7 @@
          <a href="https://www.instagram.com/topgearcentroautomotivoltda/" target="_blank" rel="noopener">Instagram</a></p>
     </div>
     <!-- Falta preencher: o CNPJ e o link da política de privacidade (LGPD). Pedir para a TopGear -->
-    <p class="rodape-final">© TopGear Centro Automotivo · Rio Grande, RS · desde 2019</p>
+    <p class="rodape-final">© TopGear Centro Automotivo · Rio Grande, RS · <span class="nota-mao">feito em família desde 2019</span></p>
   </footer>
 
   <!-- ===================== BOTÃO FLUTUANTE DO WHATSAPP ===================== -->
