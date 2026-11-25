@@ -1,0 +1,5 @@
+# Arquivos do sistema que não precisam ir para o GitHub
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/

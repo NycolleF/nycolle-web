@@ -1,0 +1,1622 @@
+/* =========================================================
+   FOTOGRAFIA.CSS
+   Site da Bárbara Matheus Fotografia, em estilo "revista".
+   Mesmas referências da marca (Montserrat + Lora, tons de linho),
+   com seções escuras cor de café para dar contraste e sofisticação.
+   ========================================================= */
+
+
+/* ---------- 1. CORES E MEDIDAS ---------- */
+:root {
+  --cor-fundo: #faf7f3;        /* off-white quentinho */
+  --cor-linho: #f1ebe3;        /* bege de linho */
+  --cor-escuro: #2e2823;       /* café: fundo das seções escuras */
+  --cor-texto: #373737;
+  --cor-titulo: #2d2d2d;
+  --cor-texto-suave: #6f665d;
+  --cor-marca: #8c765f;        /* taupe (marrom acinzentado), tirado do linho das fotos */
+  --cor-marca-clara: #c9b8a5;  /* taupe claro, para usar no fundo escuro */
+  --cor-borda: #e4dcd2;
+
+  --fonte: "Lora", Georgia, serif;
+  --fonte-titulo: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+
+  --largura-max: 1240px;
+
+  /* "Curva" das animações: começa rápido e termina bem devagar.
+     É o que dá aquela sensação de movimento caro, suave */
+  --suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body {
+  line-height: 1.85;
+  font-size: 1.0625rem;
+}
+
+/* Tudo que for Montserrat segue o mesmo padrão da referência:
+   fino, maiúsculo e com letras bem espaçadas */
+h1, h2, h3,
+.subtitulo,
+.btn-foto,
+.link-seta,
+.menu-lista a,
+.menu-botao,
+.galeria-legenda,
+.filme-dica,
+.incluso-titulo,
+.preco span,
+.depoimento figcaption,
+.numeros dd,
+.chamada-gigante,
+.selo-modelo {
+  font-family: var(--fonte-titulo);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2.4vw + 0.8rem, 2.3rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  color: var(--cor-titulo);
+}
+
+h3 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--cor-titulo);
+}
+
+/* Subtítulo com um tracinho antes, estilo revista */
+.subtitulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--cor-marca);
+  margin-bottom: 1.4em;
+}
+
+.subtitulo::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Espaço lateral padrão de todas as seções */
+main > section,
+.topo,
+.rodape {
+  padding-inline: max(20px, (100% - var(--largura-max)) / 2);
+}
+
+main > section {
+  padding-block: clamp(90px, 12vw, 170px);
+}
+
+
+/* ---------- 2. BOTÕES E LINKS ---------- */
+/* Botão retangular. Ao passar o mouse, outro fundo "sobe" de baixo para cima (o ::before) */
+.btn-foto {
+  position: relative;
+  display: inline-block;
+  padding: 1.15em 2.4em;
+  border: 1px solid var(--cor-titulo);
+  color: var(--cor-titulo);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  line-height: 1.4;
+  text-decoration: none;
+  overflow: hidden;           /* esconde o fundo enquanto ele está "lá embaixo" */
+  isolation: isolate;         /* garante que o fundo fique ATRÁS do texto */
+  transition: color 0.5s var(--suave);
+}
+
+.btn-foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--cor-marca);
+  transform: translateY(101%);  /* começa escondido embaixo */
+  transition: transform 0.5s var(--suave);
+}
+
+.btn-foto:hover {
+  color: #fff;
+}
+
+.btn-foto:hover::before {
+  transform: translateY(0);
+}
+
+/* Versão cheia: fundo escuro */
+.btn-foto-cheio {
+  background: var(--cor-titulo);
+  color: #fff;
+}
+
+/* Link com uma seta que anda para a direita ao passar o mouse */
+.link-seta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--cor-titulo);
+  text-decoration: none;
+}
+
+.link-seta::after {
+  content: "→";
+  font-size: 1rem;
+  transition: transform 0.4s var(--suave);
+}
+
+.link-seta:hover::after {
+  transform: translateX(6px);
+}
+
+.link-seta-claro {
+  color: var(--cor-linho);
+}
+
+
+/* ---------- 3. MENU ---------- */
+.topo {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 26px;
+  transition: background-color 0.5s, padding 0.5s var(--suave), box-shadow 0.5s;
+}
+
+.logo img {
+  width: clamp(160px, 16vw, 210px);
+  height: auto;
+  filter: brightness(0.22);   /* o logo original é branco: aqui ele fica quase preto */
+}
+
+.menu-lista {
+  display: flex;
+  gap: clamp(16px, 2.2vw, 34px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-lista a {
+  position: relative;
+  color: var(--cor-titulo);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+}
+
+/* Linha fininha que "se desenha" embaixo do link ao passar o mouse */
+.menu-lista a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--suave);
+}
+
+.menu-lista a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Depois de rolar (o JavaScript coloca "rolou" no <body>): ganha fundo e fica mais baixo */
+.rolou .topo {
+  padding-block: 14px;
+  background: rgba(250, 247, 243, 0.96);
+  box-shadow: 0 1px 0 var(--cor-borda);
+}
+
+/* --- Botão de menu (celular e tablet) --- */
+.menu-botao {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  background: none;
+  border: 0;
+  color: var(--cor-titulo);
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;                 /* fica por cima do menu aberto */
+}
+
+/* As duas linhas do ícone: uma é o próprio span, a outra é o ::after */
+.menu-botao-linhas,
+.menu-botao-linhas::after {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  transition: transform 0.5s var(--suave);
+}
+
+.menu-botao-linhas {
+  position: relative;
+  transform: translateY(-4px);
+}
+
+.menu-botao-linhas::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+}
+
+@media (max-width: 1023px) {
+  .menu-botao {
+    display: flex;
+  }
+
+  /* O menu vira uma tela cheia cor de linho, escondida até abrir */
+  .menu-lista {
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    background: var(--cor-linho);
+    opacity: 0;
+    visibility: hidden;       /* escondido também para o teclado */
+    transition: opacity 0.5s, visibility 0.5s;
+  }
+
+  .menu-lista a {
+    font-size: 1rem;
+  }
+
+  /* Cada link entra um pouquinho depois do outro (efeito "cascata") */
+  .menu-lista li {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.6s var(--suave);
+  }
+
+  .menu-lista li:nth-child(2) { transition-delay: 0.04s; }
+  .menu-lista li:nth-child(3) { transition-delay: 0.08s; }
+  .menu-lista li:nth-child(4) { transition-delay: 0.12s; }
+  .menu-lista li:nth-child(5) { transition-delay: 0.16s; }
+  .menu-lista li:nth-child(6) { transition-delay: 0.2s; }
+  .menu-lista li:nth-child(7) { transition-delay: 0.24s; }
+
+  .menu-aberto .menu-lista {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-aberto .menu-lista li {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu-aberto .logo {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* As duas linhas viram um X */
+  .menu-aberto .menu-botao-linhas {
+    transform: rotate(45deg);
+  }
+
+  .menu-aberto .menu-botao-linhas::after {
+    transform: translateY(-8px) rotate(-90deg);
+  }
+
+  body.menu-aberto {
+    overflow: hidden;         /* com o menu aberto, a página de trás não rola */
+  }
+}
+
+
+/* ---------- 4. ANIMAÇÕES DE ENTRADA E AO ROLAR ---------- */
+
+/* Elementos da abertura: aparecem subindo um pouquinho, cada um com seu atraso */
+.capa-anima {
+  animation: aparecer 1.2s var(--suave) var(--atraso, 0s) both;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* A "janela" de cada linha do título: esconde o que estiver fora dela */
+.linha {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;      /* espaço para as letras não serem cortadas embaixo */
+}
+
+/* O texto de dentro começa abaixo da janela e sobe */
+.linha > span {
+  display: block;
+  animation: subir-linha 1.4s var(--suave) var(--atraso, 0s) both;
+}
+
+@keyframes subir-linha {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+
+/* Tudo que tem data-revelar começa invisível e um pouco mais embaixo.
+   Quando entra na tela, o JavaScript coloca a classe "visivel".
+   Só vale com a classe "js": sem JavaScript, nada fica escondido. */
+.js [data-revelar] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 1.1s var(--suave) var(--atraso, 0s),
+    transform 1.3s var(--suave) var(--atraso, 0s);
+}
+
+.js [data-revelar].visivel {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ---------- 5. ABERTURA ---------- */
+.abertura {
+  display: grid;
+  gap: 56px;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: 130px;        /* espaço para o menu fixo */
+}
+
+@media (min-width: 900px) {
+  .abertura {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.abertura h1 {
+  margin: 0 0 0.7em;
+  font-size: clamp(2.3rem, 5.4vw, 4.9rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.08;
+  color: var(--cor-titulo);
+}
+
+/* A palavra em itálico com serifa, no meio do título em maiúsculas */
+.abertura h1 em {
+  font-family: var(--fonte);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--cor-marca);
+}
+
+.abertura-descricao {
+  max-width: 30em;
+  font-size: 1.1rem;
+  color: var(--cor-texto-suave);
+}
+
+.abertura-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 32px;
+  margin-top: 2.2em;
+}
+
+.abertura-fotos {
+  position: relative;
+  width: min(100%, 460px);
+  margin-inline: auto;
+}
+
+@media (min-width: 900px) {
+  .abertura-fotos { margin-right: 0; }
+}
+
+/* O arco: retângulo com o topo totalmente arredondado */
+.arco {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
+/* As três fotos ficam uma em cima da outra e se revezam */
+.arco img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: revezar 15s infinite;
+}
+
+.arco img:nth-child(2) { animation-delay: 5s; }
+.arco img:nth-child(3) { animation-delay: 10s; }
+
+/* Cada foto: aparece, fica 5 segundos se afastando devagar e some.
+   15s no total ÷ 3 fotos = 5s para cada uma */
+@keyframes revezar {
+  0%   { opacity: 0; transform: scale(1.12); }
+  6%   { opacity: 1; }
+  33%  { opacity: 1; }
+  40%  { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; }
+}
+
+/* Foto pequena "colada" no canto de baixo, com borda da cor do fundo */
+.abertura-detalhe {
+  position: absolute;
+  left: -14%;
+  bottom: 9%;
+  width: 46%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 8px solid var(--cor-fundo);
+  box-shadow: 0 20px 40px -20px rgba(60, 45, 30, 0.4);
+}
+
+/* Selo redondo girando */
+.selo-girando {
+  position: absolute;
+  top: -6%;
+  right: -8%;
+  width: clamp(110px, 12vw, 150px);
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--cor-fundo);
+  animation: girar 22s linear infinite;
+}
+
+.selo-girando text {
+  font-family: var(--fonte-titulo);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  fill: var(--cor-titulo);
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 599px) {
+  .abertura-detalhe { left: -4%; }
+  .selo-girando { right: -2%; }
+}
+
+
+/* ---------- 6. VÍDEOS (seção escura) ---------- */
+.bastidores {
+  display: grid;
+  gap: 64px;
+  align-items: center;
+  background: var(--cor-escuro);
+  color: var(--cor-linho);
+  overflow: hidden;           /* os vídeos inclinados não "vazam" para fora */
+}
+
+@media (min-width: 900px) {
+  .bastidores {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.bastidores h2 {
+  color: #fff;
+}
+
+.bastidores .subtitulo {
+  color: var(--cor-marca-clara);
+}
+
+.bastidores-texto p:not(.subtitulo) {
+  max-width: 36ch;
+  color: #d9cfc4;
+  margin-bottom: 2em;
+}
+
+/* No celular: os dois "celulares" lado a lado, em duas colunas iguais */
+.videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* No computador: mais espaço, e o segundo um pouco mais baixo (zigue-zague) */
+@media (min-width: 900px) {
+  .videos {
+    grid-template-columns: repeat(2, minmax(0, 250px));
+    justify-content: center;
+    gap: 56px;
+  }
+
+  .video-cartao:nth-child(2) {
+    margin-top: 80px;
+  }
+}
+
+.video-cartao {
+  display: block;
+  color: var(--cor-linho);
+  text-decoration: none;
+}
+
+/* O desenho do celular: borda grossa escura (a "moldura" do aparelho) e cantos bem redondos */
+.video-celular {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;       /* formato de tela de celular, igual ao do Reels */
+  overflow: hidden;
+  border: clamp(5px, 1.2vw, 8px) solid #151210;
+  border-radius: clamp(22px, 5vw, 34px);
+  background: #151210;
+  box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.7);
+  transition: transform 0.8s var(--suave), box-shadow 0.8s var(--suave);
+}
+
+/* A "ilha" no topo da tela, como nos celulares atuais */
+.video-celular::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  z-index: 2;
+  width: 32%;
+  height: clamp(10px, 2.4vw, 16px);
+  border-radius: 999px;
+  background: #151210;
+  translate: -50% 0;
+}
+
+/* Escurece a parte de baixo da capa, para o play aparecer bem */
+.video-celular::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 16, 12, 0.55), transparent 55%);
+}
+
+.video-celular img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--suave);
+}
+
+/* Botão de play: círculo claro com um triângulo, e uma "onda" pulsando em volta */
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: clamp(48px, 12vw, 66px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(250, 247, 243, 0.92);
+  translate: -50% -50%;
+  transition: scale 0.5s var(--suave);
+}
+
+/* O triângulo, recortado com clip-path */
+.video-play::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 30%;
+  height: 34%;
+  translate: 12% 0;           /* um pouquinho para a direita: o triângulo parece centralizado */
+  background: var(--cor-escuro);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* A onda pulsando */
+.video-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 247, 243, 0.8);
+  animation: pulsar 2.4s var(--suave) infinite;
+}
+
+@keyframes pulsar {
+  from { transform: scale(1); opacity: 1; }
+  to   { transform: scale(1.8); opacity: 0; }
+}
+
+.video-titulo {
+  display: block;
+  margin-top: 18px;
+  font-size: clamp(1rem, 1vw + 0.7rem, 1.2rem);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.video-info {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--fonte-titulo);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cor-marca-clara);
+}
+
+/* Ao passar o mouse: o celular sobe, a capa aproxima e o play cresce */
+.video-cartao:hover .video-celular {
+  transform: translateY(-8px);
+  box-shadow: 0 50px 80px -30px rgba(0, 0, 0, 0.8);
+}
+
+.video-cartao:hover img {
+  transform: scale(1.06);
+}
+
+.video-cartao:hover .video-play {
+  scale: 1.1;
+}
+
+/* --- A janela que abre com o vídeo --- */
+.video-janela {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(20, 16, 12, 0.94);
+}
+
+.video-janela[open] {
+  display: grid;
+  place-items: center;
+  animation: lightbox-entrar 0.5s var(--suave);
+}
+
+.video-janela::backdrop {
+  background: transparent;
+}
+
+/* A caixa branca onde o Instagram aparece. Se o vídeo for mais alto que a tela, dá para rolar dentro */
+.video-janela-caixa {
+  width: min(400px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 14px;
+  animation: foto-trocar 0.6s var(--suave);
+}
+
+.video-janela-caixa iframe {
+  display: block;
+  width: 100%;
+  height: 760px;
+  border: 0;
+}
+
+.video-janela-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: var(--fonte-titulo);
+  font-weight: 300;
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.video-janela-fechar:hover {
+  opacity: 1;
+}
+
+
+/* ---------- 7. ABORDAGEM (palavras que acendem) ---------- */
+.abordagem {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.abordagem-frase {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw + 0.4rem, 2.75rem);
+  line-height: 1.45;
+  color: var(--cor-titulo);
+}
+
+/* Cada palavra vira um <span class="palavra"> (o JavaScript faz isso).
+   Começa bem clarinha e escurece quando "acende" */
+.js .palavra {
+  color: rgba(45, 45, 45, 0.16);
+  transition: color 0.5s;
+}
+
+.js .palavra.acesa {
+  color: var(--cor-titulo);
+}
+
+
+/* ---------- 8. PORTFÓLIO (filme) ---------- */
+.filme {
+  padding: 0;                 /* esta seção controla o próprio espaço */
+  background: var(--cor-linho);
+}
+
+/* Modo padrão (celular): uma fileira que se arrasta com o dedo */
+.filme-tela {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory; /* ao soltar o dedo, "encaixa" na foto mais próxima */
+  scroll-padding-inline: 20px;   /* ...deixando 20px de respiro na esquerda */
+  padding-block: 80px;
+}
+
+.filme-trilho {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: max-content;
+  flex-shrink: 0;             /* o trilho NUNCA encolhe para caber na tela: ele é maior de propósito */
+  padding-inline: 20px;
+}
+
+.filme-intro {
+  flex-shrink: 0;
+  width: min(78vw, 360px);
+  align-self: center;
+  scroll-snap-align: start;
+}
+
+.filme-intro p:not(.subtitulo) {
+  color: var(--cor-texto-suave);
+}
+
+.filme-intro p.filme-dica {
+  display: flex;
+  gap: 10px;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--cor-marca);
+}
+
+.filme-dica span {
+  animation: empurrar 1.6s ease-in-out infinite;
+}
+
+@keyframes empurrar {
+  50% { transform: translateX(8px); }
+}
+
+.galeria-item {
+  display: block;
+  flex-shrink: 0;             /* cada foto mantém o próprio tamanho */
+  scroll-snap-align: start;
+  text-decoration: none;
+  cursor: zoom-in;            /* cursor de lupa: "dá para ampliar" */
+}
+
+.galeria-item img {
+  height: min(62vh, 520px);
+  width: auto;                /* a largura acompanha o formato da foto (em pé ou deitada) */
+  max-width: none;            /* desliga o limite do base.css: aqui a foto pode passar da tela */
+  transition: transform 1s var(--suave), filter 0.6s;
+}
+
+.galeria-item:hover img {
+  filter: brightness(0.92);
+}
+
+.galeria-legenda {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--cor-texto-suave);
+}
+
+/* Modo "filme" (computador, ligado pelo JavaScript com a classe filme-ativo):
+   a tela fica grudada (sticky) e o trilho anda para o lado */
+.filme-ativo .filme-tela {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+.filme-ativo .filme-trilho {
+  gap: 4vw;
+  padding-inline: max(20px, (100vw - var(--largura-max)) / 2) 8vw;
+  will-change: transform;
+}
+
+.filme-ativo .galeria-item-baixo {
+  margin-top: 12vh;           /* fotos alternadas mais baixas: ritmo de revista */
+}
+
+.filme-ativo .galeria-item img {
+  height: 58vh;
+}
+
+
+/* ---------- 9. TIPOS DE ENSAIO ---------- */
+.ensaios {
+  position: relative;
+}
+
+.ensaios-cabecalho {
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.ensaios-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ensaio;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.ensaios-lista li {
+  counter-increment: ensaio;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-block: 20px;
+  border-top: 1px solid var(--cor-borda);
+  transition: opacity 0.5s;
+}
+
+/* Número 01, 02... antes de cada ensaio */
+.ensaios-lista li::before {
+  content: counter(ensaio, decimal-leading-zero);
+  width: 2.6em;
+  flex-shrink: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--cor-marca);
+}
+
+/* Fotinho ao lado (só no celular) */
+.ensaios-lista img {
+  width: 56px;
+  height: 70px;
+  object-fit: cover;
+  order: 2;                   /* vai para o fim da linha */
+  margin-left: auto;
+}
+
+.ensaios-lista span {
+  font-size: clamp(1.3rem, 2.6vw + 0.5rem, 2.6rem);
+  line-height: 1.2;
+  color: var(--cor-titulo);
+  transition: transform 0.6s var(--suave), color 0.4s;
+}
+
+/* A foto flutuante começa escondida */
+.ensaios-flutuante {
+  display: none;
+}
+
+/* Só em telas grandes com mouse (hover: hover = aparelhos que têm "passar o mouse") */
+@media (min-width: 900px) and (hover: hover) {
+  .ensaios-lista img {
+    display: none;            /* no computador, quem mostra a foto é a flutuante */
+  }
+
+  .ensaios-lista li {
+    cursor: default;
+  }
+
+  /* Quando o mouse está na lista, todos os itens ficam apagados... */
+  .js .ensaios-lista:hover li {
+    opacity: 0.3;
+  }
+
+  /* ...menos o que está embaixo do mouse, que anda para a direita */
+  .js .ensaios-lista li:hover {
+    opacity: 1;
+  }
+
+  .ensaios-lista li:hover span {
+    transform: translateX(24px);
+    font-style: italic;
+    color: var(--cor-marca);
+  }
+
+  .ensaios-flutuante {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: 240px;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    pointer-events: none;     /* não atrapalha o mouse */
+    opacity: 0;
+    scale: 0.85;
+    /* translate com transição = a foto segue o mouse "atrasadinha", com suavidade */
+    transition: opacity 0.4s, scale 0.5s var(--suave), translate 0.6s var(--suave);
+  }
+
+  .ensaios-flutuante.ativa {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .ensaios-flutuante img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+
+/* ---------- 10. SOBRE A SESSÃO ---------- */
+.sessao {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.sessao-citacao {
+  max-width: 980px;
+  margin: 0 auto clamp(70px, 10vw, 130px);
+  text-align: center;
+}
+
+.sessao-citacao p {
+  font-size: clamp(1.5rem, 3vw + 0.4rem, 2.7rem);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--cor-titulo);
+}
+
+.sessao-citacao em {
+  color: var(--cor-marca);
+}
+
+.sessao-grade {
+  display: grid;
+  gap: clamp(48px, 7vw, 110px);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .sessao-grade {
+    grid-template-columns: 5fr 6fr;
+  }
+}
+
+.sessao-texto p:not(.subtitulo) {
+  max-width: 52ch;
+}
+
+/* --- Molduras com "cortina" branca que sobe e revela a foto --- */
+.moldura {
+  position: relative;
+  overflow: hidden;
+}
+
+.moldura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sessao-foto {
+  aspect-ratio: 4 / 5;
+}
+
+.js .moldura[data-revelar] {
+  opacity: 1;                 /* aqui não usamos o "sumir", e sim a cortina */
+  transform: none;
+}
+
+.js .moldura[data-revelar]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cor-fundo);
+  transform-origin: top;      /* encolhe em direção ao topo */
+  transition: transform 1.4s var(--suave) var(--atraso, 0s);
+}
+
+.js .moldura[data-revelar].visivel::after {
+  transform: scaleY(0);
+}
+
+/* Foto com parallax: um pouco mais alta que a moldura, para ter "sobra" ao se mover */
+.moldura img[data-parallax] {
+  height: 116%;
+  margin-top: -8%;
+  will-change: transform;
+}
+
+/* Depoimento com uma linha fina na lateral */
+.depoimento {
+  margin: 2.6em 0 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--cor-marca);
+}
+
+.depoimento blockquote {
+  margin: 0;
+}
+
+.depoimento p {
+  font-style: italic;
+  color: var(--cor-titulo);
+}
+
+.depoimento figcaption {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--cor-marca);
+}
+
+
+/* ---------- 11. SOBRE MIM ---------- */
+.sobre {
+  display: grid;
+  gap: clamp(48px, 7vw, 110px);
+  align-items: center;
+  background: var(--cor-linho);
+}
+
+@media (min-width: 900px) {
+  .sobre {
+    grid-template-columns: 6fr 5fr;
+  }
+}
+
+.sobre-destaque {
+  font-size: clamp(1.2rem, 1.2vw + 0.8rem, 1.5rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--cor-titulo);
+}
+
+.sobre-texto p:not(.subtitulo) {
+  max-width: 54ch;
+}
+
+/* A foto também em arco, conversando com a abertura */
+.sobre-foto img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 999px 999px 0 0;
+}
+
+/* Números em destaque: +20 e 6 */
+.numeros {
+  display: flex;
+  gap: 48px;
+  margin: 2.4em 0 0;
+}
+
+.numeros div {
+  display: flex;
+  flex-direction: column;     /* número (dt) em cima, legenda (dd) embaixo */
+}
+
+.numeros dt {
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  line-height: 1;
+  color: var(--cor-marca);
+}
+
+.numeros dd {
+  margin: 10px 0 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 12. INVESTIMENTO ---------- */
+.investimento {
+  display: grid;
+  gap: 56px;
+}
+
+@media (min-width: 900px) {
+  .investimento {
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(48px, 7vw, 110px);
+    align-items: start;
+  }
+
+  /* O lado esquerdo "gruda" na tela enquanto o direito rola */
+  .investimento-fixo {
+    position: sticky;
+    top: 120px;
+  }
+}
+
+.preco {
+  margin: 1.4em 0 1.8em;
+}
+
+.preco span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--cor-marca);
+}
+
+.preco strong {
+  font-family: var(--fonte);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 7vw, 5.5rem);
+  line-height: 1.1;
+  color: var(--cor-titulo);
+}
+
+.incluso-titulo {
+  margin: 2.6em 0 0.6em;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--cor-texto-suave);
+}
+
+.incluso {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: item;        /* cria um contador chamado "item" */
+}
+
+.incluso li {
+  counter-increment: item;    /* cada item soma 1 */
+  display: flex;
+  gap: 22px;
+  padding-block: 18px;
+  border-top: 1px solid var(--cor-borda);
+  line-height: 1.7;
+}
+
+/* Número com dois dígitos: 01, 02, 03... */
+.incluso li::before {
+  content: counter(item, decimal-leading-zero);
+  flex-shrink: 0;
+  padding-top: 0.35em;
+  font-family: var(--fonte-titulo);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--cor-marca);
+}
+
+.album {
+  margin-top: 56px;
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--cor-linho);
+}
+
+.album h3 {
+  margin-bottom: 1em;
+}
+
+.album-convite {
+  margin: 0;
+  font-style: italic;
+  color: var(--cor-marca);
+}
+
+
+/* ---------- 13. DÚVIDAS ---------- */
+.duvidas {
+  display: grid;
+  gap: 40px;
+  border-top: 1px solid var(--cor-borda);
+}
+
+@media (min-width: 900px) {
+  .duvidas {
+    grid-template-columns: 4fr 7fr;
+    gap: clamp(48px, 7vw, 110px);
+    align-items: start;
+  }
+
+  .duvidas-cabecalho {
+    position: sticky;
+    top: 120px;
+  }
+}
+
+.perguntas {
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.perguntas details {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.perguntas summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  font-size: clamp(1.02rem, 0.6vw + 0.85rem, 1.15rem);
+  color: var(--cor-titulo);
+  cursor: pointer;
+  list-style: none;           /* tira o triângulo padrão... */
+  transition: color 0.3s;
+}
+
+.perguntas summary::-webkit-details-marker {
+  display: none;              /* ...também no Safari */
+}
+
+.perguntas summary:hover {
+  color: var(--cor-marca);
+}
+
+/* Um "+" feito com duas linhas finas. Ao abrir, gira e vira "−" */
+.perguntas summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat;
+  transition: transform 0.5s var(--suave);
+}
+
+.perguntas details[open] summary::after {
+  transform: rotate(90deg);
+  background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+
+.resposta p {
+  margin: 0;
+  padding: 0 40px 26px 0;
+  color: var(--cor-texto-suave);
+}
+
+/* A resposta aparece descendo de leve quando a pergunta abre */
+.perguntas details[open] .resposta {
+  animation: aparecer 0.7s var(--suave);
+}
+
+
+/* ---------- 14. CONTATO (seção escura com faixa gigante) ---------- */
+.contato {
+  padding-bottom: 0;
+  background: var(--cor-escuro);
+  color: var(--cor-linho);
+  text-align: center;
+  overflow: hidden;
+}
+
+.contato .subtitulo {
+  justify-content: center;
+  color: var(--cor-marca-clara);
+}
+
+.contato .subtitulo::after {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+
+.contato-texto {
+  max-width: 640px;
+  margin: 0 auto clamp(50px, 7vw, 90px);
+  font-size: clamp(1.15rem, 1vw + 0.8rem, 1.4rem);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* O link-faixa: vai de ponta a ponta da tela */
+.chamada-gigante {
+  display: block;
+  margin-inline: calc(50% - 50vw);  /* truque: estica até as bordas da TELA, ignorando o espaço lateral da seção */
+  padding-block: clamp(20px, 3vw, 40px);
+  border-top: 1px solid rgba(241, 235, 227, 0.15);
+  color: var(--cor-linho);
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.chamada-trilho {
+  display: flex;
+  width: max-content;
+  animation: correr 28s linear infinite;
+}
+
+.chamada-trilho span {
+  font-size: clamp(2.6rem, 9vw, 8.5rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: color 0.5s;
+}
+
+.chamada-trilho em {
+  font-family: var(--fonte);
+  font-style: normal;
+  color: var(--cor-marca);
+  margin-inline: 0.3em;
+}
+
+/* Ao passar o mouse: a faixa anda mais devagar e o texto ganha a cor da marca */
+.chamada-gigante:hover .chamada-trilho span {
+  color: var(--cor-marca-clara);
+}
+
+/* Anda metade da largura (= uma cópia inteira) e recomeça, sem "pulo" */
+@keyframes correr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+
+/* ---------- 15. RODAPÉ ---------- */
+.rodape {
+  padding-block: 64px 90px;
+  background: var(--cor-escuro);
+  color: #b9ada0;
+  font-size: 0.92rem;
+  text-align: center;
+  border-top: 1px solid rgba(241, 235, 227, 0.15);
+}
+
+.rodape > img {
+  width: 220px;
+  margin: 0 auto 48px;        /* aqui o logo fica branco, como o original */
+}
+
+.rodape-colunas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rodape-colunas p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.rodape-colunas a {
+  font-family: var(--fonte-titulo);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cor-linho);
+  text-decoration: none;
+}
+
+.rodape-colunas a:hover {
+  color: var(--cor-marca-clara);
+}
+
+.rodape-colunas span {
+  font-style: italic;
+}
+
+.rodape .rodape-credito {
+  margin: 48px 0 0;
+  font-size: 0.8rem;
+}
+
+.rodape-credito a {
+  color: #b9ada0;
+}
+
+
+/* ---------- 16. LIGHTBOX (foto em tela cheia) ---------- */
+.lightbox {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(28, 24, 20, 0.96);
+  color: #fff;
+}
+
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: lightbox-entrar 0.5s var(--suave);
+}
+
+@keyframes lightbox-entrar {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightbox::backdrop {
+  background: transparent;
+}
+
+.lightbox-foto {
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* Cada vez que a foto troca, o JavaScript reinicia esta animação */
+.lightbox-foto.trocando {
+  animation: foto-trocar 0.6s var(--suave);
+}
+
+@keyframes foto-trocar {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.lightbox button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: var(--fonte-titulo);
+  font-weight: 300;
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.3s, transform 0.4s var(--suave);
+}
+
+.lightbox button:hover {
+  opacity: 1;
+}
+
+.lightbox-fechar {
+  top: 14px;
+  right: 14px;
+}
+
+.lightbox-seta {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.lightbox-anterior { left: 10px; }
+.lightbox-proxima  { right: 10px; }
+
+.lightbox-anterior:hover { transform: translateX(-4px); }
+.lightbox-proxima:hover  { transform: translateX(4px); }
+
+.lightbox-contador {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+}
+
+
+/* ---------- 17. SELO "MODELO POR NYCOLLE WEB" ---------- */
+.selo-modelo {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  padding: 10px 16px;
+  background: var(--cor-marca);
+  color: #fff;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  /* Escondido no começo; aparece depois que a pessoa rola */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.5s, visibility 0.5s, transform 0.6s var(--suave);
+}
+
+.rolou .selo-modelo {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.rolou .selo-modelo:hover {
+  transform: translateY(-3px);
+}
+
+
+/* ---------- 18. DICA "ROLE" x "ARRASTE" NO PORTFÓLIO ---------- */
+.filme-dica b {
+  font-weight: inherit;
+}
+
+/* Por padrão (celular), mostra "Arraste" */
+.dica-pc {
+  display: none;
+}
+
+/* No modo filme (computador), mostra "Role" */
+.filme-ativo .dica-pc {
+  display: inline;
+}
+
+.filme-ativo .dica-cel {
+  display: none;
+}
+
+
+/* ---------- 19. SELO NO CELULAR E NO FIM DA PÁGINA ---------- */
+/* No fim da página (o JavaScript coloca "no-fim" quando o rodapé aparece), o selo some */
+.rolou.no-fim .selo-modelo {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* No celular: menor, só "Nycolle Web →", para não cobrir o conteúdo */
+@media (max-width: 599px) {
+  .selo-modelo {
+    right: 10px;
+    bottom: 10px;
+    padding: 7px 11px;
+    font-size: 0.52rem;
+    opacity: 0.92;
+  }
+
+  .selo-longo {
+    display: none;
+  }
+}

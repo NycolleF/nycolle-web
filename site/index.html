@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- lang="pt-BR": avisa ao navegador e ao Google que a página é em português do Brasil
+     (ajuda na tradução automática, no corretor e nos leitores de tela) -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <!-- Sem esta linha, o celular mostra a página "miniatura", como se fosse um computador -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da aba e do resultado no Google. Curto e com o que você vende + cidade -->
+  <title>Nycolle Web | Sites e landing pages em Rio Grande, RS</title>
+  <!-- Descrição: o textinho que aparece embaixo do título no Google -->
+  <meta name="description" content="Sites e landing pages para pequenos negócios de Rio Grande e região, feitos para celular e com botão direto para o seu WhatsApp. Preço fechado.">
+
+  <!-- Arquivos de CSS (a "roupa" da página). A ORDEM importa:
+       primeiro o base (vale para o site todo), depois o index (só desta página),
+       para que o index possa ajustar o que veio do base -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+  <!-- ===================== 1. MENU ===================== -->
+  <!-- <header> = cabeçalho da página. <nav> = grupo de links de navegação -->
+  <header class="menu">
+    <!-- A marca leva de volta ao topo. "#topo" pula para o elemento com id="topo" -->
+    <a href="#topo" class="marca">Nycolle Web</a>
+
+    <nav aria-label="Menu principal">
+      <!-- Lista (<ul>) porque são vários itens do mesmo tipo: leitores de tela contam "lista com 4 itens" -->
+      <ul>
+        <li><a href="#modelos">Modelos</a></li>
+        <li><a href="#pacotes">Pacotes</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#perguntas">Dúvidas</a></li>
+      </ul>
+    </nav>
+
+    <!-- Botão principal. Todos os botões de ação usam o MESMO link de WhatsApp (regra de ouro).
+         "?text=" já escreve a mensagem para o cliente. Os %20, %C3%A1 etc. são letras e espaços
+         "traduzidos" para dentro de um link (isso se chama codificação de URL).
+         target="_blank" abre em outra aba; rel="noopener" é uma proteção de segurança para isso. -->
+    <a class="btn btn-principal"
+       href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vim%20pelo%20seu%20site%20e%20quero%20um%20or%C3%A7amento."
+       target="_blank" rel="noopener">Pedir orçamento</a>
+  </header>
+
+  <!-- <main> = o conteúdo principal. Só existe um por página -->
+  <main>
+
+    <!-- ===================== 2. HERO ===================== -->
+    <!-- "Hero" (herói, em inglês) é o nome que se dá à primeira área grande da página -->
+    <section class="hero" id="topo">
+      <div class="hero-texto">
+        <!-- Só pode ter UM <h1> por página: é o assunto principal para o Google -->
+        <h1>Seu negócio no celular do cliente, com um toque até o seu <span class="destaque">WhatsApp</span>.</h1>
+        <p>Crio sites e landing pages simples, rápidos e bonitos para pequenos negócios de Rio Grande e região. Você recebe pronto, com preço fechado.</p>
+
+        <div class="hero-botoes">
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vim%20pelo%20seu%20site%20e%20quero%20um%20or%C3%A7amento."
+             target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>
+          <!-- Botão secundário: não sai da página, só desce até os modelos -->
+          <a class="btn btn-secundario" href="#modelos">Ver modelos</a>
+        </div>
+      </div>
+
+      <!-- Janela de navegador "desenhada". No Passo 4 o CSS vai fazer as mensagens aparecerem e sumirem.
+           aria-hidden="true" esconde dos leitores de tela, porque é só enfeite (as mensagens são ilustração, não conversa real) -->
+      <div class="janela" aria-hidden="true">
+        <div class="janela-barra">
+          <span class="bolinha"></span><span class="bolinha"></span><span class="bolinha"></span>
+          <span class="janela-endereco">seunegocio.com.br</span>
+        </div>
+        <div class="janela-conversa">
+          <p class="msg msg-cliente">Oi! Vi o site de vocês. Ainda tem horário amanhã?</p>
+          <p class="msg msg-loja">Tem sim! Às 10h ou às 15h. Qual fica melhor?</p>
+          <p class="msg msg-cliente">10h, por favor 😊</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. FAIXA QUE CORRE ===================== -->
+    <!-- A lista aparece DUAS vezes de propósito: no Passo 4, a animação desliza a faixa
+         e a segunda cópia preenche o buraco, dando a impressão de que nunca acaba.
+         A segunda cópia tem aria-hidden para o leitor de tela não ler tudo duas vezes. -->
+    <section class="faixa" aria-label="Serviços">
+      <ul class="faixa-trilho">
+        <li>Landing page</li>
+        <li>Site institucional</li>
+        <li>Botão de WhatsApp</li>
+        <li>Google Meu Negócio</li>
+        <li>Hospedagem</li>
+        <li>Manutenção mensal</li>
+      </ul>
+      <ul class="faixa-trilho" aria-hidden="true">
+        <li>Landing page</li>
+        <li>Site institucional</li>
+        <li>Botão de WhatsApp</li>
+        <li>Google Meu Negócio</li>
+        <li>Hospedagem</li>
+        <li>Manutenção mensal</li>
+      </ul>
+    </section>
+
+    <!-- ===================== 4. MODELOS ===================== -->
+    <section id="modelos">
+      <!-- <h2> = título de seção. A ordem h1 > h2 > h3 é como o índice de um livro -->
+      <h2>Modelos prontos para o seu tipo de negócio</h2>
+      <p>Clique e veja como o seu site pode ficar. Eu adapto cores, fotos e textos para a sua marca.</p>
+
+      <div class="cartoes">
+        <!-- <article> = um bloco que faz sentido sozinho (cada cartão é um modelo).
+             A <div class="previa"> vai virar a "fotinho" colorida do modelo no CSS -->
+        <article class="cartao">
+          <div class="previa previa-fotografia"></div>
+          <h3>Fotografia</h3>
+          <p>Para fotógrafos: portfólio, ensaios e reserva de data.</p>
+          <a href="fotografia.html">Ver modelo</a>
+        </article>
+
+        <article class="cartao">
+          <div class="previa previa-salao"></div>
+          <h3>Salão de beleza</h3>
+          <p>Serviços, antes e depois, equipe e agendamento.</p>
+          <a href="salao.html">Ver modelo</a>
+        </article>
+
+        <article class="cartao">
+          <div class="previa previa-racao"></div>
+          <h3>Casa de ração e pet shop</h3>
+          <p>Produtos com pedido direto no WhatsApp, banho e tosa.</p>
+          <a href="casa-de-racao.html">Ver modelo</a>
+        </article>
+
+        <article class="cartao">
+          <div class="previa previa-padaria"></div>
+          <h3>Padaria e confeitaria</h3>
+          <p>Cardápio, fornadas do dia e encomendas de festa.</p>
+          <a href="padaria.html">Ver modelo</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== 5. VÍDEO ===================== -->
+    <section id="video">
+      <h2>Prazer, eu sou a Nycolle</h2>
+      <!-- Espaço reservado. Quando você gravar o vídeo (30 a 60 s), ele entra aqui no Passo 5 -->
+      <div class="video-espaco">
+        <p>[Vídeo de apresentação aqui: 30 a 60 segundos]</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6. PACOTES ===================== -->
+    <section id="pacotes">
+      <h2>Pacotes</h2>
+      <p>Valores de partida. O preço final é fechado antes de começar, sem surpresa.</p>
+
+      <div class="cartoes">
+        <article class="cartao pacote">
+          <h3>Landing page</h3>
+          <!-- "a partir de" deixa claro que pode variar conforme o pedido -->
+          <p class="preco">a partir de <strong>R$ 600</strong></p>
+          <ul>
+            <li>Uma página com tudo sobre o seu negócio</li>
+            <li>Feita para celular</li>
+            <li>Botão direto para o seu WhatsApp</li>
+          </ul>
+        </article>
+
+        <article class="cartao pacote">
+          <h3>Site simples</h3>
+          <p class="preco">a partir de <strong>R$ 1.200</strong></p>
+          <ul>
+            <li>Algumas páginas (início, serviços, contato)</li>
+            <li>Feito para celular</li>
+            <li>Botão direto para o seu WhatsApp</li>
+          </ul>
+        </article>
+
+        <article class="cartao pacote">
+          <h3>Manutenção</h3>
+          <p class="preco">a partir de <strong>R$ 100/mês</strong></p>
+          <ul>
+            <li>Troca de textos, fotos e preços</li>
+            <li>Site sempre no ar e atualizado</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- <small> = observação de letra pequena, informação secundária -->
+      <p><small>O domínio (o endereço .com.br) fica no seu nome e é cobrado pelo custo real, cerca de R$ 40 por ano.</small></p>
+
+      <a class="btn btn-principal"
+         href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vim%20pelo%20seu%20site%20e%20quero%20um%20or%C3%A7amento."
+         target="_blank" rel="noopener">Quero um orçamento</a>
+    </section>
+
+    <!-- ===================== 7. COMO FUNCIONA ===================== -->
+    <section id="como-funciona">
+      <h2>Como funciona</h2>
+      <!-- <ol> = lista NUMERADA, porque aqui a ordem importa (passo 1, 2, 3, 4) -->
+      <ol class="passos">
+        <li>
+          <h3>Conversa no WhatsApp</h3>
+          <p>Você me conta sobre o seu negócio e o que precisa.</p>
+        </li>
+        <li>
+          <h3>Proposta com preço fechado</h3>
+          <p>Mando o valor e o prazo. Você paga 50% para começar.</p>
+        </li>
+        <li>
+          <h3>Eu crio e você aprova</h3>
+          <p>Te mostro o site pronto e ajusto o que for preciso.</p>
+        </li>
+        <li>
+          <h3>Site no ar</h3>
+          <p>Você paga os outros 50% e o site vai para a internet.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===================== 8. POR QUE COMIGO ===================== -->
+    <section id="por-que">
+      <h2>Por que fazer comigo</h2>
+      <div class="cartoes">
+        <article class="cartao">
+          <h3>Eu entendo de vender</h3>
+          <p>Trabalho todo dia com vendas e atendimento pelo WhatsApp. Sei o que faz o cliente chamar.</p>
+        </article>
+        <article class="cartao">
+          <h3>Feito para celular</h3>
+          <p>A maioria dos seus clientes vai abrir o site pelo celular. Ele é pensado para isso desde o início.</p>
+        </article>
+        <article class="cartao">
+          <h3>Preço fechado</h3>
+          <p>Você sabe quanto vai pagar antes de começar.</p>
+        </article>
+      </div>
+
+      <h3>Ferramentas que eu uso</h3>
+      <ul class="tecnologias">
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>WordPress</li>
+        <li>Node.js</li>
+      </ul>
+    </section>
+
+    <!-- ===================== 9. PERGUNTAS FREQUENTES ===================== -->
+    <section id="perguntas">
+      <h2>Perguntas frequentes</h2>
+      <!-- <details> + <summary> já abrem e fecham sozinhos, SEM JavaScript.
+           <summary> é a pergunta (sempre visível); o resto só aparece ao clicar -->
+      <details>
+        <summary>Quanto tempo leva para ficar pronto?</summary>
+        <p>[Prazo médio, ex.: de 7 a 15 dias para uma landing page]</p>
+      </details>
+      <details>
+        <summary>Preciso ter fotos e textos prontos?</summary>
+        <p>Ajuda, mas não precisa. Eu te ajudo a organizar os textos e a escolher fotos de bancos gratuitos que podem ser usadas comercialmente.</p>
+      </details>
+      <details>
+        <summary>O site fica no meu nome?</summary>
+        <p>Sim. O domínio é registrado no seu CPF ou CNPJ, no Registro.br.</p>
+      </details>
+      <details>
+        <summary>Tem mensalidade?</summary>
+        <p>Só se você quiser o plano de manutenção. A hospedagem que eu uso é gratuita; você paga apenas o domínio, uma vez por ano.</p>
+      </details>
+      <details>
+        <summary>Consigo mudar coisas depois?</summary>
+        <p>Sim. Pequenas trocas entram na manutenção mensal, ou você pede quando precisar.</p>
+      </details>
+    </section>
+
+    <!-- ===================== 10. CHAMADA FINAL ===================== -->
+    <section id="contato">
+      <h2>Vamos colocar o seu negócio na internet?</h2>
+      <p>Me chama no WhatsApp e eu respondo pessoalmente.</p>
+
+      <a class="btn btn-principal"
+         href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vim%20pelo%20seu%20site%20e%20quero%20um%20or%C3%A7amento."
+         target="_blank" rel="noopener">Falar no WhatsApp</a>
+
+      <ul class="contatos">
+        <!-- "mailto:" abre o programa de e-mail já com o seu endereço preenchido -->
+        <li><a href="mailto:nycollef.profissional@gmail.com">nycollef.profissional@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/nycolle-fiussen-6b8673174/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer>
+    <!-- O <span id="ano"> vai ser atualizado sozinho pelo JavaScript no Passo 5 -->
+    <p>© <span id="ano">2026</span> Nycolle Web · Rio Grande, RS</p>
+  </footer>
+
+</body>
+</html>

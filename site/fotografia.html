@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!-- class="sem-js": se o JavaScript não carregar, tudo aparece normalmente, sem animação.
+     O scriptzinho logo abaixo troca para "js" e liga as animações -->
+<html lang="pt-BR" class="sem-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.replace('sem-js', 'js');</script>
+
+  <title>Bárbara Matheus Fotografia | Gestante, bebê e família em Rio Grande, RS</title>
+  <meta name="description" content="Fotógrafa especialista em retratos de gestante, bebê e família, em Rio Grande - RS. Ensaios leves, sem poses forçadas, em casa ou ao ar livre.">
+
+  <!-- Fontes do Google: Montserrat (títulos, em MAIÚSCULAS) e Lora (textos, com serifa) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/fotografia.css">
+
+  <!-- "defer" = o JavaScript só roda depois que o HTML todo foi lido -->
+  <script src="js/fotografia.js" defer></script>
+</head>
+<body>
+
+  <!-- ===================== MENU ===================== -->
+  <header class="topo">
+    <a href="#inicio" class="logo">
+      <!-- O logo original é branco. O CSS escurece ele com um filtro -->
+      <img src="img/fotografia/logo-recortado.png" alt="Bárbara Matheus Fotografia" width="494" height="90">
+    </a>
+
+    <!-- Botão de menu (só aparece no celular). aria-expanded avisa o leitor de tela se o menu está aberto -->
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-lista">
+      <span class="menu-botao-linhas" aria-hidden="true"></span>
+      <span class="menu-botao-texto">Menu</span>
+    </button>
+
+    <nav aria-label="Menu principal">
+      <ul id="menu-lista" class="menu-lista">
+        <li><a href="#bastidores">Vídeos</a></li>
+        <li><a href="#portfolio">Portfólio</a></li>
+        <li><a href="#ensaios">Ensaios</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#investimento">Investimento</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <!-- A área de clientes continua na Pixieset, onde ficam as galerias de cada família -->
+        <li><a href="https://barbaramatheus.mypixieset.com/clientes/" target="_blank" rel="noopener">Clientes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== 1. ABERTURA ===================== -->
+    <!-- Estilo "capa de revista": texto grande de um lado, foto em arco do outro -->
+    <section class="abertura" id="inicio">
+      <div class="abertura-texto">
+        <p class="subtitulo capa-anima" style="--atraso: 0.1s">Gestante · Bebê · Família</p>
+        <!-- Cada linha do título fica dentro de uma "janela" (span.linha) que esconde o texto.
+             A animação empurra o texto de baixo para cima, como uma cortina.
+             <em> mistura uma palavra em itálico com serifa no meio do título: toque de revista -->
+        <h1>
+          <span class="linha"><span style="--atraso: 0.25s">Para cada</span></span>
+          <span class="linha"><span style="--atraso: 0.37s">história, um</span></span>
+          <span class="linha"><span style="--atraso: 0.49s">retrato <em>único</em>.</span></span>
+        </h1>
+        <p class="abertura-descricao capa-anima" style="--atraso: 0.9s">Fotógrafa especialista em retratos de gestante, bebê e família, em Rio Grande - RS.</p>
+        <div class="abertura-botoes capa-anima" style="--atraso: 1.05s">
+          <a class="btn-foto btn-foto-cheio"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1!%20Vi%20o%20site%20da%20B%C3%A1rbara%20Matheus%20Fotografia%20e%20quero%20reservar%20um%20ensaio."
+             target="_blank" rel="noopener">Reservar meu ensaio</a>
+          <a class="link-seta" href="#investimento">Ver pacotes e valores</a>
+        </div>
+      </div>
+
+      <div class="abertura-fotos capa-anima" style="--atraso: 0.4s">
+        <!-- O arco: três fotos empilhadas que vão se revezando sozinhas (só com CSS) -->
+        <div class="arco">
+          <img src="img/fotografia/home-08-800.jpg" alt="Casal abraçado na praia, com as mãos sobre a barriga da gestante" width="800" height="1200" fetchpriority="high">
+          <img src="img/fotografia/home-10-800.jpg" alt="Família rindo junta na praia" width="800" height="1200">
+          <img src="img/fotografia/home-04-800.jpg" alt="Menino de cabelo cacheado sorrindo num campo ao pôr do sol" width="800" height="1200">
+        </div>
+
+        <!-- Foto pequena sobreposta, como um recorte colado na página -->
+        <img class="abertura-detalhe" src="img/fotografia/home-06-800.jpg" alt="Detalhe dos pezinhos de um bebê" width="800" height="533">
+
+        <!-- Selo redondo que gira devagar. É um desenho SVG:
+             o texto segue o caminho de um círculo (textPath) -->
+        <svg class="selo-girando" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <path id="circulo" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/>
+          </defs>
+          <text>
+            <textPath href="#circulo">Bárbara Matheus · Fotografia · Rio Grande ·</textPath>
+          </text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===================== 2. VÍDEOS ===================== -->
+    <section class="bastidores" id="bastidores">
+      <div class="bastidores-texto">
+        <p class="subtitulo" data-revelar>Em movimento</p>
+        <h2 data-revelar style="--atraso: 0.1s">Feito para durar</h2>
+        <p data-revelar style="--atraso: 0.2s">Do ensaio à caixa que chega na tua casa: fotografias reveladas, álbuns em linho e um cuidado que dá para sentir nas mãos.</p>
+        <a class="link-seta link-seta-claro" href="https://www.instagram.com/barbaramatheus.fotografa/" target="_blank" rel="noopener" data-revelar style="--atraso: 0.3s">Mais no Instagram</a>
+      </div>
+
+      <!-- Em vez de mostrar o Instagram direto (que vem com cabeçalho, botões e comentários),
+           mostramos dois "celulares" desenhados, cada um com uma capa e um botão de play.
+           Ao tocar, o vídeo abre numa janela por cima da página (o JavaScript cuida disso).
+           Vantagem extra: o Instagram só carrega quando a pessoa quer assistir, e o site fica mais rápido.
+           data-video = endereço do vídeo no Instagram. Para trocar o vídeo, é só trocar esse endereço -->
+      <div class="videos">
+        <a class="video-cartao" href="https://www.instagram.com/reel/DV1OHfdCPav/"
+           data-video="https://www.instagram.com/reel/DV1OHfdCPav/embed"
+           target="_blank" rel="noopener" data-revelar>
+          <span class="video-celular">
+            <img src="img/fotografia/home-03-800.jpg" alt="" loading="lazy">
+            <span class="video-play" aria-hidden="true"></span>
+          </span>
+          <span class="video-titulo">O álbum em linho</span>
+          <span class="video-info">Assistir · Reels</span>
+        </a>
+        <a class="video-cartao" href="https://www.instagram.com/reel/DUbmHIGD5ul/"
+           data-video="https://www.instagram.com/reel/DUbmHIGD5ul/embed"
+           target="_blank" rel="noopener" data-revelar style="--atraso: 0.15s">
+          <span class="video-celular">
+            <img src="img/fotografia/capa-900.jpg" alt="" loading="lazy">
+            <span class="video-play" aria-hidden="true"></span>
+          </span>
+          <span class="video-titulo">A caixa de revelações</span>
+          <span class="video-info">Assistir · Reels</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== 3. ABORDAGEM ===================== -->
+    <!-- data-acender: o JavaScript separa o texto em palavras,
+         e elas vão "acendendo" (de clarinho para escuro) conforme a pessoa rola -->
+    <section class="abordagem">
+      <p class="subtitulo" data-revelar>Uma abordagem leve e autoral</p>
+      <p class="abordagem-frase" data-acender>Fotografar é permitir que o tempo pare. Sem pressa e com muita leveza, guio nossos encontros para que a tua essência apareça de forma natural. O resultado são retratos que guardam pedaços da tua história, preservados para sempre.</p>
+    </section>
+
+    <!-- ===================== 4. PORTFÓLIO (FILME) ===================== -->
+    <!-- No computador: a seção é bem alta, e o conteúdo fica "grudado" na tela (sticky).
+         Enquanto a pessoa rola para baixo, o JavaScript empurra as fotos para o lado, como um filme.
+         No celular: vira uma fileira que se arrasta com o dedo -->
+    <section class="filme" id="portfolio">
+      <div class="filme-tela">
+        <div class="filme-trilho">
+          <div class="filme-intro">
+            <p class="subtitulo">Portfólio</p>
+            <h2>Vamos documentar tudo</h2>
+            <p>Cada foto abre grande. Clique e passe com as setas.</p>
+            <!-- No computador a pessoa ROLA; no celular ela ARRASTA. O CSS mostra a palavra certa -->
+            <p class="filme-dica" aria-hidden="true"><b class="dica-pc">Role</b><b class="dica-cel">Arraste</b> <span>→</span></p>
+          </div>
+
+          <!-- Cada foto é um link para a versão grande. Com JavaScript, abre no "lightbox"
+               (tela cheia) sem sair da página. Sem JavaScript, o link abre a foto normalmente -->
+          <a class="galeria-item" href="img/fotografia/home-01-1600.jpg">
+            <img src="img/fotografia/home-01-800.jpg" alt="Gestante na praia, com as mãos na barriga e o cabelo ao vento" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">01 — Gestação</span>
+          </a>
+          <a class="galeria-item galeria-item-baixo" href="img/fotografia/home-09-1600.jpg">
+            <img src="img/fotografia/home-09-800.jpg" alt="Recém-nascido de olhos abertos, com a mãozinha na boca" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">02 — Primeiros dias</span>
+          </a>
+          <a class="galeria-item" href="img/fotografia/home-05-1600.jpg">
+            <img src="img/fotografia/home-05-800.jpg" alt="Mãe abraçando a filha na beira da praia ao entardecer" width="800" height="533" loading="lazy">
+            <span class="galeria-legenda">03 — Mãe e filha</span>
+          </a>
+          <a class="galeria-item galeria-item-baixo" href="img/fotografia/home-07-1600.jpg">
+            <img src="img/fotografia/home-07-800.jpg" alt="Menino de macacão claro em pé no gramado, olhando para as mãos" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">04 — Fases</span>
+          </a>
+          <a class="galeria-item" href="img/fotografia/sobre-01-1600.jpg">
+            <img src="img/fotografia/sobre-01-800.jpg" alt="Casal se abraçando testa com testa na praia" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">05 — Família</span>
+          </a>
+          <a class="galeria-item galeria-item-baixo" href="img/fotografia/home-02-1600.jpg">
+            <img src="img/fotografia/home-02-800.jpg" alt="Bebê recém-nascido deitado sobre lençol claro" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">06 — Newborn</span>
+          </a>
+          <a class="galeria-item" href="img/fotografia/sobre-02-1600.jpg">
+            <img src="img/fotografia/sobre-02-800.jpg" alt="Mãe abraçando a filha com carinho, em tons claros" width="800" height="1200" loading="lazy">
+            <span class="galeria-legenda">07 — Abraço</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 5. TIPOS DE ENSAIO ===================== -->
+    <!-- No computador, ao passar o mouse num item, a foto dele aparece flutuando junto do cursor.
+         No celular, cada item mostra uma fotinho ao lado -->
+    <section class="ensaios" id="ensaios">
+      <div class="ensaios-cabecalho">
+        <p class="subtitulo" data-revelar>O que eu fotografo</p>
+        <h2 data-revelar style="--atraso: 0.1s">Cada fase, um capítulo</h2>
+      </div>
+
+      <ol class="ensaios-lista">
+        <li data-revelar><img src="img/fotografia/home-02-800.jpg" alt="" loading="lazy"><span>Primeiros dias do bebê</span></li>
+        <li data-revelar><img src="img/fotografia/sobre-03-800.jpg" alt="" loading="lazy"><span>Primeiro aniversário</span></li>
+        <li data-revelar><img src="img/fotografia/home-01-800.jpg" alt="" loading="lazy"><span>Gestação</span></li>
+        <li data-revelar><img src="img/fotografia/home-09-800.jpg" alt="" loading="lazy"><span>Fases do bebê</span></li>
+        <li data-revelar><img src="img/fotografia/home-10-800.jpg" alt="" loading="lazy"><span>Momento em família</span></li>
+        <li data-revelar><img src="img/fotografia/home-04-800.jpg" alt="" loading="lazy"><span>Marcos para relembrar</span></li>
+        <li data-revelar><img src="img/fotografia/home-07-800.jpg" alt="" loading="lazy"><span>Em casa ou externa</span></li>
+      </ol>
+
+      <!-- A foto flutuante (só no computador). O JavaScript troca a imagem e move junto do mouse.
+           alt="" porque é só enfeite: o nome do ensaio já está escrito na lista -->
+      <div class="ensaios-flutuante" aria-hidden="true"><img src="img/fotografia/home-02-800.jpg" alt=""></div>
+    </section>
+
+    <!-- ===================== 6. SOBRE A SESSÃO ===================== -->
+    <section class="sessao">
+      <blockquote class="sessao-citacao" data-revelar>
+        <p>A vida escreve sua própria poesia. Eu apenas registro o momento em que o <em>sentir</em> acontece.</p>
+      </blockquote>
+
+      <div class="sessao-grade">
+        <div class="moldura sessao-foto" data-revelar>
+          <img src="img/fotografia/home-03-800.jpg" alt="Álbum de fotos com capa de linho e o título Entre Nós gravado" width="800" height="1200" loading="lazy" data-parallax>
+        </div>
+        <div class="sessao-texto">
+          <p class="subtitulo" data-revelar>Sobre a sessão</p>
+          <p data-revelar style="--atraso: 0.1s">As fotografias acontecem na tranquilidade da tua casa ou em algum lugar ao ar livre. Nossos encontros duram entre 30 minutos e uma hora e meia, sempre com um ritmo leve, sem poses forçadas e com expressões reais.</p>
+          <p data-revelar style="--atraso: 0.2s">Gosto de sugerir roupas em tons claros e neutros, que ajudam a valorizar a beleza natural do momento. Meu objetivo é registrar cada gesto e olhar de forma verdadeira, respeitando a tua história.</p>
+
+          <!-- Depoimento dentro da seção, com uma linha fina na lateral -->
+          <figure class="depoimento" data-revelar style="--atraso: 0.3s">
+            <blockquote>
+              <p>“Gratos somos nós com tanto carinho no teu olhar. Esses registros enchem nossos corações. Obrigada por ajudar a contar a história da nossa família.”</p>
+            </blockquote>
+            <figcaption>Ana Paula Fioravante</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. SOBRE MIM ===================== -->
+    <section class="sobre" id="sobre">
+      <div class="sobre-texto">
+        <p class="subtitulo" data-revelar>Sobre mim</p>
+        <h2 data-revelar style="--atraso: 0.1s">Bárbara Matheus</h2>
+        <p class="sobre-destaque" data-revelar style="--atraso: 0.2s">Sou mãe do Lázaro e da Clarice, esposa, amiga e tantas outras versões que me constroem todos os dias.</p>
+        <p data-revelar style="--atraso: 0.3s">A fotografia me encontrou: ganhei minha primeira câmera há mais de 20 anos e, desde então, vi muitas histórias através das lentes, de casamentos a batizados. Há seis anos, transformei essa paixão em profissão e me especializei em retratar famílias, o que realmente aquece meu coração.</p>
+        <p data-revelar style="--atraso: 0.4s">Busco, em cada ensaio, traduzir sentimentos em imagens, entregando um olhar único e retratos que nascem do sentir.</p>
+
+        <!-- Números em destaque -->
+        <dl class="numeros" data-revelar style="--atraso: 0.5s">
+          <div><dt>+20</dt><dd>anos com a câmera</dd></div>
+          <div><dt>6</dt><dd>anos de profissão</dd></div>
+        </dl>
+      </div>
+      <div class="sobre-foto" data-revelar style="--atraso: 0.15s">
+        <img src="img/fotografia/sobre-03-800.jpg"
+             srcset="img/fotografia/sobre-03-800.jpg 800w, img/fotografia/sobre-03-1600.jpg 1600w"
+             sizes="(min-width: 900px) 38vw, 90vw"
+             alt="Família reunida na festa de primeiro aniversário da Clarice, com balões rosa e verde"
+             width="800" height="1200" loading="lazy">
+      </div>
+    </section>
+
+    <!-- ===================== 8. INVESTIMENTO ===================== -->
+    <section class="investimento" id="investimento">
+      <!-- Lado esquerdo "gruda" na tela (sticky) enquanto a lista da direita passa -->
+      <div class="investimento-fixo">
+        <p class="subtitulo" data-revelar>Investimento</p>
+        <h2 data-revelar style="--atraso: 0.1s">Cada família carrega uma história única</h2>
+        <p class="preco" data-revelar style="--atraso: 0.2s">
+          <span>Pacotes a partir de</span>
+          <strong>R$ 350</strong>
+        </p>
+        <a class="btn-foto btn-foto-cheio"
+           href="https://wa.me/5553992032750?text=Ol%C3%A1!%20Vi%20o%20site%20da%20B%C3%A1rbara%20Matheus%20Fotografia%20e%20quero%20receber%20a%20proposta%20com%20os%20pacotes."
+           target="_blank" rel="noopener" data-revelar style="--atraso: 0.3s">Receber a proposta</a>
+      </div>
+
+      <div class="investimento-conteudo">
+        <p data-revelar>Os pacotes são feitos para construir o registro que faça sentido para o teu momento. Os valores variam conforme tempo dedicado, forma de entrega e profundidade da experiência, sempre respeitando o ritmo da família e o cuidado que cada memória merece.</p>
+
+        <p class="incluso-titulo" data-revelar>Podem incluir</p>
+        <!-- <ol> = lista numerada. O CSS desenha os números 01, 02, 03... -->
+        <ol class="incluso">
+          <li data-revelar>Sessões com duração entre 20 minutos e 1 hora.</li>
+          <li data-revelar>Condução sensível, sem poses forçadas.</li>
+          <li data-revelar>Olhar atento aos gestos, vínculos e detalhes.</li>
+          <li data-revelar>Seleção e tratamento cuidadoso das imagens.</li>
+          <li data-revelar>Entrega digital com qualidade.</li>
+          <li data-revelar>Opções com fotografias reveladas, caixas e álbuns feitos para durar.</li>
+        </ol>
+
+        <div class="album" data-revelar>
+          <h3>Álbuns em linho</h3>
+          <p>Para as famílias que não querem deixar suas histórias guardadas apenas em uma tela, ofereço a experiência completa de transformar fotos em objetos de memória. Nossos álbuns são confeccionados em linho, com um acabamento pensado para durar gerações e ser folheado daqui a muitos anos.</p>
+          <p class="album-convite">Mais do que contratar um serviço, o convite aqui é para escolher como tu desejas que essa fase da tua vida seja lembrada.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. DÚVIDAS ===================== -->
+    <section class="duvidas" id="duvidas">
+      <div class="duvidas-cabecalho">
+        <p class="subtitulo" data-revelar>Dúvidas frequentes</p>
+        <h2 data-revelar style="--atraso: 0.1s">Antes de marcar</h2>
+      </div>
+
+      <!-- <details> + <summary> abrem e fecham sozinhos, sem JavaScript.
+           <summary> é a pergunta (sempre visível); a .resposta só aparece ao clicar -->
+      <div class="perguntas">
+        <details data-revelar>
+          <summary>Onde os ensaios são realizados?</summary>
+          <div class="resposta"><p>Os ensaios acontecem na casa do cliente, em um espaço aconchegante e cheio de significado. Aproveitamos a luz natural, especialmente das janelas, para criar imagens delicadas e cheias de vida. Ou em locais externos, com a natureza criando a composição.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Preciso ter um espaço grande em casa para fotografar?</summary>
+          <div class="resposta"><p>Não precisa. O mais importante é a luz natural e o aconchego. Com pequenos cantinhos já conseguimos registros lindos e afetivos.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Fotografa em estúdio ou apenas na casa do cliente?</summary>
+          <div class="resposta"><p>Atualmente realizo os ensaios na casa das famílias ou em ambientes que façam sentido para vocês.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Que tipo de roupa é melhor usar no ensaio?</summary>
+          <div class="resposta"><p>Sempre indico roupas confortáveis e em tons claros, neutros e suaves, como bege, branco, off-white e verde clarinho. Assim, a atenção vai toda para a conexão e os detalhes mais importantes: vocês.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Qual a melhor idade para fotografar o bebê?</summary>
+          <div class="resposta"><p>Cada fase é especial. Mas costumo recomendar o acompanhamento nos 3, 6, 9 e 12 meses, porque são marcos cheios de descobertas e mudanças visíveis.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Quanto tempo demora para receber as fotos?</summary>
+          <div class="resposta"><p>O prazo de entrega é de até 30 dias para os arquivos digitais e 60 dias para revelações e álbuns.</p></div>
+        </details>
+        <details data-revelar>
+          <summary>Como funciona o pagamento e a reserva?</summary>
+          <div class="resposta"><p>A data é reservada mediante pagamento de sinal, e o restante pode ser organizado de acordo com a forma de pagamento escolhida.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== 10. CONTATO ===================== -->
+    <section class="contato" id="contato">
+      <p class="subtitulo" data-revelar>Teu retrato começa aqui</p>
+      <p class="contato-texto" data-revelar style="--atraso: 0.1s">Se sentiu conexão com meu trabalho, este é o primeiro passo. Escreve para mim e vamos planejar juntas o ensaio que vai guardar o que o tempo não apaga.</p>
+
+      <!-- Faixa gigante que corre: o link inteiro leva ao WhatsApp.
+           Duas cópias do texto para o movimento não ter "buraco" -->
+      <a class="chamada-gigante"
+         href="https://wa.me/5553992032750?text=Ol%C3%A1!%20Vi%20o%20site%20da%20B%C3%A1rbara%20Matheus%20Fotografia%20e%20quero%20agendar%20um%20ensaio."
+         target="_blank" rel="noopener" aria-label="Agendar meu ensaio pelo WhatsApp">
+        <span class="chamada-trilho" aria-hidden="true">
+          <span>Agendar meu ensaio <em>·</em> Agendar meu ensaio <em>·</em>&nbsp;</span>
+          <span>Agendar meu ensaio <em>·</em> Agendar meu ensaio <em>·</em>&nbsp;</span>
+        </span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="rodape">
+    <img src="img/fotografia/logo-recortado.png" alt="Bárbara Matheus Fotografia" width="494" height="90" loading="lazy">
+    <div class="rodape-colunas">
+      <p><a href="https://www.instagram.com/barbaramatheus.fotografa/" target="_blank" rel="noopener">@barbaramatheus.fotografa</a><br><span>Me acompanhe no Instagram</span></p>
+      <p>Rio Grande, RS<br><span>Em casa ou ao ar livre</span></p>
+      <p><a href="https://barbaramatheus.mypixieset.com/clientes/" target="_blank" rel="noopener">Espaço do cliente</a><br><span>Acesse a tua galeria</span></p>
+    </div>
+    <p class="rodape-credito">Site feito por <a href="index.html">Nycolle Web</a></p>
+  </footer>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <!-- <dialog> = uma janela que abre por cima da página. Começa fechada.
+       O JavaScript coloca a foto clicada aqui dentro e abre -->
+  <dialog class="lightbox" aria-label="Foto ampliada">
+    <img class="lightbox-foto" src="" alt="">
+    <button class="lightbox-fechar" type="button" aria-label="Fechar">×</button>
+    <button class="lightbox-seta lightbox-anterior" type="button" aria-label="Foto anterior">‹</button>
+    <button class="lightbox-seta lightbox-proxima" type="button" aria-label="Próxima foto">›</button>
+    <p class="lightbox-contador" aria-live="polite"></p>
+  </dialog>
+
+  <!-- ===================== JANELA DO VÍDEO ===================== -->
+  <!-- Começa vazia. O JavaScript coloca o vídeo do Instagram aqui dentro ao tocar no celular,
+       e tira quando fecha (assim o vídeo para de tocar) -->
+  <dialog class="video-janela" aria-label="Vídeo do Instagram">
+    <div class="video-janela-caixa"></div>
+    <!-- autofocus: ao abrir, o foco do teclado vai direto para o "fechar" -->
+    <button class="video-janela-fechar" type="button" aria-label="Fechar vídeo" autofocus>×</button>
+  </dialog>
+
+  <!-- Selo flutuante discreto: leva quem está vendo o modelo de volta ao site da Nycolle -->
+  <a class="selo-modelo" href="index.html#modelos"><span class="selo-longo">Modelo por </span>Nycolle Web <span aria-hidden="true">→</span></a>
+
+</body>
+</html>

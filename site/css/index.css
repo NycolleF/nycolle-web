@@ -1,0 +1,456 @@
+/* =========================================================
+   INDEX.CSS
+   Regras só da página inicial.
+   Estratégia "celular primeiro" (mobile first): escrevemos tudo
+   para a tela pequena e, no fim de cada bloco, usamos @media
+   para ajustar quando a tela é maior.
+   ========================================================= */
+
+
+/* ---------- ESPAÇAMENTO DAS SEÇÕES ----------
+   padding-inline = espaço nas laterais.
+   max(16px, ...) = no celular, 16px; em tela grande, o espaço que
+   sobra para o conteúdo ficar centralizado em até 1100px.
+   Assim o FUNDO da seção pode ir de ponta a ponta, mas o texto fica no meio. */
+main > section,
+.menu,
+footer {
+  padding-inline: max(16px, (100% - var(--largura-max)) / 2);
+}
+
+main > section {
+  padding-block: 64px; /* espaço em cima e embaixo */
+}
+
+/* Texto de introdução logo abaixo do título de cada seção */
+main > section > h2 + p {
+  color: var(--cor-texto-suave);
+  max-width: 60ch; /* "ch" = largura de um caractere: linhas de ~60 letras são as mais fáceis de ler */
+  margin-bottom: 32px;
+}
+
+
+/* ===================== 1. MENU ===================== */
+.menu {
+  /* sticky = o menu "gruda" no topo quando você rola a página */
+  position: sticky;
+  top: 0;
+  z-index: 10; /* fica por cima do resto do conteúdo */
+  display: flex;
+  flex-wrap: wrap;           /* no celular, o que não couber desce para outra linha */
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding-block: 12px;
+  background: rgba(251, 247, 242, 0.92); /* creme levemente transparente */
+  backdrop-filter: blur(8px);            /* desfoca o que passa por trás */
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.marca {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.menu .btn {
+  padding: 0.6em 1.1em;
+  font-size: 0.95rem;
+}
+
+/* No celular, os links ficam numa segunda linha, ocupando a largura toda */
+.menu nav {
+  order: 3;        /* muda a ORDEM visual: o nav vai para depois do botão */
+  width: 100%;
+}
+
+.menu ul {
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;      /* tira as bolinhas da lista */
+  overflow-x: auto;      /* se não couber, dá para deslizar de lado */
+}
+
+.menu nav a {
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;   /* "Como funciona" não quebra em duas linhas */
+}
+
+.menu nav a:hover {
+  color: var(--cor-marca);
+}
+
+/* Telas a partir de 800px (tablet deitado e computador):
+   tudo numa linha só, com os links no meio */
+@media (min-width: 800px) {
+  .menu nav {
+    order: 0;
+    width: auto;
+  }
+}
+
+
+/* ===================== 2. HERO ===================== */
+.hero {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+  padding-top: 48px;
+}
+
+.destaque {
+  color: var(--cor-whats);
+}
+
+.hero-texto > p {
+  font-size: 1.15rem;
+  color: var(--cor-texto-suave);
+  max-width: 50ch;
+}
+
+.hero-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* --- A janela de navegador desenhada --- */
+.janela {
+  background: var(--cor-superficie);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  overflow: hidden; /* corta o que passar dos cantos arredondados */
+  border: 1px solid var(--cor-borda);
+}
+
+.janela-barra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #f1ece6;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.bolinha {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%; /* 50% transforma o quadrado em círculo */
+  background: #d9d1c8;
+}
+
+.janela-endereco {
+  margin-left: 10px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+.janela-conversa {
+  display: flex;
+  flex-direction: column; /* uma mensagem embaixo da outra */
+  gap: 10px;
+  padding: 24px 18px;
+  min-height: 240px;
+  background: var(--cor-marca-clara);
+}
+
+.msg {
+  max-width: 80%;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Mensagem do cliente: à esquerda, balão branco */
+.msg-cliente {
+  align-self: flex-start;
+  background: var(--cor-superficie);
+  border-bottom-left-radius: 4px;
+}
+
+/* Resposta da loja: à direita, balão verde (como no WhatsApp) */
+.msg-loja {
+  align-self: flex-end;
+  background: #d6f5dd;
+  border-bottom-right-radius: 4px;
+}
+
+/* Tela grande: texto à esquerda, janela à direita */
+@media (min-width: 800px) {
+  .hero {
+    grid-template-columns: 1.2fr 1fr; /* a coluna do texto é um pouco maior */
+    padding-top: 80px;
+  }
+}
+
+
+/* ===================== 3. FAIXA QUE CORRE ===================== */
+/* Por enquanto ela fica parada. No Passo 4 ela ganha movimento. */
+.faixa {
+  display: flex;
+  overflow: hidden;        /* esconde o que passar da tela */
+  padding-block: 18px;
+  padding-inline: 0;       /* a faixa vai de ponta a ponta, sem margem lateral */
+  background: var(--cor-texto);
+  color: var(--cor-fundo);
+}
+
+.faixa-trilho {
+  display: flex;
+  flex-shrink: 0;          /* não deixa a lista ser espremida */
+  gap: 40px;
+  margin: 0;
+  padding: 0 20px;
+  list-style: none;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* Um losango entre um serviço e outro */
+.faixa-trilho li::before {
+  content: "◆";
+  margin-right: 40px;
+  color: var(--cor-marca);
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+
+
+/* ===================== CARTÕES (usados em várias seções) ===================== */
+/* auto-fit + minmax: o navegador decide quantos cartões cabem por linha.
+   Cada um tem no mínimo 240px. No celular fica 1 por linha; no computador, 3 ou 4. */
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.cartao {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.cartao p {
+  color: var(--cor-texto-suave);
+}
+
+
+/* ===================== 4. MODELOS ===================== */
+/* A "fotinho" de cada modelo, feita só com cores (gradiente).
+   Quando você tiver prints dos modelos, pode trocar por <img>. */
+.previa {
+  aspect-ratio: 16 / 10;   /* mantém o formato retangular em qualquer largura */
+  margin: -24px -24px 20px; /* margem negativa: encosta nas bordas do cartão */
+  border-radius: var(--raio) var(--raio) 0 0;
+}
+
+.previa-fotografia { background: linear-gradient(135deg, #2b2d42, #8d99ae); }
+.previa-salao      { background: linear-gradient(135deg, #f7c6d9, #b4235a); }
+.previa-racao      { background: linear-gradient(135deg, #ffd27f, #e07a2f); }
+.previa-padaria    { background: linear-gradient(135deg, #f3e1c7, #a8663a); }
+
+/* margin-top: auto empurra o link para o pé do cartão,
+   assim todos os "Ver modelo" ficam alinhados */
+#modelos .cartao a {
+  margin-top: auto;
+  font-weight: 700;
+}
+
+
+/* ===================== 5. VÍDEO ===================== */
+#video {
+  background: var(--cor-marca-clara);
+}
+
+.video-espaco {
+  display: grid;
+  place-items: center;     /* centraliza o conteúdo na horizontal e na vertical */
+  max-width: 720px;
+  aspect-ratio: 16 / 9;    /* formato de vídeo */
+  border: 2px dashed var(--cor-marca);
+  border-radius: var(--raio);
+  color: var(--cor-texto-suave);
+  text-align: center;
+  padding: 16px;
+}
+
+
+/* ===================== 6. PACOTES ===================== */
+.pacote ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.preco {
+  font-size: 0.95rem;
+}
+
+.preco strong {
+  display: block;          /* o valor vai para a linha de baixo, em destaque */
+  font-size: 1.6rem;
+  color: var(--cor-texto);
+}
+
+#pacotes > p small {
+  display: block;
+  margin-top: 24px;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ===================== 7. COMO FUNCIONA ===================== */
+/* Os números 1, 2, 3, 4 da lista são desenhados por nós com um "contador",
+   para poderem ficar grandes e coloridos */
+.passos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;    /* cria um contador chamado "passo" começando do zero */
+}
+
+.passos li {
+  counter-increment: passo; /* cada item soma 1 */
+}
+
+.passos li::before {
+  content: counter(passo);  /* escreve o número do contador */
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: var(--cor-marca);
+  color: #fff;
+  font-weight: 800;
+}
+
+.passos p {
+  color: var(--cor-texto-suave);
+}
+
+
+/* ===================== 8. POR QUE COMIGO ===================== */
+#por-que > h3 {
+  margin-top: 40px;
+}
+
+/* As tecnologias viram "etiquetas" lado a lado */
+.tecnologias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tecnologias li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+/* ===================== 9. PERGUNTAS FREQUENTES ===================== */
+#perguntas details {
+  max-width: 760px;
+  margin-bottom: 12px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+#perguntas summary {
+  cursor: pointer;          /* mãozinha ao passar o mouse */
+  padding: 18px 20px;
+  font-weight: 700;
+  list-style: none;         /* tira o triângulo padrão... */
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+#perguntas summary::-webkit-details-marker {
+  display: none;            /* ...também no Safari */
+}
+
+/* ...e coloca um "+" no lugar */
+#perguntas summary::after {
+  content: "+";
+  color: var(--cor-marca);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* [open] = quando a pergunta está aberta, o "+" vira "−" */
+#perguntas details[open] summary::after {
+  content: "−";
+}
+
+#perguntas details p {
+  margin: 0;
+  padding: 0 20px 18px;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ===================== 10. CHAMADA FINAL ===================== */
+#contato {
+  text-align: center;
+  background: var(--cor-texto);
+  color: var(--cor-fundo);
+}
+
+#contato > p {
+  color: #d8d3dc;
+  margin-inline: auto;      /* centraliza o parágrafo */
+}
+
+.contatos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contatos a {
+  color: var(--cor-fundo);
+}
+
+
+/* ===================== RODAPÉ ===================== */
+footer {
+  padding-block: 24px;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}
