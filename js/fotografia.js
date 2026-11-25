@@ -1,29 +1,95 @@
 /* =========================================================
    FOTOGRAFIA.JS
-   1. Menu: ganha fundo quando a pessoa rola a página
+   0. Rolagem suave (Lenis)
+   1. Menu: vidro fosco, some ao descer, volta ao subir + barrinha de progresso
    2. Menu do celular: abre e fecha
-   3. Blocos que aparecem ao rolar + parallax
+   3. Blocos que aparecem ao rolar + títulos palavra por palavra + parallax
    4. Palavras que "acendem" conforme a rolagem
-   5. Portfólio em "filme": rola para baixo, as fotos andam para o lado
-   6. Tipos de ensaio: foto flutuante que segue o mouse
+   5. Portfólio em "filme": rola para baixo, as fotos andam para o lado (e inclinam)
+   6. Coisas que seguem o mouse: foto dos ensaios, cursor "Ver", capa, botões-ímã
    7. Lightbox: as fotos do portfólio abrem em tela cheia
-   8. Janela dos vídeos + selo que some no fim da página
+   8. Janela dos vídeos + números que contam + selo que some no fim da página
    ========================================================= */
 
 // Quem pediu "reduzir movimento" no aparelho não vê os efeitos mais fortes
 const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Aparelho com mouse e tela grande (computador). No celular, os efeitos de mouse ficam desligados
+const temMouse = window.matchMedia('(hover: hover) and (min-width: 900px)').matches;
 
-/* ---------- 1. MENU QUE MUDA AO ROLAR ---------- */
-function atualizarMenu() {
-  // window.scrollY = quantos pixels a página já rolou.
-  // classList.toggle('rolou', condição) coloca a classe se for verdade e tira se for mentira.
-  // A classe vai no <body> para o menu E o selo "Modelo por Nycolle Web" poderem usar
-  document.body.classList.toggle('rolou', window.scrollY > 60);
+// "Regra de três" entre dois valores: lerp(10, 20, 0.1) = 11.
+// Usamos para as coisas irem ATRÁS de um alvo aos pouquinhos (é isso que dá a sensação fluida)
+function lerp(de, para, quanto) {
+  return de + (para - de) * quanto;
 }
 
-atualizarMenu();
-window.addEventListener('scroll', atualizarMenu, { passive: true });
+// Trava um número entre um mínimo e um máximo
+function travar(numero, minimo, maximo) {
+  return Math.min(Math.max(numero, minimo), maximo);
+}
+
+
+/* ---------- 0. ROLAGEM SUAVE ----------
+   A Lenis faz a página deslizar com inércia: a rodinha do mouse empurra,
+   e a página freia devagar, em vez de andar "aos trancos".
+   No celular ela deixa a rolagem do próprio aparelho (que já é suave). */
+let rolagem = null;
+
+if (!reduzirMovimento && typeof Lenis !== 'undefined') {
+  rolagem = new Lenis({
+    lerp: 0.085           // quanto menor, mais "macia" (e mais demorada) a freada
+  });
+
+  // A Lenis precisa ser avisada a cada quadro da tela
+  function quadro(tempo) {
+    rolagem.raf(tempo);
+    requestAnimationFrame(quadro);
+  }
+  requestAnimationFrame(quadro);
+}
+
+// Pausa a rolagem da página (quando abre o menu, a foto grande ou o vídeo) e volta depois
+function pausarRolagem() {
+  if (rolagem) rolagem.stop();
+}
+function voltarRolagem() {
+  // Só religa se estava pausada (religar à toa cancelaria um deslize em andamento)
+  if (rolagem && rolagem.isStopped) rolagem.start();
+}
+
+// Links do menu (#portfolio, #sobre...): a Lenis desliza até a seção
+document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+  link.addEventListener('click', function (evento) {
+    const alvo = document.querySelector(link.getAttribute('href'));
+    if (!rolagem || !alvo) return;   // sem Lenis, o navegador cuida sozinho
+    evento.preventDefault();
+    voltarRolagem();                 // se o menu do celular estava aberto, a rolagem estava pausada
+    rolagem.scrollTo(alvo, { duration: 1.6 });
+  });
+});
+
+
+/* ---------- 1. MENU QUE MUDA AO ROLAR ---------- */
+let ultimaPosicao = 0;
+
+function atualizarMenu() {
+  // window.scrollY = quantos pixels a página já rolou.
+  // classList.toggle('classe', condição) coloca a classe se for verdade e tira se for mentira.
+  // As classes vão no <body> para o menu E o selo "Modelo por Nycolle Web" poderem usar
+  const posicao = window.scrollY;
+  document.body.classList.toggle('rolou', posicao > 60);
+
+  // Descendo (e já longe do topo): esconde o menu. Subindo: mostra
+  const descendo = posicao > ultimaPosicao;
+  if (Math.abs(posicao - ultimaPosicao) > 4) {   // ignora tremidinhas pequenas
+    document.body.classList.toggle('menu-some', descendo && posicao > 400);
+    ultimaPosicao = posicao;
+  }
+
+  // Barrinha de progresso: quanto já foi lido, de 0 (topo) a 1 (fim)
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.documentElement.style.setProperty('--progresso', total > 0 ? posicao / total : 0);
+}
 
 
 /* ---------- 2. MENU DO CELULAR ---------- */
@@ -32,11 +98,13 @@ const botaoMenu = document.querySelector('.menu-botao');
 function fecharMenu() {
   document.body.classList.remove('menu-aberto');
   botaoMenu.setAttribute('aria-expanded', 'false');
+  voltarRolagem();
 }
 
 botaoMenu.addEventListener('click', function () {
   const abriu = document.body.classList.toggle('menu-aberto');
   botaoMenu.setAttribute('aria-expanded', String(abriu));
+  if (abriu) pausarRolagem(); else voltarRolagem();
 });
 
 // Ao tocar num link do menu, ele fecha (e a página desliza até a seção)
@@ -45,7 +113,21 @@ document.querySelectorAll('.menu-lista a').forEach(function (link) {
 });
 
 
-/* ---------- 3a. APARECER AO ROLAR ----------
+/* ---------- 3a. TÍTULOS PALAVRA POR PALAVRA ----------
+   Cada palavra do h2 vai para dentro de uma "janelinha" (.mascara).
+   O CSS faz elas subirem uma depois da outra quando o título aparece.
+   Precisa vir ANTES do vigia (3b), porque ele é quem dispara a animação. */
+document.querySelectorAll('h2[data-revelar]').forEach(function (titulo) {
+  const texto = titulo.textContent.trim();
+  titulo.setAttribute('aria-label', texto); // o leitor de tela lê a frase inteira, não palavra por palavra
+  titulo.innerHTML = texto.split(/\s+/).map(function (palavra, numero) {
+    return '<span class="mascara" aria-hidden="true"><span style="--i: ' + numero + '">' + palavra + '</span></span>';
+  }).join(' ');
+  titulo.classList.add('titulo-dividido');
+});
+
+
+/* ---------- 3b. APARECER AO ROLAR ----------
    IntersectionObserver = um "vigia" que avisa quando um elemento entra na tela.
    É bem mais leve do que ficar medindo a posição a cada rolada. */
 const vigia = new IntersectionObserver(function (entradas) {
@@ -65,7 +147,7 @@ document.querySelectorAll('[data-revelar]').forEach(function (elemento) {
 });
 
 
-/* ---------- 3b. PARALLAX ----------
+/* ---------- 3c. PARALLAX ----------
    A foto se move mais devagar que a página, dando sensação de profundidade. */
 const fotosParallax = document.querySelectorAll('[data-parallax]');
 
@@ -99,8 +181,7 @@ function acenderPalavras() {
     // e termina quando o fim do texto chega a 45% da tela
     const inicio = altura * 0.85;
     const fim = altura * 0.45;
-    let progresso = (inicio - caixa.top) / (inicio - fim + caixa.height);
-    progresso = Math.min(Math.max(progresso, 0), 1); // trava entre 0 e 1
+    const progresso = travar((inicio - caixa.top) / (inicio - fim + caixa.height), 0, 1);
 
     const spans = paragrafo.querySelectorAll('.palavra');
     const quantas = Math.round(progresso * spans.length);
@@ -118,6 +199,7 @@ const filme = document.querySelector('.filme');
 const trilho = document.querySelector('.filme-trilho');
 const telaGrande = window.matchMedia('(min-width: 900px)');
 let distanciaFilme = 0;
+let esperaEndireitar = null;
 
 function montarFilme() {
   if (telaGrande.matches && !reduzirMovimento) {
@@ -137,8 +219,18 @@ function montarFilme() {
 function moverFilme() {
   if (distanciaFilme <= 0) return;
   // Quanto já rolamos DENTRO da seção (0 no começo, distanciaFilme no fim)
-  const rolado = Math.min(Math.max(-filme.getBoundingClientRect().top, 0), distanciaFilme);
+  const rolado = travar(-filme.getBoundingClientRect().top, 0, distanciaFilme);
   trilho.style.transform = 'translateX(' + (-rolado) + 'px)';
+
+  // As fotos inclinam conforme a VELOCIDADE da rolagem (a Lenis sabe a velocidade)...
+  const velocidade = rolagem ? rolagem.velocity : 0;
+  trilho.style.setProperty('--inclinar', travar(velocidade * -0.25, -6, 6) + 'deg');
+
+  // ...e quando a pessoa para de rolar, voltam retinhas
+  clearTimeout(esperaEndireitar);
+  esperaEndireitar = setTimeout(function () {
+    trilho.style.setProperty('--inclinar', '0deg');
+  }, 120);
 }
 
 montarFilme();
@@ -156,6 +248,7 @@ window.addEventListener('load', montarFilme);
 let agendado = false;
 
 function aoRolar() {
+  atualizarMenu();
   if (!reduzirMovimento) moverParallax();
   acenderPalavras();
   moverFilme();
@@ -172,12 +265,21 @@ window.addEventListener('scroll', function () {
 aoRolar();
 
 
-/* ---------- 6. FOTO FLUTUANTE DOS ENSAIOS ----------
-   Ao passar o mouse num item da lista, a foto dele aparece e segue o cursor.
-   (No celular a foto flutuante fica escondida pelo CSS, então nada disso aparece.) */
+/* ---------- 6. COISAS QUE SEGUEM O MOUSE (só no computador) ----------
+   Truque da fluidez: guardamos onde o mouse ESTÁ (o "alvo") e, a cada quadro,
+   cada coisa anda só um pedacinho do caminho até ele (lerp). Assim ela chega "deslizando". */
+const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+window.addEventListener('mousemove', function (evento) {
+  mouse.x = evento.clientX;
+  mouse.y = evento.clientY;
+}, { passive: true });
+
+// 6a. Foto flutuante dos ensaios: aparece ao passar num item e segue o mouse balançando
 const lista = document.querySelector('.ensaios-lista');
 const flutuante = document.querySelector('.ensaios-flutuante');
 const fotoFlutuante = flutuante.querySelector('img');
+const posFoto = { x: mouse.x, y: mouse.y };
 
 lista.querySelectorAll('li').forEach(function (item) {
   item.addEventListener('mouseenter', function () {
@@ -190,11 +292,73 @@ lista.addEventListener('mouseleave', function () {
   flutuante.classList.remove('ativa');
 });
 
-lista.addEventListener('mousemove', function (evento) {
-  // clientX/clientY = posição do mouse na tela. Tiramos metade do tamanho da foto
-  // para o centro dela ficar perto do cursor
-  flutuante.style.translate = (evento.clientX - 120) + 'px ' + (evento.clientY - 160) + 'px';
-});
+// 6b. Cursor "Ver" / "Play": uma bolinha que aparece em cima das fotos e dos vídeos
+const bolinha = document.createElement('div');
+bolinha.className = 'cursor-bolinha';
+bolinha.setAttribute('aria-hidden', 'true');
+document.body.appendChild(bolinha);
+const posBolinha = { x: mouse.x, y: mouse.y };
+
+function ligarBolinha(seletor, texto) {
+  document.querySelectorAll(seletor).forEach(function (item) {
+    item.addEventListener('mouseenter', function () {
+      bolinha.textContent = texto;
+      bolinha.classList.add('ativa');
+    });
+    item.addEventListener('mouseleave', function () {
+      bolinha.classList.remove('ativa');
+    });
+  });
+}
+
+// 6c. Capa: as camadas (arco, foto pequena, selo) se mexem de leve com o mouse
+const abertura = document.querySelector('.abertura');
+
+if (temMouse && !reduzirMovimento) {
+  ligarBolinha('.galeria-item', 'Ver');
+  ligarBolinha('.video-cartao', 'Play');
+
+  abertura.addEventListener('mousemove', function (evento) {
+    // Posição do mouse de -1 (esquerda/topo) a 1 (direita/baixo)
+    const mx = (evento.clientX / window.innerWidth) * 2 - 1;
+    const my = (evento.clientY / window.innerHeight) * 2 - 1;
+    abertura.style.setProperty('--mx', mx.toFixed(3));
+    abertura.style.setProperty('--my', my.toFixed(3));
+  });
+
+  // 6d. Botões-ímã: o botão vem um pouquinho na direção do mouse
+  document.querySelectorAll('.btn-foto').forEach(function (botao) {
+    botao.addEventListener('mousemove', function (evento) {
+      const caixa = botao.getBoundingClientRect();
+      const dx = evento.clientX - (caixa.left + caixa.width / 2);
+      const dy = evento.clientY - (caixa.top + caixa.height / 2);
+      botao.style.translate = (dx * 0.25) + 'px ' + (dy * 0.4) + 'px';
+    });
+    botao.addEventListener('mouseleave', function () {
+      botao.style.translate = '';   // volta para o lugar (o CSS faz a volta suave)
+    });
+  });
+
+  // O "motor": a cada quadro, a foto flutuante e a bolinha andam um pedaço até o mouse
+  function seguirMouse() {
+    // Foto flutuante: mais "preguiçosa" (0.12) e inclina conforme a distância que falta
+    const antes = posFoto.x;
+    posFoto.x = lerp(posFoto.x, mouse.x, 0.12);
+    posFoto.y = lerp(posFoto.y, mouse.y, 0.12);
+    const giro = travar((posFoto.x - antes) * 0.6, -12, 12);
+    // Tiramos metade do tamanho da foto (240 x 320) para o centro dela ficar no mouse
+    flutuante.style.translate = (posFoto.x - 120) + 'px ' + (posFoto.y - 160) + 'px';
+    flutuante.style.rotate = giro + 'deg';
+
+    // Bolinha: mais rápida (0.2), quase grudada no mouse
+    posBolinha.x = lerp(posBolinha.x, mouse.x, 0.2);
+    posBolinha.y = lerp(posBolinha.y, mouse.y, 0.2);
+    bolinha.style.translate = posBolinha.x + 'px ' + posBolinha.y + 'px';
+
+    requestAnimationFrame(seguirMouse);
+  }
+  requestAnimationFrame(seguirMouse);
+}
 
 
 /* ---------- 7. LIGHTBOX ----------
@@ -225,6 +389,8 @@ itens.forEach(function (item, numero) {
     evento.preventDefault();   // não abre o link: abre o lightbox no lugar
     mostrarFoto(numero);
     lightbox.showModal();      // showModal: abre o <dialog> e prende o foco do teclado dentro dele
+    bolinha.classList.remove('ativa');
+    pausarRolagem();
   });
 });
 
@@ -243,6 +409,9 @@ lightbox.addEventListener('click', function (evento) {
   if (evento.target === lightbox) lightbox.close();
 });
 
+// Fechou (pelo X, pelo fundo ou pela tecla Esc): a página volta a rolar
+lightbox.addEventListener('close', voltarRolagem);
+
 // Teclado: setas passam as fotos. (A tecla Esc o <dialog> já fecha sozinho)
 document.addEventListener('keydown', function (evento) {
   if (lightbox.open) {
@@ -253,7 +422,19 @@ document.addEventListener('keydown', function (evento) {
   }
 });
 
-/* ---------- 8. JANELA DOS VÍDEOS ----------
+// Celular: arrastar o dedo para o lado troca a foto
+let inicioToque = 0;
+lightbox.addEventListener('touchstart', function (evento) {
+  inicioToque = evento.touches[0].clientX;
+}, { passive: true });
+lightbox.addEventListener('touchend', function (evento) {
+  const arrasto = evento.changedTouches[0].clientX - inicioToque;
+  if (arrasto > 50) mostrarFoto(atual - 1);   // arrastou para a direita: foto anterior
+  if (arrasto < -50) mostrarFoto(atual + 1);  // arrastou para a esquerda: próxima
+});
+
+
+/* ---------- 8a. JANELA DOS VÍDEOS ----------
    Ao tocar num dos "celulares", o vídeo do Instagram abre numa janela por cima da página.
    Sem JavaScript, o link simplesmente abre o vídeo no Instagram. */
 const janelaVideo = document.querySelector('.video-janela');
@@ -266,6 +447,8 @@ document.querySelectorAll('.video-cartao').forEach(function (cartao) {
     caixaVideo.innerHTML = '<iframe src="' + cartao.dataset.video + '" title="' +
       cartao.querySelector('.video-titulo').textContent + ', vídeo no Instagram" allowfullscreen></iframe>';
     janelaVideo.showModal();
+    bolinha.classList.remove('ativa');
+    pausarRolagem();
   });
 });
 
@@ -281,23 +464,45 @@ janelaVideo.addEventListener('click', function (evento) {
 // Ao fechar (pelo X, pelo fundo ou pela tecla Esc), apaga o iframe: assim o vídeo para de tocar
 janelaVideo.addEventListener('close', function () {
   caixaVideo.innerHTML = '';
+  voltarRolagem();
 });
 
 
-// Celular: arrastar o dedo para o lado troca a foto
-let inicioToque = 0;
-lightbox.addEventListener('touchstart', function (evento) {
-  inicioToque = evento.touches[0].clientX;
-}, { passive: true });
-lightbox.addEventListener('touchend', function (evento) {
-  const arrasto = evento.changedTouches[0].clientX - inicioToque;
-  if (arrasto > 50) mostrarFoto(atual - 1);   // arrastou para a direita: foto anterior
-  if (arrasto < -50) mostrarFoto(atual + 1);  // arrastou para a esquerda: próxima
-});
+/* ---------- 8b. NÚMEROS QUE CONTAM ----------
+   "+20" e "6" começam do zero e sobem até o valor quando aparecem na tela */
+const vigiaNumeros = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (entrada) {
+    if (!entrada.isIntersecting) return;
+    vigiaNumeros.unobserve(entrada.target);
+
+    const elemento = entrada.target;
+    const original = elemento.dataset.original;       // ex.: "+20"
+    const final = parseInt(original.replace(/\D/g, ''), 10); // só os dígitos: 20
+    const prefixo = original.replace(/\d/g, '');      // o que sobra: "+"
+    const duracao = 1600;                             // 1,6 segundo
+    const inicio = performance.now();
+
+    function contar(agora) {
+      const t = travar((agora - inicio) / duracao, 0, 1);
+      const suave = 1 - Math.pow(1 - t, 3);           // começa rápido e freia no fim
+      elemento.textContent = prefixo + Math.round(final * suave);
+      if (t < 1) requestAnimationFrame(contar);
+    }
+    requestAnimationFrame(contar);
+  });
+}, { threshold: 0.6 });
+
+if (!reduzirMovimento) {
+  document.querySelectorAll('.numeros dt').forEach(function (numero) {
+    numero.dataset.original = numero.textContent;                // guarda o "+20" verdadeiro
+    numero.textContent = numero.textContent.replace(/\d+/, '0'); // e começa mostrando "+0"
+    vigiaNumeros.observe(numero);
+  });
+}
 
 
-/* ---------- SELO "MODELO POR NYCOLLE WEB" SOME NO FIM ----------
-   Quando o contato ou o rodapé aparecem na tela, o selo se esconde
+/* ---------- 8c. SELO "MODELO POR NYCOLLE WEB" SOME NO FIM ----------
+   Quando o rodapé aparece na tela, o selo se esconde
    para não ficar por cima dos links e do botão final */
 const vigiaFim = new IntersectionObserver(function (entradas) {
   const algumVisivel = entradas.some(function (entrada) { return entrada.isIntersecting; });
