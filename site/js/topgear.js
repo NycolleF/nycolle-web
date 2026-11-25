@@ -1,6 +1,6 @@
 /* =========================================================
    TOPGEAR.JS
-   0. Rolagem suave (Lenis)
+   0. Links do menu (rolagem do próprio navegador)
    1. Menu: encolhe ao rolar + gaveta do celular
    2. Blocos que aparecem ao rolar + título palavra por palavra + paralaxe
    3. Números que contam
@@ -14,19 +14,9 @@
 const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
-/* ---------- 0. ROLAGEM SUAVE ---------- */
-let rolagem = null;
-
-if (!reduzirMovimento && typeof Lenis !== 'undefined') {
-  rolagem = new Lenis({ lerp: 0.09 });
-  function quadro(tempo) {
-    rolagem.raf(tempo);
-    requestAnimationFrame(quadro);
-  }
-  requestAnimationFrame(quadro);
-}
-
-// Links do menu (#servicos, #contato...): desliza até a seção, descontando a altura do menu
+/* ---------- 0. LINKS DO MENU ----------
+   Usamos a rolagem do próprio navegador (sem biblioteca): é a mais leve e nunca trava.
+   Os links (#servicos, #contato...) deslizam até a seção, descontando a altura do menu */
 document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   link.addEventListener('click', function (evento) {
     const alvo = document.querySelector(link.getAttribute('href'));
@@ -34,11 +24,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     evento.preventDefault();
     fecharMenu();
     const altura = menu.offsetHeight;
-    if (rolagem) {
-      rolagem.scrollTo(alvo, { offset: -altura + 1 });
-    } else {
-      window.scrollTo({ top: alvo.getBoundingClientRect().top + window.scrollY - altura + 1, behavior: reduzirMovimento ? 'auto' : 'smooth' });
-    }
+    window.scrollTo({ top: alvo.getBoundingClientRect().top + window.scrollY - altura + 1, behavior: reduzirMovimento ? 'auto' : 'smooth' });
     // Move o foco para a seção (importante para quem usa teclado ou leitor de tela)
     alvo.setAttribute('tabindex', '-1');
     alvo.focus({ preventScroll: true });
@@ -51,8 +37,14 @@ const menu = document.querySelector('.menu');
 const menuBotao = document.querySelector('.menu-botao');
 const menuLista = document.querySelector('.menu-lista');
 
+// Só troca a classe quando o estado muda (trocar à toa a cada pixel rolado pesa)
+let menuRolou = null;
 function aoRolar() {
-  menu.classList.toggle('rolou', window.scrollY > 40);
+  const rolou = window.scrollY > 40;
+  if (rolou !== menuRolou) {
+    menuRolou = rolou;
+    menu.classList.toggle('rolou', rolou);
+  }
 }
 window.addEventListener('scroll', aoRolar, { passive: true });
 aoRolar();
@@ -124,21 +116,41 @@ if (titulo && !reduzirMovimento) {
   Array.from(titulo.children).forEach(function (filho) { filho.setAttribute('aria-hidden', 'true'); });
 }
 
-// Paralaxe: a foto anda mais devagar que a página (só no computador)
-const fotosParalaxe = document.querySelectorAll('[data-paralaxe]');
+// Paralaxe: a foto anda mais devagar que a página (só no computador).
+// Para não pesar: só calcula quando a pessoa ROLA (não a cada quadro),
+// no máximo uma vez por quadro, e só para as fotos que estão na tela
 if (!reduzirMovimento && window.matchMedia('(min-width: 820px)').matches) {
+  const fotosNaTela = new Set();
+  let agendado = false;
+
+  const vigiaParalaxe = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (entrada) {
+      if (entrada.isIntersecting) fotosNaTela.add(entrada.target);
+      else fotosNaTela.delete(entrada.target);
+    });
+    pedirParalaxe();
+  });
+  document.querySelectorAll('[data-paralaxe]').forEach(function (foto) {
+    vigiaParalaxe.observe(foto.parentElement);
+  });
+
   function paralaxe() {
+    agendado = false;
     const alturaTela = window.innerHeight;
-    fotosParalaxe.forEach(function (foto) {
-      const caixa = foto.parentElement.getBoundingClientRect();
-      if (caixa.bottom < 0 || caixa.top > alturaTela) return;
+    fotosNaTela.forEach(function (moldura) {
+      const caixa = moldura.getBoundingClientRect();
       // -1 quando a foto está saindo por cima, +1 quando está entrando por baixo
       const posicao = (caixa.top + caixa.height / 2 - alturaTela / 2) / alturaTela;
-      foto.style.transform = 'scale(1.12) translateY(' + (posicao * -6).toFixed(2) + '%)';
+      moldura.querySelector('[data-paralaxe]').style.transform =
+        'scale(1.12) translate3d(0,' + (posicao * -6).toFixed(2) + '%,0)';
     });
+  }
+  function pedirParalaxe() {
+    if (agendado || fotosNaTela.size === 0) return;
+    agendado = true;
     requestAnimationFrame(paralaxe);
   }
-  requestAnimationFrame(paralaxe);
+  window.addEventListener('scroll', pedirParalaxe, { passive: true });
 }
 
 
@@ -344,7 +356,6 @@ document.querySelectorAll('.video-cartao').forEach(function (cartao) {
     caixaVideo.innerHTML = '<iframe src="' + cartao.dataset.video + '" title="' +
       cartao.querySelector('.video-titulo').textContent + ', vídeo no Instagram" allowfullscreen></iframe>';
     janelaVideo.showModal();
-    if (rolagem) rolagem.stop();
   });
 });
 
@@ -356,7 +367,6 @@ janelaVideo.addEventListener('click', function (evento) {
 });
 janelaVideo.addEventListener('close', function () {
   caixaVideo.innerHTML = '';   // apaga o iframe: o vídeo para de tocar
-  if (rolagem) rolagem.start();
 });
 
 

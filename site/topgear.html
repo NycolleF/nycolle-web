@@ -19,8 +19,6 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/topgear.css">
 
-  <!-- Lenis: rolagem com inércia (a mesma do modelo de fotografia). Se não carregar, a rolagem fica normal -->
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="js/topgear.js" defer></script>
 
   <!-- Dados estruturados: explicam ao Google que isto é uma oficina, onde fica e quando abre.
@@ -76,7 +74,7 @@
     </button>
 
     <nav aria-label="Menu principal">
-      <ul id="menu-lista" class="menu-lista" data-lenis-prevent>
+      <ul id="menu-lista" class="menu-lista">
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
         <li><a href="#espaco">Espaço Top</a></li>
@@ -397,7 +395,7 @@
       </div>
 
       <!-- tabindex="0": quem usa teclado consegue focar a galeria e andar com as setas do teclado -->
-      <ul class="trilho" id="marcas" tabindex="0" aria-label="Marcas de óleo disponíveis" data-lenis-prevent>
+      <ul class="trilho" id="marcas" tabindex="0" aria-label="Marcas de óleo disponíveis">
         <li><img src="img/topgear/oleo-motul-8100.jpg" alt="Frascos de óleo Motul 8100 Eco-lite 0W-20 sobre um tambor vermelho" width="900" height="900" loading="lazy"><span>Motul</span></li>
         <li><img src="img/topgear/oleo-mobil.jpg" alt="Cinco frascos de óleo Mobil Super, de 5W-30 a 20W-50" width="1000" height="667" loading="lazy"><span>Mobil Super</span></li>
         <li><img src="img/topgear/oleo-petronas.jpg" alt="Frascos de óleo Petronas Selenia e Syntium" width="1000" height="667" loading="lazy"><span>Petronas</span></li>
@@ -432,7 +430,7 @@
         <p data-revelar style="--atraso: 0.2s">Bastidores, dicas e serviços direto do nosso Instagram.</p>
       </div>
 
-      <div class="videos-trilho" data-lenis-prevent>
+      <div class="videos-trilho">
         <a class="video-cartao" href="https://www.instagram.com/reel/DZI6nXGRi1P/"
            data-video="https://www.instagram.com/reel/DZI6nXGRi1P/embed" target="_blank" rel="noopener" data-revelar>
           <span class="video-celular"><img src="img/topgear/fachada-900.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
@@ -474,7 +472,7 @@
       </div>
 
       <div class="carrossel" data-carrossel>
-        <ul class="carrossel-trilho" tabindex="0" aria-label="Avaliações de clientes" data-lenis-prevent>
+        <ul class="carrossel-trilho" tabindex="0" aria-label="Avaliações de clientes">
           <li class="depoimento">
             <p class="estrelas" aria-label="5 estrelas">★★★★★</p>
             <blockquote>Fiquei impressionado com a qualidade do atendimento. Fiz a troca do óleo da caixa de transmissão do meu Civic 2014. E fui acompanhando as etapas via link que eles te passam. Então colocaram alguns vídeos do que estavam executando e isso é sensacional. No final ainda peguei o carro lavado. Parabéns pelo profissionalismo, ganharam mais um cliente. Sucesso!!!</blockquote>
@@ -628,7 +626,7 @@
   </a>
 
   <!-- Janela onde abre o vídeo do Instagram -->
-  <dialog class="video-janela" aria-label="Vídeo do Instagram" data-lenis-prevent>
+  <dialog class="video-janela" aria-label="Vídeo do Instagram">
     <div class="video-janela-caixa"></div>
     <button class="video-janela-fechar" type="button" aria-label="Fechar vídeo" autofocus>×</button>
   </dialog>
