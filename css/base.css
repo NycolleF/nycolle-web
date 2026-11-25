@@ -1,0 +1,157 @@
+/* =========================================================
+   BASE.CSS
+   Regras que valem para TODAS as páginas do site
+   (a página inicial e os modelos: fotografia, salão etc.).
+   O que é só da página inicial fica no index.css.
+   ========================================================= */
+
+
+/* ---------- 1. VARIÁVEIS (as "cores e medidas da marca") ----------
+   :root é a raiz da página. O que for criado aqui pode ser usado
+   em qualquer lugar com var(--nome).
+   Vantagem: para mudar a cor do site inteiro, você troca UMA linha. */
+:root {
+  /* Cores */
+  --cor-fundo: #fbf7f2;        /* creme bem clarinho, mais acolhedor que o branco puro */
+  --cor-superficie: #ffffff;   /* fundo dos cartões */
+  --cor-texto: #23202b;        /* quase preto: cansa menos a vista que o preto puro */
+  --cor-texto-suave: #5d5866;  /* para textos de apoio */
+  --cor-marca: #b4235a;        /* framboesa: a cor da Nycolle Web */
+  --cor-marca-clara: #fbe4ec;  /* versão clarinha da marca, para fundos */
+  --cor-whats: #0f7a3f;        /* verde do WhatsApp, escurecido para o texto branco ficar legível */
+  --cor-whats-escura: #0b5e30; /* quando passa o mouse no botão */
+  --cor-borda: #e8e1d9;
+
+  /* Fonte: usamos as fontes que JÁ vêm no aparelho da pessoa.
+     O site abre mais rápido porque não precisa baixar nada. */
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Medidas */
+  --largura-max: 1100px;  /* o conteúdo não passa disso em telas grandes */
+  --raio: 14px;           /* arredondamento dos cantos */
+  --sombra: 0 6px 24px rgba(35, 32, 43, 0.08);
+}
+
+
+/* ---------- 2. AJUSTES GERAIS ("reset") ----------
+   Cada navegador vem com margens e tamanhos diferentes.
+   Aqui deixamos todos iguais para o site ficar igual em qualquer lugar. */
+
+/* box-sizing: border-box faz a largura incluir o espaço interno e a borda.
+   Sem isso, uma caixa de 300px com 20px de espaço vira 340px e "estoura". */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Ao clicar em "Pacotes" no menu, a página desliza em vez de pular */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  font-size: 1.0625rem;   /* 17px: um pouco maior que o padrão, melhor no celular */
+  line-height: 1.6;       /* espaço entre as linhas: deixa o texto respirar */
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+/* Imagens e vídeos nunca ficam maiores que a caixa onde estão */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* ---------- 3. TEXTOS ---------- */
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 0.6em;
+}
+
+/* clamp(mínimo, ideal, máximo): o título cresce com a tela,
+   mas nunca fica menor que o mínimo nem maior que o máximo */
+h1 { font-size: clamp(2rem, 5vw + 1rem, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3vw + 1rem, 2.4rem); }
+h3 { font-size: 1.2rem; }
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--cor-marca);
+}
+
+/* Contorno que aparece quando a pessoa navega pelo teclado (tecla Tab).
+   Nunca remova sem colocar outro no lugar: quem não usa mouse depende dele. */
+:focus-visible {
+  outline: 3px solid var(--cor-marca);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
+/* ---------- 4. BOTÕES ----------
+   Todo link com class="btn" vira botão.
+   btn-principal = verde do WhatsApp (a ação mais importante)
+   btn-secundario = só contorno (ação de apoio) */
+.btn {
+  display: inline-block;
+  padding: 0.85em 1.5em;
+  border-radius: 999px;     /* número bem grande = cantos totalmente redondos */
+  font-weight: 700;
+  text-decoration: none;    /* tira o sublinhado do link */
+  text-align: center;
+  border: 2px solid transparent;
+  transition: background-color 0.2s, transform 0.2s; /* a mudança acontece suave */
+}
+
+.btn:hover {
+  transform: translateY(-2px); /* sobe 2px ao passar o mouse */
+}
+
+.btn-principal {
+  background: var(--cor-whats);
+  color: #fff;
+}
+
+.btn-principal:hover {
+  background: var(--cor-whats-escura);
+}
+
+.btn-secundario {
+  background: transparent;
+  color: var(--cor-texto);
+  border-color: var(--cor-texto);
+}
+
+.btn-secundario:hover {
+  background: var(--cor-texto);
+  color: var(--cor-fundo);
+}
+
+
+/* ---------- 5. MENOS MOVIMENTO ----------
+   Algumas pessoas sentem enjoo ou tontura com animações e
+   ativam "reduzir movimento" no celular. Aqui respeitamos isso. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Este é um MODELO de demonstração. O salão "Studio Aurora" é inventado:
+       quando um cliente fechar, você troca nome, textos, fotos e o número do WhatsApp -->
+  <title>Studio Aurora | Modelo de site para salão de beleza</title>
+  <meta name="description" content="Modelo de site para salão de beleza: serviços com preços, antes e depois, equipe e agendamento pelo WhatsApp.">
+
+  <!-- Mesmo base.css da página inicial (botões, fontes, reset)...
+       ...e o salao.css, que troca as cores e arruma as seções deste modelo -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/salao.css">
+</head>
+<body>
+
+  <!-- ===================== AVISO DE MODELO ===================== -->
+  <!-- Faixa fininha no topo: deixa claro que é demonstração e leva de volta ao seu site -->
+  <div class="aviso-modelo">
+    <p>Este é um <strong>modelo de demonstração</strong> da Nycolle Web.
+      <a href="index.html#modelos">Ver outros modelos</a></p>
+  </div>
+
+  <!-- ===================== MENU ===================== -->
+  <header class="menu">
+    <a href="#topo" class="marca">Studio Aurora</a>
+    <nav aria-label="Menu do salão">
+      <ul>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#antes-depois">Antes e depois</a></li>
+        <li><a href="#equipe">Equipe</a></li>
+        <li><a href="#onde">Onde estamos</a></li>
+      </ul>
+    </nav>
+    <!-- Num site de verdade, aqui vai o WhatsApp DO SALÃO.
+         No modelo, o link vai para o SEU WhatsApp, com a mensagem dizendo qual modelo a pessoa viu -->
+    <a class="btn btn-principal"
+       href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20sal%C3%A3o%20e%20quero%20um%20site%20assim."
+       target="_blank" rel="noopener">Agendar</a>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="topo">
+      <div class="hero-texto">
+        <p class="sobretitulo">Salão de beleza · Rio Grande</p>
+        <h1>Você merece sair daqui se sentindo <em>linda</em>.</h1>
+        <p>Cabelo, unhas e sobrancelhas com hora marcada. Escolha o serviço e agende em dois toques pelo WhatsApp.</p>
+        <div class="hero-botoes">
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20sal%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+          <a class="btn btn-secundario" href="#servicos">Ver serviços e preços</a>
+        </div>
+      </div>
+      <!-- Espaço da foto principal. Aqui entra uma foto real do salão:
+           <img src="img/salao-capa.jpg" alt="Interior do salão com cadeiras e espelhos"> -->
+      <div class="foto foto-capa" role="img" aria-label="Foto do salão"></div>
+    </section>
+
+    <!-- ===================== SERVIÇOS ===================== -->
+    <section id="servicos">
+      <h2>Serviços e preços</h2>
+      <p>Valores de referência. O preço final pode variar conforme o comprimento do cabelo.</p>
+
+      <div class="servicos">
+        <!-- Cada grupo de serviços é um cartão. Dentro, uma lista de "nome ... preço".
+             Usamos <dl> (lista de definições): <dt> é o nome, <dd> é o preço -->
+        <article class="cartao">
+          <h3>Cabelo</h3>
+          <dl class="tabela-precos">
+            <div><dt>Corte feminino</dt><dd>R$ 60</dd></div>
+            <div><dt>Escova</dt><dd>R$ 45</dd></div>
+            <div><dt>Coloração</dt><dd>a partir de R$ 120</dd></div>
+            <div><dt>Hidratação</dt><dd>R$ 70</dd></div>
+          </dl>
+        </article>
+
+        <article class="cartao">
+          <h3>Unhas</h3>
+          <dl class="tabela-precos">
+            <div><dt>Mão</dt><dd>R$ 30</dd></div>
+            <div><dt>Pé</dt><dd>R$ 35</dd></div>
+            <div><dt>Mão e pé</dt><dd>R$ 60</dd></div>
+            <div><dt>Alongamento em gel</dt><dd>R$ 150</dd></div>
+          </dl>
+        </article>
+
+        <article class="cartao">
+          <h3>Sobrancelhas</h3>
+          <dl class="tabela-precos">
+            <div><dt>Design</dt><dd>R$ 35</dd></div>
+            <div><dt>Design com henna</dt><dd>R$ 50</dd></div>
+            <div><dt>Laminação</dt><dd>R$ 110</dd></div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== ANTES E DEPOIS ===================== -->
+    <section id="antes-depois">
+      <h2>Antes e depois</h2>
+      <p>Alguns resultados de clientes que autorizaram a foto.</p>
+
+      <div class="galeria">
+        <!-- <figure> = imagem com legenda. <figcaption> = a legenda.
+             Os quadrados coloridos são o lugar das fotos reais -->
+        <figure>
+          <div class="par">
+            <div class="foto foto-antes" role="img" aria-label="Antes"><span>Antes</span></div>
+            <div class="foto foto-depois" role="img" aria-label="Depois"><span>Depois</span></div>
+          </div>
+          <figcaption>Coloração e corte</figcaption>
+        </figure>
+        <figure>
+          <div class="par">
+            <div class="foto foto-antes" role="img" aria-label="Antes"><span>Antes</span></div>
+            <div class="foto foto-depois" role="img" aria-label="Depois"><span>Depois</span></div>
+          </div>
+          <figcaption>Alongamento em gel</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== EQUIPE ===================== -->
+    <section id="equipe">
+      <h2>Quem vai te atender</h2>
+      <div class="equipe">
+        <article>
+          <div class="foto foto-pessoa" role="img" aria-label="Foto da Carla"></div>
+          <h3>Carla</h3>
+          <p>Cabeleireira e colorista</p>
+        </article>
+        <article>
+          <div class="foto foto-pessoa" role="img" aria-label="Foto da Júlia"></div>
+          <h3>Júlia</h3>
+          <p>Manicure e nail designer</p>
+        </article>
+        <article>
+          <div class="foto foto-pessoa" role="img" aria-label="Foto da Bia"></div>
+          <h3>Bia</h3>
+          <p>Designer de sobrancelhas</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== AGENDAMENTO ===================== -->
+    <section id="agendar">
+      <h2>Bora marcar o seu horário?</h2>
+      <p>Mande uma mensagem dizendo o serviço e o dia que prefere. A gente responde rapidinho.</p>
+      <a class="btn btn-principal"
+         href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20sal%C3%A3o%20e%20quero%20um%20site%20assim."
+         target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+    </section>
+
+    <!-- ===================== ONDE ESTAMOS ===================== -->
+    <section id="onde">
+      <h2>Onde estamos</h2>
+      <div class="onde">
+        <div>
+          <h3>Endereço</h3>
+          <!-- <address> = informação de contato/endereço -->
+          <address>Rua Exemplo, 123 · Centro<br>Rio Grande, RS</address>
+        </div>
+        <div>
+          <h3>Horário</h3>
+          <p>Terça a sexta: 9h às 19h<br>Sábado: 8h às 17h<br>Domingo e segunda: fechado</p>
+        </div>
+      </div>
+      <!-- Num site real, aqui entra o mapa do Google (Compartilhar > Incorporar um mapa) -->
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer>
+    <p>Studio Aurora · modelo criado por <a href="index.html">Nycolle Web</a></p>
+  </footer>
+
+</body>
+</html>
