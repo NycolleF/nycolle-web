@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/fotografia.css">
 
+  <!-- Lenis: biblioteca pequena que deixa a rolagem com "inércia" (desliza e freia devagar).
+       Ela vem antes do nosso script porque o nosso usa ela.
+       Se a internet não carregar a Lenis, o site continua funcionando com a rolagem normal -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+
   <!-- "defer" = o JavaScript só roda depois que o HTML todo foi lido -->
   <script src="js/fotografia.js" defer></script>
 </head>
@@ -25,6 +30,9 @@
 
   <!-- ===================== MENU ===================== -->
   <header class="topo">
+    <!-- Barrinha fina que vai enchendo conforme a pessoa lê a página -->
+    <span class="progresso" aria-hidden="true"></span>
+
     <a href="#inicio" class="logo">
       <!-- O logo original é branco. O CSS escurece ele com um filtro -->
       <img src="img/fotografia/logo-recortado.png" alt="Bárbara Matheus Fotografia" width="494" height="90">
@@ -37,7 +45,7 @@
     </button>
 
     <nav aria-label="Menu principal">
-      <ul id="menu-lista" class="menu-lista">
+      <ul id="menu-lista" class="menu-lista" data-lenis-prevent>
         <li><a href="#bastidores">Vídeos</a></li>
         <li><a href="#portfolio">Portfólio</a></li>
         <li><a href="#ensaios">Ensaios</a></li>
@@ -258,7 +266,7 @@
           <div><dt>6</dt><dd>anos de profissão</dd></div>
         </dl>
       </div>
-      <div class="sobre-foto" data-revelar style="--atraso: 0.15s">
+      <div class="sobre-foto foto-revelar" data-revelar style="--atraso: 0.15s">
         <img src="img/fotografia/sobre-03-800.jpg"
              srcset="img/fotografia/sobre-03-800.jpg 800w, img/fotografia/sobre-03-1600.jpg 1600w"
              sizes="(min-width: 900px) 38vw, 90vw"
@@ -378,7 +386,7 @@
   <!-- ===================== LIGHTBOX ===================== -->
   <!-- <dialog> = uma janela que abre por cima da página. Começa fechada.
        O JavaScript coloca a foto clicada aqui dentro e abre -->
-  <dialog class="lightbox" aria-label="Foto ampliada">
+  <dialog class="lightbox" aria-label="Foto ampliada" data-lenis-prevent>
     <img class="lightbox-foto" src="" alt="">
     <button class="lightbox-fechar" type="button" aria-label="Fechar">×</button>
     <button class="lightbox-seta lightbox-anterior" type="button" aria-label="Foto anterior">‹</button>
@@ -389,7 +397,7 @@
   <!-- ===================== JANELA DO VÍDEO ===================== -->
   <!-- Começa vazia. O JavaScript coloca o vídeo do Instagram aqui dentro ao tocar no celular,
        e tira quando fecha (assim o vídeo para de tocar) -->
-  <dialog class="video-janela" aria-label="Vídeo do Instagram">
+  <dialog class="video-janela" aria-label="Vídeo do Instagram" data-lenis-prevent>
     <div class="video-janela-caixa"></div>
     <!-- autofocus: ao abrir, o foco do teclado vai direto para o "fechar" -->
     <button class="video-janela-fechar" type="button" aria-label="Fechar vídeo" autofocus>×</button>

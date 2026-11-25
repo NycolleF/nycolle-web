@@ -114,7 +114,8 @@ main > section {
   text-decoration: none;
   overflow: hidden;           /* esconde o fundo enquanto ele está "lá embaixo" */
   isolation: isolate;         /* garante que o fundo fique ATRÁS do texto */
-  transition: color 0.5s var(--suave);
+  /* translate: o efeito "ímã" (o botão vem um pouquinho na direção do mouse) */
+  transition: color 0.5s var(--suave), translate 0.6s var(--suave);
 }
 
 .btn-foto::before {
@@ -177,7 +178,51 @@ main > section {
   align-items: center;
   justify-content: space-between;
   padding-block: 26px;
-  transition: background-color 0.5s, padding 0.5s var(--suave), box-shadow 0.5s;
+  transition: padding 0.5s var(--suave), translate 0.7s var(--suave);
+}
+
+/* O fundo de "vidro fosco" fica num ::before, atrás do menu.
+   Por que não direto no .topo? Porque o backdrop-filter no .topo
+   prenderia o menu de tela cheia do celular dentro dele */
+.topo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(250, 247, 243, 0.72);
+  backdrop-filter: blur(16px) saturate(1.4);   /* desfoca o que passa por trás */
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: 0 1px 0 var(--cor-borda);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.rolou .topo::before {
+  opacity: 1;
+}
+
+/* Rolando para BAIXO, o menu sai de cena para a foto aparecer inteira.
+   Rolando para CIMA, ele volta. (O JavaScript coloca a classe "menu-some") */
+.menu-some:not(.menu-aberto) .topo {
+  translate: 0 -100%;
+}
+
+/* Barrinha de progresso: o JavaScript diz quanto já foi lido (de 0 a 1) em --progresso */
+.progresso {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--cor-marca);
+  transform: scaleX(var(--progresso, 0));
+  transform-origin: left;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.rolou .progresso {
+  opacity: 1;
 }
 
 .logo img {
@@ -222,11 +267,9 @@ main > section {
   transform-origin: left;
 }
 
-/* Depois de rolar (o JavaScript coloca "rolou" no <body>): ganha fundo e fica mais baixo */
+/* Depois de rolar (o JavaScript coloca "rolou" no <body>): fica mais baixinho */
 .rolou .topo {
   padding-block: 14px;
-  background: rgba(250, 247, 243, 0.96);
-  box-shadow: 0 1px 0 var(--cor-borda);
 }
 
 /* --- Botão de menu (celular e tablet) --- */
@@ -974,8 +1017,8 @@ main > section {
     pointer-events: none;     /* não atrapalha o mouse */
     opacity: 0;
     scale: 0.85;
-    /* translate com transição = a foto segue o mouse "atrasadinha", com suavidade */
-    transition: opacity 0.4s, scale 0.5s var(--suave), translate 0.6s var(--suave);
+    /* O movimento atrás do mouse (e o balancinho) quem faz é o JavaScript, quadro a quadro */
+    transition: opacity 0.4s, scale 0.5s var(--suave);
   }
 
   .ensaios-flutuante.ativa {
@@ -1118,12 +1161,17 @@ main > section {
   max-width: 54ch;
 }
 
-/* A foto também em arco, conversando com a abertura */
+/* A foto também em arco, conversando com a abertura.
+   O arco fica na caixa (e não na foto) para o zoom de entrada não "vazar" */
+.sobre-foto {
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
 .sobre-foto img {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 999px 999px 0 0;
 }
 
 /* Números em destaque: +20 e 6 */
@@ -1618,5 +1666,141 @@ main > section {
 
   .selo-longo {
     display: none;
+  }
+}
+
+
+/* ---------- 20. ROLAGEM SUAVE (Lenis) ----------
+   A Lenis coloca a classe "lenis" no <html>. Estas são as regras que ela pede */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+/* A Lenis já desliza sozinha: o "smooth" do navegador brigaria com ela */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+
+/* ---------- 21. TÍTULOS QUE SOBEM PALAVRA POR PALAVRA ----------
+   O JavaScript coloca cada palavra do h2 numa "janelinha" (.mascara).
+   A palavra começa escondida embaixo e sobe, uma depois da outra (--i = número da palavra) */
+.js .titulo-dividido[data-revelar] {
+  opacity: 1;
+  transform: none;
+}
+
+.mascara {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;     /* espaço para as letras não serem cortadas */
+}
+
+.mascara > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.2s var(--suave);
+  transition-delay: calc(var(--atraso, 0s) + var(--i) * 0.07s);
+}
+
+.titulo-dividido.visivel .mascara > span {
+  transform: none;
+}
+
+
+/* ---------- 22. FOTO QUE SE REVELA DE BAIXO PARA CIMA ----------
+   clip-path recorta a foto. Começa recortada inteira (100% embaixo)
+   e vai abrindo até mostrar tudo, enquanto a foto "se afasta" (zoom saindo) */
+.js .foto-revelar[data-revelar] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.5s var(--suave) var(--atraso, 0s);
+}
+
+.js .foto-revelar[data-revelar].visivel {
+  clip-path: inset(0 0 0 0);
+}
+
+.js .foto-revelar img {
+  scale: 1.25;
+  transition: scale 2s var(--suave) var(--atraso, 0s);
+}
+
+.js .foto-revelar.visivel img {
+  scale: 1;
+}
+
+
+/* ---------- 23. CAPA QUE REAGE AO MOUSE ----------
+   O JavaScript diz onde o mouse está (--mx e --my, de -1 a 1).
+   Cada camada anda uma distância diferente: dá sensação de profundidade */
+.arco,
+.abertura-detalhe,
+.selo-girando {
+  transition: translate 1.2s var(--suave);
+}
+
+.arco             { translate: calc(var(--mx, 0) * -10px) calc(var(--my, 0) * -10px); }
+.abertura-detalhe { translate: calc(var(--mx, 0) * 22px)  calc(var(--my, 0) * 16px); }
+.selo-girando     { translate: calc(var(--mx, 0) * 30px)  calc(var(--my, 0) * 24px); }
+
+
+/* ---------- 24. PORTFÓLIO QUE "ENTORTA" COM A VELOCIDADE ----------
+   Quanto mais rápido a pessoa rola, mais as fotos inclinam (--inclinar).
+   Quando para, elas voltam retinhas devagar */
+.filme-ativo .galeria-item img {
+  transform: skewX(var(--inclinar, 0deg));
+  transition: transform 0.9s var(--suave), filter 0.6s;
+}
+
+
+/* ---------- 25. CURSOR "VER" ----------
+   No computador, ao passar o mouse numa foto do portfólio ou num vídeo,
+   o cursor vira uma bolinha com "Ver" ou "Play". O JavaScript cria e move a bolinha */
+.cursor-bolinha {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  margin: -43px 0 0 -43px;    /* metade do tamanho: o centro fica na ponta do mouse */
+  border-radius: 50%;
+  background: rgba(250, 247, 243, 0.9);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--cor-titulo);
+  font-family: var(--fonte-titulo);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  pointer-events: none;       /* não atrapalha o clique */
+  scale: 0;
+  transition: scale 0.5s var(--suave);
+}
+
+.cursor-bolinha.ativa {
+  scale: 1;
+}
+
+/* Onde a bolinha aparece, a setinha normal do mouse some */
+@media (hover: hover) and (min-width: 900px) {
+  .js .galeria-item,
+  .js .video-cartao {
+    cursor: none;
   }
 }
