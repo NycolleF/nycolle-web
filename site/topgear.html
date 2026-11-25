@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!-- class="sem-js": se o JavaScript não carregar, tudo aparece normalmente, sem animação.
+     O scriptzinho logo abaixo troca para "js" e liga as animações -->
+<html lang="pt-BR" class="sem-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.replace('sem-js', 'js');</script>
+
+  <!-- Título e descrição pensados para busca local: "centro automotivo em Rio Grande" -->
+  <title>TopGear Centro Automotivo | Mecânica, revisão e troca de óleo em Rio Grande, RS</title>
+  <meta name="description" content="Centro automotivo em Rio Grande - RS desde 2019. Revisão completa, troca de óleo, câmbio automático e freios, com fotos e vídeos em tempo real. Agende pelo WhatsApp.">
+
+  <!-- Fontes do Google: Fraunces (títulos, serifa elegante) e DM Sans (textos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/topgear.css">
+
+  <!-- Lenis: rolagem com inércia (a mesma do modelo de fotografia). Se não carregar, a rolagem fica normal -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="js/topgear.js" defer></script>
+
+  <!-- Dados estruturados: explicam ao Google que isto é uma oficina, onde fica e quando abre.
+       É isso que ajuda a aparecer no mapa e na busca "oficina em Rio Grande" -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoRepair",
+    "name": "TopGear Centro Automotivo",
+    "image": "img/topgear/fachada-1600.jpg",
+    "telephone": "+55 53 99134-4946",
+    "foundingDate": "2019",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Buarque de Macedo, 575 - Cidade Nova",
+      "addressLocality": "Rio Grande",
+      "addressRegion": "RS",
+      "postalCode": "96211-653",
+      "addressCountry": "BR"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:00", "closes": "18:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "12:00" }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "376" },
+    "sameAs": ["https://www.instagram.com/topgearcentroautomotivoltda/"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Pulo direto para o conteúdo: quem navega pelo teclado não precisa passar pelo menu todo -->
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ===================== FAIXA DE INFORMAÇÕES ===================== -->
+  <div class="info-topo">
+    <p>Av. Buarque de Macedo, 575 · <strong>Rio Grande</strong></p>
+    <p>Seg a Sex <strong>8h às 18h30</strong> · Sáb <strong>8h às 12h</strong></p>
+    <p><a href="tel:+5553991344946"><strong>(53) 99134-4946</strong></a></p>
+  </div>
+
+  <!-- ===================== MENU ===================== -->
+  <!-- O menu fica preso no topo; ao rolar, ele encolhe e ganha fundo de vidro fosco (o JS põe a classe "rolou") -->
+  <header class="menu">
+    <a href="#inicio" class="menu-logo">
+      <img src="img/topgear/logo.webp" alt="TopGear Centro Automotivo" width="56" height="56">
+      <span>TopGear</span>
+    </a>
+
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-lista">
+      <span class="menu-botao-linhas" aria-hidden="true"></span>
+      <span class="menu-botao-texto">Menu</span>
+    </button>
+
+    <nav aria-label="Menu principal">
+      <ul id="menu-lista" class="menu-lista" data-lenis-prevent>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#espaco">Espaço Top</a></li>
+        <li><a href="#lubrificantes">Lubrificantes</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#avaliacoes">Avaliações</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <!-- Regra de ouro: todo botão de agendar abre o WhatsApp da TopGear com a mensagem já escrita -->
+    <a class="btn btn-principal menu-cta"
+       href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio."
+       target="_blank" rel="noopener">Agendar</a>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ===================== 1. HERO ===================== -->
+    <section class="hero" id="inicio">
+      <!-- A foto da fachada fica atrás de tudo e dá um zoom bem lento (CSS) -->
+      <img class="hero-fundo"
+           src="img/topgear/fachada-1600.jpg"
+           srcset="img/topgear/fachada-900.jpg 900w, img/topgear/fachada-1600.jpg 1600w"
+           sizes="100vw" alt="" width="1600" height="1047" fetchpriority="high">
+
+      <div class="hero-texto">
+        <!-- Selo "Aberto agora / Fechado": o JS calcula pelo horário de Brasília -->
+        <p class="status" data-status aria-live="polite">Seg a Sex 8h às 18h30 · Sáb 8h às 12h</p>
+
+        <!-- data-palavras: o JS separa o título em palavras, que entram uma de cada vez -->
+        <h1 data-palavras>Teu carro em boas mãos. <em>E tu também.</em></h1>
+        <p class="hero-sub" data-revelar style="--atraso: 0.6s">Da troca de óleo à revisão completa, a gente cuida do teu veículo com transparência e técnica. Tu acompanha tudo por fotos e vídeos, em tempo real.</p>
+
+        <div class="hero-botoes" data-revelar style="--atraso: 0.75s">
+          <a class="btn btn-principal btn-brilho"
+             href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio."
+             target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+          <a class="btn btn-claro" href="#servicos">Ver serviços</a>
+        </div>
+      </div>
+
+      <!-- O mascote flutua devagar. aria-hidden: é enfeite, o leitor de tela não precisa dele -->
+      <div class="hero-mascote" aria-hidden="true">
+        <img src="img/topgear/mascote-640.png" alt="" width="640" height="960">
+        <span class="balao">Bah, chega mais!</span>
+      </div>
+    </section>
+
+    <!-- ===================== 2. NÚMEROS ===================== -->
+    <!-- data-contar: o número sobe do zero até o valor quando aparece na tela -->
+    <section class="numeros" aria-label="A TopGear em números">
+      <div class="numero" data-revelar>
+        <strong data-contar="4,9">4,9</strong>
+        <span>estrelas no Google</span>
+      </div>
+      <div class="numero" data-revelar style="--atraso: 0.1s">
+        <strong data-contar="376">376</strong>
+        <span>avaliações de clientes</span>
+      </div>
+      <div class="numero" data-revelar style="--atraso: 0.2s">
+        <strong data-contar="6">6</strong>
+        <span>elevadores, menos espera</span>
+      </div>
+      <div class="numero" data-revelar style="--atraso: 0.3s">
+        <strong data-contar="2019">2019</strong>
+        <span>empresa familiar de Rio Grande</span>
+      </div>
+    </section>
+
+    <!-- ===================== 3. LETREIRO ===================== -->
+    <!-- A lista aparece DUAS vezes: a segunda cópia preenche o buraco e a faixa parece não ter fim.
+         Ao passar o mouse, ela pausa (CSS) -->
+    <section class="letreiro" aria-label="Nossas garantias">
+      <ul class="letreiro-trilho">
+        <li>Garantia em todos os serviços</li>
+        <li>Equipe técnica treinada</li>
+        <li>Peças originais e homologadas</li>
+        <li>Orçamento gratuito</li>
+        <li>Fotos e vídeos em tempo real</li>
+      </ul>
+      <ul class="letreiro-trilho" aria-hidden="true">
+        <li>Garantia em todos os serviços</li>
+        <li>Equipe técnica treinada</li>
+        <li>Peças originais e homologadas</li>
+        <li>Orçamento gratuito</li>
+        <li>Fotos e vídeos em tempo real</li>
+      </ul>
+    </section>
+
+    <!-- ===================== 4. ESTRUTURA ===================== -->
+    <section class="estrutura">
+      <div class="estrutura-fotos">
+        <!-- data-paralaxe: a foto anda um pouquinho mais devagar que a página -->
+        <figure class="foto-grande" data-revelar>
+          <img src="img/topgear/oficina-socio-900.jpg" alt="Sócio da TopGear de braços cruzados dentro da oficina, com elevadores vermelhos e carros ao fundo"
+               width="900" height="1112" loading="lazy" data-paralaxe>
+        </figure>
+        <figure class="foto-pequena" data-revelar style="--atraso: 0.2s">
+          <img src="img/topgear/diagnostico-800.jpg" alt="Mecânico fazendo diagnóstico eletrônico num carro branco de capô aberto"
+               width="800" height="800" loading="lazy">
+        </figure>
+        <!-- Selo redondo que gira devagar. O texto curvo é um SVG -->
+        <div class="selo-giratorio" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="circulo" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <text><textPath href="#circulo">desde 2019 · Rio Grande · desde 2019 · Rio Grande ·</textPath></text>
+          </svg>
+          <span>TG</span>
+        </div>
+      </div>
+
+      <div class="estrutura-texto">
+        <p class="etiqueta" data-revelar>Centro automotivo completo</p>
+        <h2 data-revelar style="--atraso: 0.1s">Mais que uma oficina. <em>Um centro automotivo completo.</em></h2>
+        <p data-revelar style="--atraso: 0.2s">São seis elevadores e uma equipe treinada para o teu carro não ficar parado esperando vaga. Nenhum serviço começa sem a tua aprovação: primeiro a gente explica, depois executa.</p>
+        <ul class="lista-check" data-revelar style="--atraso: 0.3s">
+          <li>Diagnóstico eletrônico com scanner</li>
+          <li>Orçamento por escrito, item por item</li>
+          <li>Fotos e vídeos do serviço direto no teu WhatsApp</li>
+          <li>Histórico do teu carro registrado a cada visita</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== 5. SERVIÇOS ===================== -->
+    <!-- Cada serviço é TEXTO de verdade (o Google lê e o leitor de tela também),
+         com a arte do Instagram como foto. O link de cada um já diz qual serviço a pessoa quer -->
+    <section class="servicos" id="servicos">
+      <div class="cabeca-secao">
+        <p class="etiqueta" data-revelar>O que a gente faz</p>
+        <h2 data-revelar style="--atraso: 0.1s">Serviços que protegem <em>teu investimento</em></h2>
+        <p data-revelar style="--atraso: 0.2s">Manutenção preventiva e corretiva para carros de passeio. Toca no serviço e já chama a gente com a mensagem pronta.</p>
+      </div>
+
+      <div class="servicos-grade">
+        <article class="servico servico-destaque" data-revelar>
+          <img src="img/topgear/servico-cambio.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <span class="selo">Especialidade</span>
+            <h3>Óleo do câmbio automático</h3>
+            <p>O fluido velho desgasta o câmbio aos poucos, e um reparo pode passar de R$ 8.000. A troca no tempo certo evita esse susto.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20%C3%93leo%20do%20c%C3%A2mbio%20autom%C3%A1tico."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico servico-destaque" data-revelar style="--atraso: 0.08s">
+          <img src="img/topgear/servico-revisao.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <span class="selo">Alta prioridade</span>
+            <h3>Revisão completa</h3>
+            <p>Mais de 40 itens conferidos, do motor à suspensão. Tu recebe um laudo com fotos de tudo que foi visto.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Revis%C3%A3o%20completa."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar style="--atraso: 0.16s">
+          <img src="img/topgear/servico-troca-oleo.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <span class="selo">Referência</span>
+            <h3>Troca de óleo</h3>
+            <p>Sem fila, com o óleo certo para o teu motor e a troca registrada no histórico do carro.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Troca%20de%20%C3%B3leo."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar>
+          <img src="img/topgear/servico-pastilha.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <h3>Pastilha de freio</h3>
+            <p>Freio fazendo barulho ou demorando para parar? A gente confere pastilhas e discos e mostra o desgaste.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Pastilha%20de%20freio."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar style="--atraso: 0.08s">
+          <img src="img/topgear/servico-fluido-freio.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <h3>Fluido de freio</h3>
+            <p>O fluido absorve umidade com o tempo e o pedal fica mais mole. Trocar mantém a frenagem firme.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Fluido%20de%20freio."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar style="--atraso: 0.16s">
+          <img src="img/topgear/servico-correias.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <h3>Troca de correias</h3>
+            <p>Correia rompida pode parar o carro na rua e danificar o motor. A gente avisa a hora certa de trocar.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Troca%20de%20correias."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar>
+          <img src="img/topgear/servico-ar.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <h3>Ar-condicionado</h3>
+            <p>Ar fraco ou sem gelar? A gente encontra o problema e conserta antes do verão do Cassino.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Ar-condicionado."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+
+        <article class="servico" data-revelar style="--atraso: 0.08s">
+          <img src="img/topgear/servico-radiador.jpg" alt="" width="720" height="720" loading="lazy">
+          <div class="servico-texto">
+            <h3>Limpeza do radiador</h3>
+            <p>Limpa todo o sistema de arrefecimento para o motor não esquentar e durar mais.</p>
+            <a href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20agendar%3A%20Limpeza%20do%20radiador."
+               target="_blank" rel="noopener">Agendar este serviço</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== 6. ATENDIMENTO + COMO FUNCIONA ===================== -->
+    <section class="atendimento" id="como-funciona">
+      <div class="atendimento-texto">
+        <p class="etiqueta" data-revelar>Atendimento que te respeita</p>
+        <h2 data-revelar style="--atraso: 0.1s">Tu não precisa entender de carro <em>pra ser bem atendido.</em></h2>
+
+        <!-- Os três compromissos, com ícones de linha fina (SVG) no lugar de emoji -->
+        <ul class="compromissos">
+          <li data-revelar style="--atraso: 0.15s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div>
+              <h3>Explicação antes de qualquer serviço</h3>
+              <p>Tu aprova o orçamento com a descrição clara de cada item antes de o trabalho começar.</p>
+            </div>
+          </li>
+          <li data-revelar style="--atraso: 0.25s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            <div>
+              <h3>Respeito, sem conversa de mecânico</h3>
+              <p>Aqui ninguém é tratado com condescendência, entenda tu muito ou nada de mecânica.</p>
+            </div>
+          </li>
+          <li data-revelar style="--atraso: 0.35s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>
+            <div>
+              <h3>Laudo completo na entrega</h3>
+              <p>Ao retirar o carro, tu recebe o registro fotográfico de tudo que foi feito. É o histórico do teu carro.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Passo a passo numerado: uma <ol> (lista em ordem) é o certo para etapas -->
+      <div class="passos">
+        <h3 class="passos-titulo" data-revelar>Como funciona</h3>
+        <ol>
+          <li data-revelar><strong>Chama no WhatsApp</strong> e conta o que o carro está fazendo.</li>
+          <li data-revelar style="--atraso: 0.1s"><strong>Diagnóstico e orçamento gratuito</strong>, item por item.</li>
+          <li data-revelar style="--atraso: 0.2s"><strong>Tu aprova</strong> e só então o serviço começa.</li>
+          <li data-revelar style="--atraso: 0.3s"><strong>Acompanha tudo</strong> por fotos e vídeos em tempo real.</li>
+          <li data-revelar style="--atraso: 0.4s"><strong>Retira o carro</strong> com o laudo fotográfico na mão.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== 7. ESPAÇO TOP (sala de espera) ===================== -->
+    <section class="espaco" id="espaco">
+      <div class="cabeca-secao">
+        <p class="etiqueta etiqueta-clara" data-revelar>Espaço Top</p>
+        <h2 data-revelar style="--atraso: 0.1s">Aqui tu não espera. <em>Tu aproveita.</em></h2>
+        <p data-revelar style="--atraso: 0.2s">Enquanto o carro está no elevador, tu joga uma sinuca, desafia alguém no fliperama ou toma um café.</p>
+      </div>
+
+      <div class="espaco-grade">
+        <figure class="espaco-foto" data-revelar>
+          <img src="img/topgear/sala-espera.jpg" alt="Sala de espera da TopGear com fliperama, poltronas estampadas e cadeiras coloridas"
+               width="760" height="935" loading="lazy" data-paralaxe>
+        </figure>
+
+        <ul class="espaco-itens">
+          <li data-revelar style="--atraso: 0.1s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 10.5v3"/></svg>
+            <h3>Mesa de sinuca</h3>
+            <p>Uma partida rápida enquanto a revisão anda.</p>
+          </li>
+          <li data-revelar style="--atraso: 0.2s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="16" cy="11.5" r="1"/><circle cx="18" cy="13.5" r="1"/></svg>
+            <h3>Fliperama</h3>
+            <p>Os clássicos de luta, para jogar sozinho ou com os filhos.</p>
+          </li>
+          <li data-revelar style="--atraso: 0.3s">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h14v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17M7 3v3M11 3v3"/></svg>
+            <h3>Café e bebidas</h3>
+            <p>Um café ou uma bebida gelada na sala de espera.</p>
+          </li>
+        </ul>
+      </div>
+
+      <a class="btn btn-claro espaco-botao"
+         href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Quero%20conhecer%20o%20espa%C3%A7o%20de%20voc%C3%AAs."
+         target="_blank" rel="noopener" data-revelar>Vem conhecer pessoalmente</a>
+    </section>
+
+    <!-- ===================== 8. LUBRIFICANTES ===================== -->
+    <!-- Galeria que anda para o lado: no celular, arrasta com o dedo; no computador, setas ou arrastar -->
+    <section class="lubrificantes" id="lubrificantes">
+      <div class="cabeca-secao cabeca-com-setas">
+        <div>
+          <p class="etiqueta" data-revelar>Lubrificantes</p>
+          <h2 data-revelar style="--atraso: 0.1s">Especialistas em <em>óleo certo</em> para cada motor</h2>
+          <p data-revelar style="--atraso: 0.2s">Carro ou moto, mineral, semissintético ou sintético. Se faltar o que o teu motor pede, é só pedir que a gente traz.</p>
+        </div>
+        <div class="setas" aria-hidden="true">
+          <button type="button" class="seta" data-trilho="marcas" data-direcao="-1" tabindex="-1">←</button>
+          <button type="button" class="seta" data-trilho="marcas" data-direcao="1" tabindex="-1">→</button>
+        </div>
+      </div>
+
+      <!-- tabindex="0": quem usa teclado consegue focar a galeria e andar com as setas do teclado -->
+      <ul class="trilho" id="marcas" tabindex="0" aria-label="Marcas de óleo disponíveis" data-lenis-prevent>
+        <li><img src="img/topgear/oleo-motul-8100.jpg" alt="Frascos de óleo Motul 8100 Eco-lite 0W-20 sobre um tambor vermelho" width="900" height="900" loading="lazy"><span>Motul</span></li>
+        <li><img src="img/topgear/oleo-mobil.jpg" alt="Cinco frascos de óleo Mobil Super, de 5W-30 a 20W-50" width="1000" height="667" loading="lazy"><span>Mobil Super</span></li>
+        <li><img src="img/topgear/oleo-petronas.jpg" alt="Frascos de óleo Petronas Selenia e Syntium" width="1000" height="667" loading="lazy"><span>Petronas</span></li>
+        <li><img src="img/topgear/oleo-total.jpg" alt="Frascos de óleo Total Quartz em várias viscosidades" width="1000" height="667" loading="lazy"><span>Total</span></li>
+        <li><img src="img/topgear/oleo-elaion.jpg" alt="Frascos de óleo YPF Elaion sintético" width="1000" height="667" loading="lazy"><span>YPF Elaion</span></li>
+        <li><img src="img/topgear/oleo-motorcraft.jpg" alt="Frascos de óleo Ford Motorcraft e Omnicraft" width="1000" height="667" loading="lazy"><span>Motorcraft · Ford</span></li>
+        <li><img src="img/topgear/oleo-mopar.jpg" alt="Frascos de óleo Mopar MaxPro e Classic Line" width="1000" height="667" loading="lazy"><span>Mopar · Fiat, Jeep</span></li>
+        <li><img src="img/topgear/oleo-motrio.jpg" alt="Três frascos de óleo Motrio, do Grupo Renault" width="1000" height="667" loading="lazy"><span>Motrio · Renault</span></li>
+        <li><img src="img/topgear/oleo-motul-moto.jpg" alt="Quatro frascos de óleo Motul para motos 4 tempos" width="1000" height="667" loading="lazy"><span>Motul · motos</span></li>
+        <li><img src="img/topgear/oleo-mobil-moto.jpg" alt="Três frascos de óleo Mobil Super Moto" width="1000" height="667" loading="lazy"><span>Mobil · motos</span></li>
+        <li><img src="img/topgear/oleo-yamalube.jpg" alt="Dois frascos de óleo Yamalube 4T" width="1000" height="667" loading="lazy"><span>Yamalube · motos</span></li>
+        <li><img src="img/topgear/espera-castrol.jpg" alt="Mão segurando um frasco de óleo Castrol Magnatec 5W-30" width="900" height="900" loading="lazy"><span>Castrol</span></li>
+        <li><img src="img/topgear/espera-shell.jpg" alt="Mão segurando um frasco de óleo Shell Helix HX7 10W-40" width="900" height="900" loading="lazy"><span>Shell</span></li>
+        <li><img src="img/topgear/espera-havoline.jpg" alt="Mão segurando um frasco de óleo Havoline 10W-30" width="900" height="900" loading="lazy"><span>Havoline</span></li>
+        <li><img src="img/topgear/oleo-gulf.jpg" alt="Mão segurando um frasco de óleo Gulf Ultrasynth X 10W-40" width="900" height="900" loading="lazy"><span>Gulf</span></li>
+      </ul>
+
+      <a class="btn btn-principal lubrificantes-botao"
+         href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Queria%20saber%20se%20tem%20o%20%C3%B3leo%20certo%20pro%20meu%20carro."
+         target="_blank" rel="noopener">Ver se tem para o meu carro</a>
+    </section>
+
+    <!-- ===================== 9. VÍDEOS DO INSTAGRAM ===================== -->
+    <!-- Em vez de carregar 5 vídeos do Instagram de uma vez (pesado e lento no celular),
+         mostramos 5 "celulares" com capa. Ao tocar, o vídeo abre numa janela por cima.
+         Sem JavaScript, o link abre o vídeo direto no Instagram.
+         Para trocar um vídeo: troque o href e o data-video (o mesmo endereço + "embed") -->
+    <section class="videos" id="videos">
+      <div class="cabeca-secao">
+        <p class="etiqueta etiqueta-clara" data-revelar>Em movimento</p>
+        <h2 data-revelar style="--atraso: 0.1s">Veja a TopGear <em>em ação</em></h2>
+        <p data-revelar style="--atraso: 0.2s">Bastidores, dicas e serviços direto do nosso Instagram.</p>
+      </div>
+
+      <div class="videos-trilho" data-lenis-prevent>
+        <a class="video-cartao" href="https://www.instagram.com/reel/DZI6nXGRi1P/"
+           data-video="https://www.instagram.com/reel/DZI6nXGRi1P/embed" target="_blank" rel="noopener" data-revelar>
+          <span class="video-celular"><img src="img/topgear/fachada-900.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
+          <span class="video-titulo">O começo da TopGear</span>
+        </a>
+        <a class="video-cartao" href="https://www.instagram.com/reel/DYS32_GRY_V/"
+           data-video="https://www.instagram.com/reel/DYS32_GRY_V/embed" target="_blank" rel="noopener" data-revelar style="--atraso: 0.08s">
+          <span class="video-celular"><img src="img/topgear/diagnostico-800.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
+          <span class="video-titulo">Abasteceu e a luz da injeção acendeu</span>
+        </a>
+        <a class="video-cartao" href="https://www.instagram.com/reel/Df5bmbxB6Zp/"
+           data-video="https://www.instagram.com/reel/Df5bmbxB6Zp/embed" target="_blank" rel="noopener" data-revelar style="--atraso: 0.16s">
+          <span class="video-celular"><img src="img/topgear/servico-troca-oleo.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
+          <span class="video-titulo">Limpeza do sistema de admissão</span>
+        </a>
+        <a class="video-cartao" href="https://www.instagram.com/reel/DgJEdASRh6r/"
+           data-video="https://www.instagram.com/reel/DgJEdASRh6r/embed" target="_blank" rel="noopener" data-revelar style="--atraso: 0.24s">
+          <span class="video-celular"><img src="img/topgear/garagem-escura.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
+          <span class="video-titulo">Arquivo Confidencial BLACK</span>
+        </a>
+        <a class="video-cartao" href="https://www.instagram.com/reel/Df0YU_LBEfQ/"
+           data-video="https://www.instagram.com/reel/Df0YU_LBEfQ/embed" target="_blank" rel="noopener" data-revelar style="--atraso: 0.32s">
+          <span class="video-celular"><img src="img/topgear/sala-espera.jpg" alt="" loading="lazy"><span class="video-play" aria-hidden="true"></span></span>
+          <span class="video-titulo">Revelamos nosso maior segredo</span>
+        </a>
+      </div>
+
+      <a class="btn btn-claro videos-botao" href="https://www.instagram.com/topgearcentroautomotivoltda/" target="_blank" rel="noopener">Ver mais no Instagram</a>
+    </section>
+
+    <!-- ===================== 10. AVALIAÇÕES ===================== -->
+    <!-- Avaliações em TEXTO (não mais print): o Google lê, o leitor de tela lê, e fica nítido no celular.
+         O carrossel avança sozinho a cada 6 segundos e pausa quando a pessoa encosta -->
+    <section class="avaliacoes" id="avaliacoes">
+      <div class="cabeca-secao">
+        <p class="etiqueta" data-revelar>Avaliações</p>
+        <h2 data-revelar style="--atraso: 0.1s">Experiências reais <em>em Rio Grande</em></h2>
+        <p class="nota-google" data-revelar style="--atraso: 0.2s"><span class="estrelas" aria-hidden="true">★★★★★</span> <strong>4,9</strong> de 5 · 376 avaliações no Google</p>
+      </div>
+
+      <div class="carrossel" data-carrossel>
+        <ul class="carrossel-trilho" tabindex="0" aria-label="Avaliações de clientes" data-lenis-prevent>
+          <li class="depoimento">
+            <p class="estrelas" aria-label="5 estrelas">★★★★★</p>
+            <blockquote>Fiquei impressionado com a qualidade do atendimento. Fiz a troca do óleo da caixa de transmissão do meu Civic 2014. E fui acompanhando as etapas via link que eles te passam. Então colocaram alguns vídeos do que estavam executando e isso é sensacional. No final ainda peguei o carro lavado. Parabéns pelo profissionalismo, ganharam mais um cliente. Sucesso!!!</blockquote>
+            <p class="autor"><span class="avatar" aria-hidden="true">CD</span> Cristian Duarte <small>Civic 2014</small></p>
+          </li>
+          <li class="depoimento">
+            <p class="estrelas" aria-label="5 estrelas">★★★★★</p>
+            <blockquote>Top gear é uma referência na cidade, sem dúvidas, seu atendimento é o melhor. Acompanhamento em tempo real de tudo que está acontecendo em seu veículo. Colaboradores extremamente educados com foco no comprometimento e na melhor entrega. Eu não troco por nada! Lugar certo para seu veículo.</blockquote>
+            <p class="autor"><span class="avatar" aria-hidden="true">CP</span> Christiane Pires</p>
+          </li>
+          <li class="depoimento">
+            <p class="estrelas" aria-label="5 estrelas">★★★★★</p>
+            <blockquote>Excelente atendimento, ambiente amplo e bem organizado e a sala de espera, essa sim é um show à parte. Não é todo dia que consigo cuidar de meu carro enquanto jogo uma partida de street fighter com minha filha. Nota MIL.</blockquote>
+            <p class="autor"><span class="avatar" aria-hidden="true">AX</span> Alex Xavier</p>
+          </li>
+        </ul>
+        <div class="carrossel-controles">
+          <button type="button" class="seta" data-trilho-carrossel="-1" aria-label="Avaliação anterior">←</button>
+          <div class="pontinhos" aria-hidden="true"></div>
+          <button type="button" class="seta" data-trilho-carrossel="1" aria-label="Próxima avaliação">→</button>
+        </div>
+      </div>
+
+      <a class="link-seta" href="https://www.google.com/maps/search/?api=1&amp;query=TopGear+Centro+Automotivo+Rio+Grande" target="_blank" rel="noopener">Ver todas as avaliações no Google</a>
+    </section>
+
+    <!-- ===================== 11. AUTO SOCORRO ===================== -->
+    <section class="socorro">
+      <img class="socorro-fundo" src="img/topgear/garagem-escura.jpg" alt="" width="703" height="547" loading="lazy">
+      <div class="socorro-texto" data-revelar>
+        <p class="etiqueta etiqueta-clara">Auto Socorro</p>
+        <h2>Teu carro parou? <em>Chama a Top!</em></h2>
+        <p>Pane no meio do caminho ou carro que não liga? Precisa de assistência? Chama a Top que a gente te ajuda.</p>
+        <div class="hero-botoes">
+          <a class="btn btn-vermelho" href="tel:+5553991344946">Ligar (53) 99134-4946</a>
+          <a class="btn btn-claro"
+             href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Meu%20carro%20parou%20e%20preciso%20de%20socorro."
+             target="_blank" rel="noopener">Pedir socorro no WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 12. LOCALIZAÇÃO E HORÁRIOS ===================== -->
+    <section class="contato" id="contato">
+      <div class="contato-texto">
+        <p class="etiqueta" data-revelar>Onde estamos</p>
+        <h2 data-revelar style="--atraso: 0.1s">No coração da Cidade Nova, <em>com estacionamento</em></h2>
+        <address data-revelar style="--atraso: 0.2s">
+          Av. Buarque de Macedo, 575 · Cidade Nova<br>
+          Rio Grande · RS · 96211-653<br>
+          <a href="tel:+5553991344946">(53) 99134-4946</a>
+        </address>
+
+        <!-- Tabela de horários. O JS destaca o dia de hoje (classe "hoje") -->
+        <table class="horarios" data-revelar style="--atraso: 0.3s">
+          <caption>Horário de atendimento</caption>
+          <tbody>
+            <tr data-dias="1,2,3,4,5"><th scope="row">Segunda a sexta</th><td>8h às 18h30</td></tr>
+            <tr data-dias="6"><th scope="row">Sábado</th><td>8h às 12h</td></tr>
+            <tr data-dias="0"><th scope="row">Domingo</th><td>Fechado</td></tr>
+          </tbody>
+        </table>
+        <p class="status status-escuro" data-status aria-live="polite"></p>
+
+        <div class="hero-botoes">
+          <a class="btn btn-principal"
+             href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio."
+             target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+          <a class="btn btn-secundario"
+             href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.+Buarque+de+Macedo%2C+575%2C+Rio+Grande+-+RS"
+             target="_blank" rel="noopener">Abrir rota no mapa</a>
+        </div>
+      </div>
+
+      <!-- Mapa do Google. loading="lazy": só carrega quando a pessoa chega perto -->
+      <div class="mapa" data-revelar>
+        <iframe title="Mapa da TopGear Centro Automotivo"
+                src="https://www.google.com/maps?q=Av.+Buarque+de+Macedo,+575,+Rio+Grande+-+RS&amp;output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+
+    <!-- ===================== 13. DÚVIDAS ===================== -->
+    <!-- <details> e <summary> já abrem e fecham sozinhos, sem JavaScript. O CSS só deixa bonito -->
+    <section class="duvidas" id="duvidas">
+      <div class="cabeca-secao">
+        <p class="etiqueta" data-revelar>Dúvidas frequentes</p>
+        <h2 data-revelar style="--atraso: 0.1s">Ficou alguma <em>dúvida?</em></h2>
+      </div>
+
+      <div class="perguntas">
+        <details data-revelar>
+          <summary>Como eu agendo?</summary>
+          <p>Toca em qualquer botão de agendar ou no botão verde do canto da tela e manda tua mensagem no WhatsApp. A gente responde e combina o melhor horário.</p>
+        </details>
+        <details data-revelar>
+          <summary>Posso acompanhar o serviço?</summary>
+          <p>Sim. A gente manda fotos e vídeos em tempo real para tu ver e aprovar cada etapa.</p>
+        </details>
+        <details data-revelar>
+          <summary>O orçamento é gratuito?</summary>
+          <p>É sim. O orçamento é feito sem custo e o serviço só começa com a tua aprovação.</p>
+        </details>
+        <details data-revelar>
+          <summary>Que garantia vocês oferecem?</summary>
+          <p>Todos os serviços têm garantia. Usamos peças originais e homologadas, e o trabalho é feito por equipe técnica treinada.</p>
+        </details>
+        <details data-revelar>
+          <summary>Qual o diferencial da TopGear?</summary>
+          <p>Atendimento humano e transparente do começo ao fim: tu sabe o que vai ser feito, vê sendo feito e leva o laudo com fotos para casa.</p>
+        </details>
+        <details data-revelar>
+          <summary>Como sei que meu carro está seguro aí?</summary>
+          <p>Estrutura profissional com seis elevadores, equipe treinada e laudo detalhado de tudo que foi feito. E tu acompanha pelo celular o tempo todo.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="rodape">
+    <div class="rodape-marca">
+      <img src="img/topgear/logo.webp" alt="" width="64" height="64">
+      <p><strong>TopGear Centro Automotivo</strong><br>Teu carro em boas mãos. E tu também.</p>
+    </div>
+    <div>
+      <h2>Endereço</h2>
+      <p>Av. Buarque de Macedo, 575<br>Cidade Nova · Rio Grande · RS</p>
+    </div>
+    <div>
+      <h2>Horários</h2>
+      <p>Seg a Sex · 8h às 18h30<br>Sáb · 8h às 12h</p>
+    </div>
+    <div>
+      <h2>Fale com a gente</h2>
+      <p><a href="tel:+5553991344946">(53) 99134-4946</a><br>
+         <a href="https://www.instagram.com/topgearcentroautomotivoltda/" target="_blank" rel="noopener">Instagram</a></p>
+    </div>
+    <!-- Falta preencher: o CNPJ e o link da política de privacidade (LGPD). Pedir para a TopGear -->
+    <p class="rodape-final">© TopGear Centro Automotivo · Rio Grande, RS · desde 2019</p>
+  </footer>
+
+  <!-- ===================== BOTÃO FLUTUANTE DO WHATSAPP ===================== -->
+  <!-- Pulsa de leve; depois de alguns segundos aparece o balão "Posso ajudar?" (JS) -->
+  <a class="whats-flutuante"
+     href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio."
+     target="_blank" rel="noopener" aria-label="Conversar com a TopGear no WhatsApp">
+    <span class="whats-balao" aria-hidden="true">Posso ajudar?</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.6-.2z"/></svg>
+  </a>
+
+  <!-- Janela onde abre o vídeo do Instagram -->
+  <dialog class="video-janela" aria-label="Vídeo do Instagram" data-lenis-prevent>
+    <div class="video-janela-caixa"></div>
+    <button class="video-janela-fechar" type="button" aria-label="Fechar vídeo" autofocus>×</button>
+  </dialog>
+
+  <!-- Selo discreto: leva quem está vendo o modelo de volta ao site da Nycolle -->
+  <a class="selo-modelo" href="index.html#modelos">Site por Nycolle Web <span aria-hidden="true">→</span></a>
+
+</body>
+</html>

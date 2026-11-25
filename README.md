@@ -9,5 +9,6 @@ Feito com HTML, CSS e JavaScript puros (sem framework).
 - `site/index.html`: página inicial
 - `site/salao.html`: modelo de site para salão de beleza (Studio Aurora, fictício)
 - `site/fotografia.html`: modelo de site para fotógrafa (Bárbara Matheus Fotografia)
+- `site/topgear.html`: site da TopGear Centro Automotivo (Rio Grande), com imagens em `site/img/topgear/`
 
 Para ver, é só abrir `site/index.html` no navegador.
