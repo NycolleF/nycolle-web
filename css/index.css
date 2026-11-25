@@ -263,6 +263,7 @@ main > section > h2 + p {
 .previa-salao      { background: linear-gradient(135deg, #f7c6d9, #b4235a); }
 .previa-racao      { background: linear-gradient(135deg, #ffd27f, #e07a2f); }
 .previa-padaria    { background: linear-gradient(135deg, #f3e1c7, #a8663a); }
+.previa-topgear    { background: linear-gradient(135deg, #0b1f33 40%, #b3202a); }
 
 /* margin-top: auto empurra o link para o pé do cartão,
    assim todos os "Ver modelo" ficam alinhados */
