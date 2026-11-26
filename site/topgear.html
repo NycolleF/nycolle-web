@@ -95,13 +95,8 @@
   <main id="conteudo">
 
     <!-- ===================== 1. HERO ===================== -->
+    <!-- Fundo creme e claro: a primeira impressão é de casa, não de oficina escura -->
     <section class="hero" id="inicio">
-      <!-- A foto da fachada fica atrás de tudo e dá um zoom bem lento (CSS) -->
-      <img class="hero-fundo"
-           src="img/topgear/fachada-1600.jpg"
-           srcset="img/topgear/fachada-900.jpg 900w, img/topgear/fachada-1600.jpg 1600w"
-           sizes="100vw" alt="" width="1600" height="1047" fetchpriority="high">
-
       <div class="hero-texto">
         <!-- Selo "Aberto agora / Fechado": o JS calcula pelo horário de Brasília -->
         <p class="status" data-status aria-live="polite">Seg a Sex 8h às 18h30 · Sáb 8h às 12h</p>
@@ -116,14 +111,30 @@
           <a class="btn btn-principal btn-brilho"
              href="https://wa.me/5553991344946?text=Ol%C3%A1%2C%20TopGear!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio."
              target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
-          <a class="btn btn-claro" href="#servicos">Ver serviços</a>
+          <a class="btn btn-secundario" href="#servicos">Ver serviços</a>
         </div>
       </div>
 
-      <!-- O mascote flutua devagar. aria-hidden: é enfeite, o leitor de tela não precisa dele -->
-      <div class="hero-mascote" aria-hidden="true">
-        <img src="img/topgear/mascote-640.png" alt="" width="640" height="960">
-        <span class="balao">Bah, chega mais!</span>
+      <!-- Lado direito: a foto de verdade do Guilherme, com o selo do Google e o mascote espiando -->
+      <div class="hero-foto" data-revelar style="--atraso: 0.3s">
+        <figure class="hero-moldura">
+          <img src="img/topgear/oficina-socio-900.jpg"
+               alt="Guilherme Gonçalves, um dos donos da TopGear, dentro da oficina"
+               width="900" height="1112" fetchpriority="high">
+        </figure>
+
+        <p class="hero-selo">
+          <strong><span aria-hidden="true">★</span> 4,9</strong>
+          <span>376 avaliações no Google</span>
+        </p>
+
+        <p class="nota-mao hero-legenda">esse é o Guilherme!</p>
+
+        <!-- O mascote espia por trás da foto. aria-hidden: é enfeite -->
+        <div class="hero-mascote" aria-hidden="true">
+          <img src="img/topgear/mascote-640.png" alt="" width="640" height="960">
+          <span class="balao">Bah, chega mais!</span>
+        </div>
       </div>
     </section>
 
