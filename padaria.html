@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!-- class="sem-js": se o JavaScript não carregar, o CSS esconde o que depende dele (carrinho etc.).
+     A primeira linha de <script> lá embaixo troca para "js" assim que a página abre -->
+<html lang="pt-BR" class="sem-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.replace('sem-js', 'js');</script>
+
+  <!-- MODELO de demonstração do pacote "Site com pedidos": o mais completo dos três.
+       O cliente monta o pedido NO SITE (carrinho, bolo personalizado, entrega ou retirada)
+       e o pedido chega pronto e organizado no WhatsApp da padaria.
+       A "Forno da Vila" é inventada: troque nome, textos, preços e o número no padaria.js -->
+  <title>Forno da Vila | Modelo de site com pedidos para padaria</title>
+  <meta name="description" content="Modelo de site para padaria e confeitaria com pedido online: cardápio com carrinho, encomenda de bolo personalizada, horários das fornadas e pedido enviado pelo WhatsApp.">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/padaria.css">
+  <!-- defer = o JavaScript só roda depois que o HTML inteiro foi lido -->
+  <script src="js/padaria.js" defer></script>
+</head>
+<body>
+
+  <!-- ===================== AVISO DE MODELO ===================== -->
+  <div class="aviso-modelo">
+    <p>Este é um <strong>modelo de demonstração</strong> da Nyweb (pacote Site com pedidos). Pode testar o pedido à vontade!
+      <a href="index.html#modelos">Ver outros modelos</a></p>
+  </div>
+
+  <!-- ===================== MENU ===================== -->
+  <header class="menu">
+    <a href="#topo" class="marca">Forno <em>da</em> Vila</a>
+    <nav aria-label="Menu da padaria">
+      <ul>
+        <li><a href="#fornadas">Fornadas</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#encomendas">Bolos sob encomenda</a></li>
+        <li><a href="#onde">Onde estamos</a></li>
+      </ul>
+    </nav>
+    <!-- Botão do pedido: o número (contador) é atualizado pelo JavaScript.
+         data-abrir-pedido = "quem tiver isso, abre a janela do pedido" (o JS procura por esse atributo) -->
+    <button class="btn btn-pedido so-js" type="button" data-abrir-pedido>
+      Meu pedido <span class="contador" data-contador>0</span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="topo">
+      <div class="hero-texto">
+        <!-- O JavaScript troca este texto por "Aberto agora" ou "Fechado", conforme o horário.
+             aria-live="polite" = se mudar, o leitor de tela avisa sem interromper -->
+        <p class="status" data-status aria-live="polite">Seg a sáb 6h às 20h · Dom 7h às 12h</p>
+        <h1>Pão quentinho saindo do forno <em>o dia todo</em>.</h1>
+        <p>Monte o seu pedido aqui no site, escolha se vai buscar ou receber em casa, e ele chega pronto para a gente no WhatsApp. Sem fila e sem ligação.</p>
+        <div class="hero-botoes">
+          <a class="btn btn-principal" href="#cardapio">Montar meu pedido</a>
+          <a class="btn btn-secundario" href="#encomendas">Encomendar bolo</a>
+        </div>
+      </div>
+
+      <div class="hero-foto">
+        <!-- Espaço da foto principal: pães na bancada, o forno, a vitrine...
+             <img src="img/padaria-capa.jpg" alt="Pães recém-saídos do forno na bancada"> -->
+        <div class="foto foto-capa" role="img" aria-label="Foto de pães saindo do forno"><span aria-hidden="true">🥖</span></div>
+        <!-- Cartão da próxima fornada: o JavaScript preenche com o horário certo -->
+        <p class="proxima-fornada so-js" data-proxima>
+          <span>Próxima fornada</span>
+          <strong data-proxima-texto>...</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== FORNADAS DO DIA ===================== -->
+    <section id="fornadas">
+      <h2>Fornadas do dia</h2>
+      <p>Chegue na hora certa e leve tudo quentinho. As que já saíram ficam marcadas.</p>
+
+      <!-- data-hora = horário da fornada no formato 24h. O JS compara com a hora de agora -->
+      <ol class="fornadas">
+        <li data-hora="06:00"><time>6h</time> Pão francês</li>
+        <li data-hora="07:30"><time>7h30</time> Pão de queijo</li>
+        <li data-hora="10:00"><time>10h</time> Cuca de uva</li>
+        <li data-hora="11:00"><time>11h</time> Salgados assados</li>
+        <li data-hora="15:00"><time>15h</time> Pão francês</li>
+        <li data-hora="16:00"><time>16h</time> Sonhos</li>
+        <li data-hora="17:30"><time>17h30</time> Pão francês</li>
+      </ol>
+    </section>
+
+    <!-- ===================== CARDÁPIO ===================== -->
+    <section id="cardapio">
+      <h2>Cardápio</h2>
+      <p>Toque em "Adicionar" e ajuste a quantidade. O total aparece embaixo da tela.</p>
+
+      <!-- <noscript> só aparece se o JavaScript estiver desligado -->
+      <noscript>
+        <p class="aviso-sem-js">Para montar o pedido aqui, ative o JavaScript. Ou
+          <a href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20padaria%20e%20quero%20um%20site%20assim.">chame no WhatsApp</a>.</p>
+      </noscript>
+
+      <!-- Filtros: botões que mostram só uma categoria.
+           aria-pressed diz ao leitor de tela qual está ligado -->
+      <div class="filtros so-js" role="group" aria-label="Filtrar cardápio">
+        <button type="button" data-filtro="todos" aria-pressed="true">Tudo</button>
+        <button type="button" data-filtro="paes" aria-pressed="false">🥖 Pães</button>
+        <button type="button" data-filtro="doces" aria-pressed="false">🧁 Doces</button>
+        <button type="button" data-filtro="salgados" aria-pressed="false">🥟 Salgados</button>
+        <button type="button" data-filtro="bebidas" aria-pressed="false">☕ Bebidas</button>
+      </div>
+
+      <!-- CADA PRODUTO guarda os dados dele nos atributos data-*:
+           data-id (um nome único, sem espaço), data-nome, data-preco (com PONTO, não vírgula)
+           e data-categoria. Para mudar um preço, é só trocar o data-preco E o texto do preço.
+           O JavaScript lê esses dados e cria os botões de quantidade dentro da <div class="controle"> -->
+      <div class="itens">
+        <article class="item" data-id="pao-frances" data-nome="Pão francês" data-preco="0.90" data-categoria="paes">
+          <div class="foto foto-item" aria-hidden="true">🥖</div>
+          <div class="item-texto">
+            <h3>Pão francês</h3>
+            <p>Casquinha crocante, sai 3 vezes por dia</p>
+            <p class="preco">R$ 0,90 <small>un.</small></p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="pao-queijo" data-nome="Pão de queijo (pacote com 10)" data-preco="12.00" data-categoria="paes">
+          <div class="foto foto-item" aria-hidden="true">🧀</div>
+          <div class="item-texto">
+            <h3>Pão de queijo</h3>
+            <p>Pacote com 10, feito com queijo meia cura</p>
+            <p class="preco">R$ 12,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="pao-caseiro" data-nome="Pão caseiro" data-preco="14.00" data-categoria="paes">
+          <div class="foto foto-item" aria-hidden="true">🍞</div>
+          <div class="item-texto">
+            <h3>Pão caseiro</h3>
+            <p>Receita da vó, fofinho, 600 g</p>
+            <p class="preco">R$ 14,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="cuca-uva" data-nome="Cuca de uva" data-preco="22.00" data-categoria="paes">
+          <div class="foto foto-item" aria-hidden="true">🍇</div>
+          <div class="item-texto">
+            <h3>Cuca de uva</h3>
+            <p>Com bastante farofa, inteira</p>
+            <p class="preco">R$ 22,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="sonho" data-nome="Sonho de creme" data-preco="6.50" data-categoria="doces">
+          <div class="foto foto-item" aria-hidden="true">🍩</div>
+          <div class="item-texto">
+            <h3>Sonho de creme</h3>
+            <p>Recheio de creme de baunilha</p>
+            <p class="preco">R$ 6,50</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="bolo-cenoura" data-nome="Fatia de bolo de cenoura" data-preco="9.00" data-categoria="doces">
+          <div class="foto foto-item" aria-hidden="true">🥕</div>
+          <div class="item-texto">
+            <h3>Bolo de cenoura</h3>
+            <p>Fatia com cobertura de chocolate</p>
+            <p class="preco">R$ 9,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="torta-bolacha" data-nome="Fatia de torta de bolacha" data-preco="11.00" data-categoria="doces">
+          <div class="foto foto-item" aria-hidden="true">🍰</div>
+          <div class="item-texto">
+            <h3>Torta de bolacha</h3>
+            <p>Fatia, a clássica de aniversário</p>
+            <p class="preco">R$ 11,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="brigadeiro" data-nome="Brigadeiro" data-preco="3.50" data-categoria="doces">
+          <div class="foto foto-item" aria-hidden="true">🍫</div>
+          <div class="item-texto">
+            <h3>Brigadeiro</h3>
+            <p>Chocolate belga, unidade</p>
+            <p class="preco">R$ 3,50</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="coxinha" data-nome="Coxinha de frango" data-preco="7.00" data-categoria="salgados">
+          <div class="foto foto-item" aria-hidden="true">🍗</div>
+          <div class="item-texto">
+            <h3>Coxinha de frango</h3>
+            <p>Com catupiry, frita na hora</p>
+            <p class="preco">R$ 7,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="empada" data-nome="Empada de frango" data-preco="7.50" data-categoria="salgados">
+          <div class="foto foto-item" aria-hidden="true">🥧</div>
+          <div class="item-texto">
+            <h3>Empada de frango</h3>
+            <p>Massa que derrete na boca</p>
+            <p class="preco">R$ 7,50</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="mini-pizza" data-nome="Mini pizza" data-preco="5.00" data-categoria="salgados">
+          <div class="foto foto-item" aria-hidden="true">🍕</div>
+          <div class="item-texto">
+            <h3>Mini pizza</h3>
+            <p>Calabresa ou queijo</p>
+            <p class="preco">R$ 5,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="cafe" data-nome="Café passado" data-preco="4.00" data-categoria="bebidas">
+          <div class="foto foto-item" aria-hidden="true">☕</div>
+          <div class="item-texto">
+            <h3>Café passado</h3>
+            <p>Copo de 200 ml</p>
+            <p class="preco">R$ 4,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="cappuccino" data-nome="Cappuccino" data-preco="8.00" data-categoria="bebidas">
+          <div class="foto foto-item" aria-hidden="true">🥛</div>
+          <div class="item-texto">
+            <h3>Cappuccino</h3>
+            <p>Com canela, copo de 300 ml</p>
+            <p class="preco">R$ 8,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+
+        <article class="item" data-id="suco-laranja" data-nome="Suco de laranja" data-preco="8.00" data-categoria="bebidas">
+          <div class="foto foto-item" aria-hidden="true">🍊</div>
+          <div class="item-texto">
+            <h3>Suco de laranja</h3>
+            <p>Natural, 300 ml</p>
+            <p class="preco">R$ 8,00</p>
+          </div>
+          <div class="controle"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== BOLO SOB ENCOMENDA ===================== -->
+    <section id="encomendas">
+      <div class="encomenda-texto">
+        <h2>Monte o seu bolo de festa</h2>
+        <p>Escolha tamanho, massa, recheio e cobertura. O preço muda na hora, conforme você escolhe. Encomendas com no mínimo 2 dias de antecedência.</p>
+        <div class="foto foto-bolo" aria-hidden="true">🎂</div>
+      </div>
+
+      <!-- Formulário do bolo. Cada opção que custa a mais tem data-preco com o valor EXTRA.
+           <fieldset> agrupa opções do mesmo assunto; <legend> é o título do grupo -->
+      <form class="montar-bolo so-js" data-form-bolo>
+        <fieldset>
+          <legend>1. Tamanho</legend>
+          <div class="opcoes">
+            <label><input type="radio" name="tamanho" value="1 kg" data-preco="85" checked> <span><strong>1 kg</strong> até 10 fatias <em>R$ 85</em></span></label>
+            <label><input type="radio" name="tamanho" value="2 kg" data-preco="160"> <span><strong>2 kg</strong> até 20 fatias <em>R$ 160</em></span></label>
+            <label><input type="radio" name="tamanho" value="3 kg" data-preco="230"> <span><strong>3 kg</strong> até 30 fatias <em>R$ 230</em></span></label>
+          </div>
+        </fieldset>
+
+        <div class="duas-colunas">
+          <label class="campo">2. Massa
+            <select name="massa">
+              <option data-preco="0">Baunilha</option>
+              <option data-preco="0">Chocolate</option>
+              <option data-preco="0">Cenoura</option>
+            </select>
+          </label>
+
+          <label class="campo">3. Recheio
+            <select name="recheio">
+              <option data-preco="0">Brigadeiro</option>
+              <option data-preco="0">Ninho</option>
+              <option data-preco="15">Doce de leite com nozes (+ R$ 15)</option>
+              <option data-preco="20">Morango com creme (+ R$ 20)</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>4. Cobertura</legend>
+          <div class="opcoes">
+            <label><input type="radio" name="cobertura" value="Chantilly" data-preco="0" checked> <span><strong>Chantilly</strong> <em>incluso</em></span></label>
+            <label><input type="radio" name="cobertura" value="Ganache" data-preco="10"> <span><strong>Ganache</strong> <em>+ R$ 10</em></span></label>
+            <label><input type="radio" name="cobertura" value="Pasta americana" data-preco="40"> <span><strong>Pasta americana</strong> <em>+ R$ 40</em></span></label>
+          </div>
+        </fieldset>
+
+        <div class="duas-colunas">
+          <!-- maxlength = no máximo 30 letras -->
+          <label class="campo">Escrita no bolo <small>(opcional)</small>
+            <input type="text" name="escrita" maxlength="30" placeholder="Ex.: Feliz aniversário, Ana!">
+          </label>
+          <!-- O JS coloca o "min" deste campo como hoje + 2 dias -->
+          <label class="campo">Retirar no dia
+            <input type="date" name="data" required>
+          </label>
+        </div>
+
+        <div class="total-bolo">
+          <p>Valor do bolo <strong data-preco-bolo>R$ 85,00</strong></p>
+          <button class="btn btn-principal" type="submit">Adicionar bolo ao pedido</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===================== ONDE ESTAMOS ===================== -->
+    <section id="onde">
+      <h2>Onde estamos</h2>
+      <div class="onde">
+        <div>
+          <h3>Endereço</h3>
+          <address>Rua Exemplo, 789 · Centro<br>Rio Grande, RS</address>
+        </div>
+        <div>
+          <h3>Horário</h3>
+          <p>Segunda a sábado: 6h às 20h<br>Domingo: 7h às 12h</p>
+        </div>
+        <div>
+          <h3>Entrega</h3>
+          <p>R$ 8 no Centro e bairros vizinhos<br>Grátis acima de R$ 80</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Forno da Vila · modelo criado por <a href="index.html">Nyweb</a></p>
+  </footer>
+
+
+  <!-- ===================== BARRA DO PEDIDO (fixa embaixo) ===================== -->
+  <!-- Aparece só quando tem algo no pedido. hidden = escondida até o JS mostrar -->
+  <div class="barra-pedido" data-barra hidden>
+    <p><span data-barra-qtd>0 itens</span> · <strong data-barra-total>R$ 0,00</strong></p>
+    <button class="btn btn-principal" type="button" data-abrir-pedido>Ver pedido</button>
+  </div>
+
+  <!-- Avisinho que aparece rápido ao adicionar algo ("Sonho adicionado").
+       role="status" faz o leitor de tela ler a mensagem -->
+  <p class="aviso-rapido" role="status" data-aviso></p>
+
+
+  <!-- ===================== JANELA DO PEDIDO ===================== -->
+  <!-- <dialog> é uma janela que abre por cima da página. Com showModal() (no JS),
+       o navegador já cuida de muita coisa: fecha com Esc, prende o foco lá dentro
+       e escurece o fundo. O visual imita uma COMANDA de padaria -->
+  <dialog class="comanda" data-pedido aria-labelledby="pedido-titulo">
+    <div class="comanda-topo">
+      <h2 id="pedido-titulo">Seu pedido</h2>
+      <button class="fechar" type="button" data-fechar-pedido aria-label="Fechar pedido">✕</button>
+    </div>
+
+    <!-- A lista de itens é desenhada pelo JavaScript -->
+    <ul class="comanda-itens" data-lista></ul>
+    <p class="comanda-vazia" data-vazio>Seu pedido está vazio. Que tal um pão de queijo quentinho?</p>
+
+    <form class="comanda-form" data-form-pedido>
+      <fieldset class="receber">
+        <legend>Como você quer receber?</legend>
+        <label><input type="radio" name="receber" value="retirar" checked> Vou buscar</label>
+        <label><input type="radio" name="receber" value="entregar"> Entregar em casa</label>
+      </fieldset>
+
+      <!-- Barrinha "Faltam R$ X para a entrega grátis" (só aparece na entrega) -->
+      <div class="frete" data-frete hidden>
+        <p data-frete-texto></p>
+        <div class="frete-trilho"><div class="frete-barra" data-frete-barra></div></div>
+      </div>
+
+      <label class="campo">Seu nome
+        <input type="text" name="nome" autocomplete="name" required>
+      </label>
+
+      <label class="campo" data-campo-endereco hidden>Endereço com número e bairro
+        <input type="text" name="endereco" autocomplete="street-address">
+      </label>
+
+      <div class="duas-colunas">
+        <label class="campo">Para o dia
+          <input type="date" name="dia" required>
+        </label>
+        <label class="campo">Horário <small>(opcional)</small>
+          <input type="time" name="hora" min="06:00" max="20:00">
+        </label>
+      </div>
+
+      <fieldset class="receber">
+        <legend>Pagamento</legend>
+        <label><input type="radio" name="pagamento" value="Pix" checked> Pix</label>
+        <label><input type="radio" name="pagamento" value="Cartão"> Cartão</label>
+        <label><input type="radio" name="pagamento" value="Dinheiro"> Dinheiro</label>
+      </fieldset>
+
+      <label class="campo">Observações <small>(opcional)</small>
+        <textarea name="obs" rows="2" placeholder="Ex.: pão bem moreninho, sem cebola na mini pizza"></textarea>
+      </label>
+
+      <!-- Resumo dos valores, como no pé de uma nota -->
+      <dl class="comanda-totais">
+        <div><dt>Produtos</dt><dd data-subtotal>R$ 0,00</dd></div>
+        <div data-linha-taxa hidden><dt>Entrega</dt><dd data-taxa>R$ 8,00</dd></div>
+        <div class="total"><dt>Total</dt><dd data-total>R$ 0,00</dd></div>
+      </dl>
+
+      <button class="btn btn-principal btn-enviar" type="submit">Enviar pedido pelo WhatsApp</button>
+      <p class="comanda-nota">O pedido abre no WhatsApp já escrito. É só tocar em enviar.</p>
+    </form>
+  </dialog>
+
+</body>
+</html>

@@ -305,19 +305,29 @@ main > section > h2 + p {
 
 
 /* ===================== 4. MODELOS ===================== */
-/* A "fotinho" de cada modelo, feita só com cores (gradiente).
-   Quando você tiver prints dos modelos, pode trocar por <img>. */
-.previa {
-  aspect-ratio: 16 / 10;   /* mantém o formato retangular em qualquer largura */
+/* O print de cada modelo, no topo do cartão.
+   O #modelos .cartao na frente dá "força" para vencer a regra do link logo abaixo
+   (sem isso, o margin-top: auto de lá empurraria o print para baixo) */
+#modelos .cartao .previa {
+  display: block;
   margin: -24px -24px 20px; /* margem negativa: encosta nas bordas do cartão */
   border-radius: var(--raio) var(--raio) 0 0;
+  border-bottom: 1px solid var(--cor-borda);
+  overflow: hidden;         /* corta a imagem nos cantos arredondados */
 }
 
-.previa-fotografia { background: linear-gradient(135deg, #2b2d42, #8d99ae); }
-.previa-salao      { background: linear-gradient(135deg, #f7c6d9, #b4235a); }
-.previa-racao      { background: linear-gradient(135deg, #ffd27f, #e07a2f); }
-.previa-padaria    { background: linear-gradient(135deg, #f3e1c7, #a8663a); }
-.previa-topgear    { background: linear-gradient(135deg, #0b1f33 40%, #b3202a); }
+.previa img {
+  width: 100%;
+  aspect-ratio: 16 / 10;    /* mantém o formato retangular em qualquer largura */
+  object-fit: cover;        /* preenche o espaço sem esticar a imagem */
+  object-position: top;     /* se precisar cortar, corta embaixo e mostra o topo do site */
+  transition: transform 0.4s;
+}
+
+/* Ao passar o mouse no cartão, o print dá um zoom leve */
+#modelos .cartao:hover .previa img {
+  transform: scale(1.04);
+}
 
 /* margin-top: auto empurra o link para o pé do cartão,
    assim todos os "Ver modelo" ficam alinhados */
@@ -508,4 +518,26 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+
+/* ===================== EXEMPLOS DOS PACOTES ===================== */
+/* Link "Ver exemplo" no pé de cada pacote (margin-top: auto empurra para baixo,
+   assim os links ficam alinhados mesmo se as listas tiverem tamanhos diferentes) */
+.link-exemplo {
+  margin-top: auto;
+  padding-top: 20px;
+  font-weight: 700;
+}
+
+/* Etiqueta nos cartões de modelo dizendo de qual pacote ele é exemplo */
+.tipo-site {
+  align-self: flex-start;  /* a etiqueta fica do tamanho do texto, não estica */
+  margin: 0 0 8px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--cor-marca-clara);
+  color: var(--cor-marca) !important; /* o !important vence o ".cartao p" que deixa o texto cinza */
+  font-size: 0.8rem;
+  font-weight: 700;
 }

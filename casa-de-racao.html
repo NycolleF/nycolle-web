@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- MODELO de demonstração do pacote "Site simples": várias páginas ligadas pelo menu.
+       Esta é a página INICIAL. As outras são:
+       casa-de-racao-produtos.html, casa-de-racao-banho-e-tosa.html e casa-de-racao-contato.html.
+       A "Amigo Fiel" é inventada: quando um cliente fechar, troque nome, textos, fotos, preços e WhatsApp -->
+  <title>Amigo Fiel Rações | Modelo de site para casa de ração e pet shop</title>
+  <meta name="description" content="Modelo de site para casa de ração e pet shop: produtos com pedido pelo WhatsApp, entrega no bairro, banho e tosa.">
+
+  <!-- As 4 páginas usam os MESMOS dois arquivos de CSS: muda num lugar, muda em todas -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/casa-de-racao.css">
+</head>
+<body>
+
+  <!-- ===================== AVISO DE MODELO ===================== -->
+  <div class="aviso-modelo">
+    <p>Este é um <strong>modelo de demonstração</strong> da Nyweb (pacote Site simples).
+      <a href="index.html#modelos">Ver outros modelos</a></p>
+  </div>
+
+  <!-- ===================== MENU ===================== -->
+  <!-- O menu é IGUAL nas 4 páginas. Só muda qual link tem aria-current="page":
+       ele avisa ao leitor de tela "você está aqui", e o CSS usa isso para sublinhar o link -->
+  <header class="menu">
+    <a href="casa-de-racao.html" class="marca"><span aria-hidden="true">🐾</span> Amigo Fiel</a>
+    <nav aria-label="Menu da loja">
+      <ul>
+        <li><a href="casa-de-racao.html" aria-current="page">Início</a></li>
+        <li><a href="casa-de-racao-produtos.html">Produtos</a></li>
+        <li><a href="casa-de-racao-banho-e-tosa.html">Banho e tosa</a></li>
+        <li><a href="casa-de-racao-contato.html">Entrega e contato</a></li>
+      </ul>
+    </nav>
+    <!-- Num site de verdade, aqui vai o WhatsApp DA LOJA.
+         No modelo, vai para o SEU WhatsApp, dizendo qual modelo a pessoa viu -->
+    <a class="btn btn-principal"
+       href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+       target="_blank" rel="noopener">Fazer pedido</a>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="topo">
+      <div class="hero-texto">
+        <p class="sobretitulo">Casa de ração e pet shop · Rio Grande</p>
+        <h1>A ração do seu pet chega em casa <span class="destaque">no mesmo dia</span>.</h1>
+        <p>Peça pelo WhatsApp até as 16h e a gente entrega no seu bairro. Ração, petiscos, areia, remédios e banho e tosa com hora marcada.</p>
+        <div class="hero-botoes">
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+          <!-- Agora o botão leva para OUTRA PÁGINA, não para um pedaço desta -->
+          <a class="btn btn-secundario" href="casa-de-racao-produtos.html">Ver produtos</a>
+        </div>
+
+        <ul class="selos">
+          <li><strong>Entrega grátis</strong> acima de R$ 150</li>
+          <li><strong>Pix ou cartão</strong> na entrega</li>
+          <li><strong>Ração a granel</strong> por quilo</li>
+        </ul>
+      </div>
+
+      <!-- Espaço da foto principal. Aqui entra uma foto real (o dono com um cachorro, a fachada...):
+           <img src="img/racao-capa.jpg" alt="Cachorro feliz na frente da loja"> -->
+      <div class="foto foto-capa" role="img" aria-label="Foto de um cachorro na loja">
+        <span class="foto-bicho" aria-hidden="true">🐶</span>
+        <p class="adesivo">Peça até as <strong>16h</strong>, chega <strong>hoje</strong></p>
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORIAS ===================== -->
+    <!-- "pagina.html#caes" = abre a página de produtos JÁ na parte dos cães -->
+    <section class="categorias" aria-label="Categorias">
+      <ul>
+        <li><a href="casa-de-racao-produtos.html#caes"><span aria-hidden="true">🐕</span> Cães</a></li>
+        <li><a href="casa-de-racao-produtos.html#gatos"><span aria-hidden="true">🐈</span> Gatos</a></li>
+        <li><a href="casa-de-racao-produtos.html#aves-peixes"><span aria-hidden="true">🐦</span> Aves</a></li>
+        <li><a href="casa-de-racao-produtos.html#aves-peixes"><span aria-hidden="true">🐟</span> Peixes</a></li>
+        <li><a href="casa-de-racao-banho-e-tosa.html"><span aria-hidden="true">🛁</span> Banho e tosa</a></li>
+      </ul>
+    </section>
+
+    <!-- ===================== MAIS PEDIDOS ===================== -->
+    <!-- No início mostramos só os 4 mais pedidos. A lista completa fica na página Produtos -->
+    <section id="produtos">
+      <h2>Mais pedidos da semana</h2>
+      <p>Preços de referência. Não achou a marca que o seu pet come? Pergunta no WhatsApp que a gente consegue.</p>
+
+      <div class="produtos">
+        <article class="produto">
+          <div class="foto foto-produto" role="img" aria-label="Foto do saco de ração"><span aria-hidden="true">🐶</span></div>
+          <p class="produto-tipo">Cães adultos</p>
+          <h3>Ração Premium Frango e Arroz</h3>
+          <p class="produto-detalhe">Saco de 15 kg</p>
+          <p class="preco">R$ 189,90</p>
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Pedir</a>
+        </article>
+
+        <article class="produto">
+          <div class="foto foto-produto foto-gato" role="img" aria-label="Foto do saco de ração"><span aria-hidden="true">🐱</span></div>
+          <p class="produto-tipo">Gatos castrados</p>
+          <h3>Ração Gatos Castrados Salmão</h3>
+          <p class="produto-detalhe">Saco de 10,1 kg</p>
+          <p class="preco">R$ 164,90</p>
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Pedir</a>
+        </article>
+
+        <article class="produto">
+          <div class="foto foto-produto foto-areia" role="img" aria-label="Foto do pacote de areia"><span aria-hidden="true">🪣</span></div>
+          <p class="produto-tipo">Gatos</p>
+          <h3>Areia Higiênica Grãos Finos</h3>
+          <p class="produto-detalhe">Pacote de 4 kg</p>
+          <p class="preco">R$ 24,90</p>
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Pedir</a>
+        </article>
+
+        <article class="produto">
+          <div class="foto foto-produto" role="img" aria-label="Foto da ração a granel"><span aria-hidden="true">🥣</span></div>
+          <p class="etiqueta">Mais barato</p>
+          <p class="produto-tipo">Cães</p>
+          <h3>Ração a granel</h3>
+          <p class="produto-detalhe">Por quilo, leve quanto quiser</p>
+          <p class="preco">R$ 9,90 <small>/kg</small></p>
+          <a class="btn btn-principal"
+             href="https://wa.me/5553992032750?text=Ol%C3%A1%2C%20Nycolle!%20Vi%20o%20modelo%20de%20casa%20de%20ra%C3%A7%C3%A3o%20e%20quero%20um%20site%20assim."
+             target="_blank" rel="noopener">Pedir</a>
+        </article>
+      </div>
+
+      <a class="link-mais" href="casa-de-racao-produtos.html">Ver todos os produtos →</a>
+    </section>
+
+    <!-- ===================== CHAMADA PARA O BANHO ===================== -->
+    <!-- Um "resumo" do banho e tosa que leva para a página completa -->
+    <section class="chamada-banho">
+      <div class="foto foto-banho" role="img" aria-label="Foto de um cachorro tomando banho"><span aria-hidden="true">🛁</span></div>
+      <div>
+        <h2>Banho e tosa a partir de R$ 45</h2>
+        <p>Seu pet sai cheiroso e sem estresse. A gente busca e leva em casa.</p>
+        <a class="btn btn-secundario" href="casa-de-racao-banho-e-tosa.html">Ver preços do banho</a>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS ===================== -->
+    <section id="depoimentos">
+      <h2>Quem compra, volta</h2>
+      <div class="depoimentos">
+        <figure>
+          <blockquote>"Peço a ração do Thor todo mês e chega sempre no mesmo dia. Não preciso mais carregar saco de 15 kg."</blockquote>
+          <figcaption>Fernanda, tutora do Thor</figcaption>
+        </figure>
+        <figure>
+          <blockquote>"A Mel voltou do banho linda e calma. E eles ainda buscaram em casa!"</blockquote>
+          <figcaption>Ricardo, tutor da Mel</figcaption>
+        </figure>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <!-- Num site de várias páginas, o rodapé repete o endereço e os links:
+       quem chega ao fim de qualquer página acha tudo ali -->
+  <footer>
+    <div class="rodape">
+      <div>
+        <p class="marca"><span aria-hidden="true">🐾</span> Amigo Fiel</p>
+        <address>Rua Exemplo, 456 · Cidade Nova · Rio Grande, RS</address>
+        <p>Seg a sex 8h às 19h · Sáb 8h às 13h</p>
+      </div>
+      <nav aria-label="Páginas">
+        <ul>
+          <li><a href="casa-de-racao.html">Início</a></li>
+          <li><a href="casa-de-racao-produtos.html">Produtos</a></li>
+          <li><a href="casa-de-racao-banho-e-tosa.html">Banho e tosa</a></li>
+          <li><a href="casa-de-racao-contato.html">Entrega e contato</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="credito">Modelo criado por <a href="index.html">Nyweb</a></p>
+  </footer>
+
+</body>
+</html>
