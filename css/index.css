@@ -7,6 +7,64 @@
    ========================================================= */
 
 
+/* ---------- FONTES ----------
+   As duas fontes vêm do Google (o link está no <head> do index.html).
+   Depois de cada nome vem uma fonte "reserva", usada enquanto a do Google carrega */
+:root {
+  --fonte-titulo: "Bricolage Grotesque", var(--fonte);
+  --fonte-enfeite: "Instrument Serif", Georgia, serif;
+}
+
+h1,
+h2,
+h3,
+.marca {
+  font-family: var(--fonte-titulo);
+  letter-spacing: -0.02em;   /* letras um pouco mais juntinhas: título fica mais "firme" */
+}
+
+h1 {
+  font-size: clamp(2.3rem, 5vw + 1rem, 3.9rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw + 1rem, 2.7rem);
+}
+
+/* Palavras com <em> nos títulos: itálico elegante, na cor da marca.
+   A fonte Instrument Serif é mais "baixinha", por isso aumentamos 15% */
+h1 em,
+h2 em {
+  font-family: var(--fonte-enfeite);
+  font-weight: 400;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  color: var(--cor-marca);
+}
+
+/* Etiqueta pequena acima de cada título de seção ("Portfólio", "Pacotes"...) */
+.sobre {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cor-marca);
+}
+
+/* Tracinho antes da etiqueta */
+.sobre::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: currentColor;  /* currentColor = a mesma cor do texto */
+}
+
+
 /* ---------- ESPAÇAMENTO DAS SEÇÕES ----------
    padding-inline = espaço nas laterais.
    max(16px, ...) = no celular, 16px; em tela grande, o espaço que
@@ -45,13 +103,25 @@ main > section > h2 + p {
   background: rgba(251, 247, 242, 0.92); /* creme levemente transparente */
   backdrop-filter: blur(8px);            /* desfoca o que passa por trás */
   border-bottom: 1px solid var(--cor-borda);
+  transition: box-shadow 0.3s;
+}
+
+/* O JavaScript coloca a classe "rolou" quando a página desce */
+.menu.rolou {
+  box-shadow: 0 6px 24px rgba(35, 32, 43, 0.08);
 }
 
 .marca {
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   color: var(--cor-texto);
   text-decoration: none;
+}
+
+/* Um pontinho framboesa depois do nome: "Nyweb." (detalhe de marca) */
+.marca::after {
+  content: ".";
+  color: var(--cor-marca);
 }
 
 .menu .btn {
@@ -98,19 +168,117 @@ main > section > h2 + p {
 /* ===================== 2. HERO ===================== */
 .hero {
   display: grid;
-  gap: 48px;
+  gap: 56px;
   align-items: center;
   padding-top: 48px;
+  overflow: hidden;   /* as manchas de cor e os cartões flutuantes não criam rolagem de lado */
+  /* Duas "manchas" de cor desfocadas no fundo: framboesa no alto à direita,
+     verde embaixo à esquerda. radial-gradient = gradiente em círculo */
+  background:
+    radial-gradient(circle at 85% 10%, rgba(180, 35, 90, 0.16), transparent 40%),
+    radial-gradient(circle at 5% 95%, rgba(15, 122, 63, 0.12), transparent 40%);
 }
 
+/* Etiqueta "Sites para pequenos negócios · Rio Grande" */
+.selo-topo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+/* Pontinho verde que "pulsa", como um sinal de "online" */
+.pontinho {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cor-whats);
+  animation: pulsar 2s infinite;
+}
+
+@keyframes pulsar {
+  0%   { box-shadow: 0 0 0 0 rgba(15, 122, 63, 0.5); }
+  100% { box-shadow: 0 0 0 10px rgba(15, 122, 63, 0); }
+}
+
+/* "WhatsApp" do título: verde, com um sublinhado desenhado embaixo */
 .destaque {
   color: var(--cor-whats);
+  background: linear-gradient(transparent 85%, rgba(15, 122, 63, 0.22) 85%);
 }
 
-.hero-texto > p {
+.hero-texto > p:not(.selo-topo) {
   font-size: 1.15rem;
   color: var(--cor-texto-suave);
   max-width: 50ch;
+}
+
+/* Lista "Preço fechado · Feito para celular · ..." com um ✓ antes de cada item */
+.garantias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+  color: var(--cor-texto-suave);
+}
+
+.garantias li::before {
+  content: "✓ ";
+  color: var(--cor-whats);
+  font-weight: 800;
+}
+
+/* Área da ilustração: a janela + os cartões flutuantes em volta */
+.hero-ilustracao {
+  position: relative;
+  padding: 24px 0;
+}
+
+.flutuante {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--cor-superficie);
+  box-shadow: 0 12px 30px rgba(35, 32, 43, 0.14);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: flutuar 5s ease-in-out infinite;  /* sobe e desce devagar, sem parar */
+}
+
+.flutuante span {
+  font-size: 1.2rem;
+}
+
+.flutuante-1 {
+  top: 0;
+  right: -8px;
+}
+
+.flutuante-2 {
+  bottom: 0;
+  left: -8px;
+  animation-delay: -2.5s;   /* começa no meio do movimento: os dois não sobem juntos */
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
 
 .hero-botoes {
@@ -186,6 +354,46 @@ main > section > h2 + p {
   border-bottom-right-radius: 4px;
 }
 
+/* --- Animação da conversa (o JavaScript coloca a classe "mostrar" em cada balão) ---
+   .js na frente = só esconde se o JavaScript estiver funcionando;
+   sem JS, a conversa aparece inteira, parada */
+.js .janela-conversa .msg {
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.js .janela-conversa .msg.mostrar {
+  opacity: 1;
+  transform: none;
+}
+
+/* O balão dos três pontinhos só ocupa espaço enquanto está "digitando" */
+.digitando {
+  display: none;
+  gap: 4px;
+}
+
+.js .janela-conversa .digitando.mostrar {
+  display: flex;
+}
+
+.digitando span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6aa57d;
+  animation: pular 1s infinite;
+}
+
+.digitando span:nth-child(2) { animation-delay: 0.15s; }
+.digitando span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes pular {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30%           { transform: translateY(-4px); opacity: 1; }
+}
+
 /* Tela grande: texto à esquerda, janela à direita */
 @media (min-width: 800px) {
   .hero {
@@ -196,7 +404,9 @@ main > section > h2 + p {
 
 
 /* ===================== 3. FAIXA QUE CORRE ===================== */
-/* Por enquanto ela fica parada. No Passo 4 ela ganha movimento. */
+/* As duas listas iguais andam para a esquerda sem parar.
+   Quando a primeira sai toda da tela, a segunda está exatamente no lugar dela,
+   e a animação recomeça: parece uma faixa infinita */
 .faixa {
   display: flex;
   overflow: hidden;        /* esconde o que passar da tela */
@@ -215,6 +425,18 @@ main > section > h2 + p {
   list-style: none;
   white-space: nowrap;
   font-weight: 600;
+  animation: correr 28s linear infinite;  /* linear = mesma velocidade o tempo todo */
+}
+
+/* Passou o mouse: a faixa para (dá para ler com calma) */
+.faixa:hover .faixa-trilho {
+  animation-play-state: paused;
+}
+
+/* -100% = anda a largura inteira da própria lista */
+@keyframes correr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
 }
 
 /* Um losango entre um serviço e outro */
@@ -243,6 +465,25 @@ main > section > h2 + p {
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Passou o mouse: o cartão sobe um pouco e ganha sombra */
+.cartao:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(35, 32, 43, 0.1);
+}
+
+/* Selinho redondo com emoji (cartões do "Por que fazer comigo") */
+.icone {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: var(--cor-marca-clara);
+  font-size: 1.5rem;
 }
 
 .cartao p {
@@ -342,16 +583,54 @@ main > section > h2 + p {
   background: var(--cor-marca-clara);
 }
 
+/* Vídeo de um lado, texto do outro (no celular, um embaixo do outro) */
+.video-grade {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
 .video-espaco {
   display: grid;
   place-items: center;     /* centraliza o conteúdo na horizontal e na vertical */
-  max-width: 720px;
+  align-content: center;
+  gap: 12px;
   aspect-ratio: 16 / 9;    /* formato de vídeo */
-  border: 2px dashed var(--cor-marca);
   border-radius: var(--raio);
-  color: var(--cor-texto-suave);
+  background: linear-gradient(135deg, #3a2240, var(--cor-marca));
+  color: #f3dce6;
   text-align: center;
   padding: 16px;
+  box-shadow: var(--sombra);
+}
+
+.video-espaco p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Botão de "play" redondo no meio */
+.play {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding-left: 4px;        /* o triângulo parece torto se ficar no centro exato */
+  border-radius: 50%;
+  background: #fff;
+  color: var(--cor-marca);
+  font-size: 1.4rem;
+}
+
+.video-texto p {
+  font-size: 1.1rem;
+  color: var(--cor-texto-suave);
+}
+
+@media (min-width: 800px) {
+  .video-grade {
+    grid-template-columns: 1.2fr 1fr;
+  }
 }
 
 
@@ -369,6 +648,51 @@ main > section > h2 + p {
   display: block;          /* o valor vai para a linha de baixo, em destaque */
   font-size: 1.6rem;
   color: var(--cor-texto);
+}
+
+/* O pacote recomendado: fundo escuro, um pouco maior e com selo */
+.pacote-destaque {
+  position: relative;
+  background: var(--cor-texto);
+  border-color: var(--cor-texto);
+  color: #fff;
+}
+
+.pacote-destaque .preco,
+.pacote-destaque li {
+  color: #d8d3dc;
+}
+
+.pacote-destaque .preco strong {
+  color: #fff;
+}
+
+.pacote-destaque .link-exemplo {
+  color: #ffb3cf;
+}
+
+/* O selo "Recomendado" fica "pendurado" na borda de cima do cartão */
+.selo-pacote {
+  position: absolute;
+  top: -13px;
+  left: 24px;
+  margin: 0;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--cor-marca);
+  color: #fff !important;   /* vence o ".cartao p" que deixa o texto cinza */
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  .pacote-destaque {
+    transform: scale(1.04);  /* 4% maior que os outros */
+  }
+
+  .pacote-destaque:hover {
+    transform: scale(1.04) translateY(-4px);
+  }
 }
 
 #pacotes > p small {
@@ -392,7 +716,25 @@ main > section > h2 + p {
 }
 
 .passos li {
+  position: relative;       /* para a linha tracejada ser posicionada a partir daqui */
   counter-increment: passo; /* cada item soma 1 */
+}
+
+/* No computador, os 4 passos ficam lado a lado, ligados por uma linha tracejada
+   que sai de cada número e vai até o próximo */
+@media (min-width: 900px) {
+  .passos {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .passos li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 22px;              /* metade da bolinha de 44px: a linha passa no meio dela */
+    left: 56px;
+    right: -12px;
+    border-top: 2px dashed var(--cor-borda);
+  }
 }
 
 .passos li::before {
@@ -484,13 +826,32 @@ main > section > h2 + p {
 /* ===================== 10. CHAMADA FINAL ===================== */
 #contato {
   text-align: center;
-  background: var(--cor-texto);
+  padding-block: 96px;
+  /* Gradiente do quase preto para a framboesa: a seção mais chamativa da página */
+  background:
+    radial-gradient(circle at 50% 120%, rgba(180, 35, 90, 0.75), transparent 60%),
+    var(--cor-texto);
   color: var(--cor-fundo);
+}
+
+#contato h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
+}
+
+#contato h2 em {
+  color: #ffb3cf;           /* framboesa clarinho: o escuro não aparece no fundo escuro */
 }
 
 #contato > p {
   color: #d8d3dc;
   margin-inline: auto;      /* centraliza o parágrafo */
+}
+
+#contato .btn {
+  font-size: 1.1rem;
+  padding: 1em 2em;
 }
 
 .contatos {
@@ -509,15 +870,96 @@ main > section > h2 + p {
 
 
 /* ===================== RODAPÉ ===================== */
+/* Escuro, emendando com a chamada final */
 footer {
-  padding-block: 24px;
-  font-size: 0.9rem;
-  color: var(--cor-texto-suave);
-  text-align: center;
+  padding-block: 48px 24px;
+  background: #1a1720;
+  font-size: 0.92rem;
+  color: #a9a2b3;
 }
 
 footer p {
   margin: 0;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.rodape .marca {
+  color: #fff;
+}
+
+.rodape div p {
+  max-width: 36ch;
+  margin-top: 6px;
+}
+
+.rodape ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rodape nav a {
+  color: #d8d3dc;
+  text-decoration: none;
+}
+
+.rodape nav a:hover {
+  color: #fff;
+}
+
+.credito {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+}
+
+
+/* ===================== BOTÃO FLUTUANTE DO WHATSAPP ===================== */
+.whats-flutuante {
+  position: fixed;            /* fixo na TELA, não na página: acompanha a rolagem */
+  right: 18px;
+  bottom: 18px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--cor-whats);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15, 122, 63, 0.35);
+  transition: transform 0.2s;
+  animation: pulsar 2.4s infinite;   /* reaproveita a animação do pontinho do topo */
+}
+
+.whats-flutuante:hover {
+  transform: scale(1.08);
+}
+
+
+/* ===================== APARECER AO ROLAR ===================== */
+/* O JavaScript coloca "revelar" nos blocos e, quando cada um entra na tela, "visivel".
+   Usamos "translate" (e não "transform") de propósito: são propriedades separadas,
+   então a subida ao aparecer não briga com o efeito de passar o mouse dos cartões */
+.revelar {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity 0.7s ease, translate 0.7s ease, transform 0.3s, box-shadow 0.3s;
+}
+
+.revelar.visivel {
+  opacity: 1;
+  translate: 0 0;
 }
 
 
