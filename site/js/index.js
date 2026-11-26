@@ -3,7 +3,7 @@
    JavaScript da página inicial.
    1. Ano do rodapé
    2. Menu ganha sombra ao rolar
-   3. Conversa da janelinha: mensagens aparecem uma por uma
+   3. Vitrine: o celular que troca de site (e o título junto)
    4. Blocos que aparecem suavemente ao rolar a página
    ========================================================= */
 
@@ -28,40 +28,84 @@ window.addEventListener('scroll', conferirRolagem, { passive: true });
 conferirRolagem();
 
 
-/* ---------- 3. CONVERSA DA JANELINHA ----------
-   Ordem: cliente pergunta → loja "digitando..." → loja responde → cliente responde.
-   Depois de um tempo, tudo some e começa de novo */
-const conversa = document.querySelector('.janela-conversa');
-const mensagens = Array.from(conversa.querySelectorAll('.msg'));
-const digitando = conversa.querySelector('.digitando');
+/* ---------- 3. VITRINE: O CELULAR QUE TROCA DE SITE ----------
+   A cada 6,5 segundos passa para o próximo site. Junto com ele trocam:
+   o começo do título, a notificação do WhatsApp, a etiqueta e o link do celular.
+   Os dados de cada site estão nos botões, no HTML (data-palavra, data-msg...) */
+const TEMPO_POR_SITE = 6500; // em milésimos de segundo (6500 = 6,5 s)
 
-// "esperar(1000)" = pausa de 1 segundo. Deixa a sequência fácil de ler, de cima para baixo
-function esperar(ms) {
-  return new Promise(function (pronto) { setTimeout(pronto, ms); });
+const telas = document.querySelectorAll('.tela-site');
+const botoesVitrine = document.querySelectorAll('.vitrine-botoes button');
+const celular = document.querySelector('[data-celular]');
+const palavra = document.querySelector('[data-palavra]');
+const notificacao = document.querySelector('[data-notificacao]');
+const notificacaoNome = document.querySelector('[data-notificacao-nome]');
+const notificacaoTexto = document.querySelector('[data-notificacao-texto]');
+const etiqueta = document.querySelector('[data-etiqueta]');
+
+let atual = 0;
+let relogio;           // guarda o "timer" da troca automática, para poder reiniciar
+let timerNotificacao;
+
+// Para uma animação de CSS começar DE NOVO, tiramos a classe, forçamos o navegador
+// a "reparar" (ler offsetWidth faz isso) e colocamos a classe de volta
+function reiniciarAnimacao(elemento, classe) {
+  elemento.classList.remove(classe);
+  void elemento.offsetWidth;
+  elemento.classList.add(classe);
 }
 
-async function animarConversa() {
-  while (true) {
-    mensagens.forEach(function (m) { m.classList.remove('mostrar'); });
-    await esperar(700);
-    mensagens[0].classList.add('mostrar');   // cliente pergunta
-    await esperar(1200);
-    digitando.classList.add('mostrar');      // loja digitando...
-    await esperar(1600);
-    digitando.classList.remove('mostrar');
-    mensagens[2].classList.add('mostrar');   // loja responde
-    await esperar(1500);
-    mensagens[3].classList.add('mostrar');   // cliente: "10h, por favor"
-    await esperar(4500);                     // deixa a conversa um tempo na tela
-  }
+function mostrarSite(numero) {
+  atual = numero;
+  const botao = botoesVitrine[numero];
+
+  telas.forEach(function (tela, i) {
+    if (i === numero) reiniciarAnimacao(tela, 'ativo');
+    else tela.classList.remove('ativo');
+  });
+  botoesVitrine.forEach(function (b, i) { b.setAttribute('aria-pressed', String(i === numero)); });
+
+  palavra.textContent = botao.dataset.palavra;
+  reiniciarAnimacao(palavra, 'entrando');
+
+  celular.href = botao.dataset.pagina;
+  celular.setAttribute('aria-label', 'Abrir o site: ' + botao.textContent.replace(/^\S+\s/, ''));
+  etiqueta.textContent = botao.dataset.tipo;
+
+  // A notificação some e "chega" de novo um pouquinho depois do site aparecer
+  notificacao.classList.remove('mostrar');
+  clearTimeout(timerNotificacao);
+  timerNotificacao = setTimeout(function () {
+    notificacaoNome.textContent = botao.dataset.nome;
+    notificacaoTexto.textContent = botao.dataset.msg;
+    notificacao.classList.add('mostrar');
+  }, reduzirMovimento ? 0 : 900);
 }
 
-if (reduzirMovimento) {
-  // Sem animação: mostra a conversa completa, sem os pontinhos
-  mensagens.forEach(function (m) { if (m !== digitando) m.classList.add('mostrar'); });
-} else {
-  animarConversa();
+function proximo() {
+  mostrarSite((atual + 1) % telas.length);  // % = "resto": depois do último, volta ao 0
 }
+
+function ligarRelogio() {
+  clearInterval(relogio);
+  if (!reduzirMovimento) relogio = setInterval(proximo, TEMPO_POR_SITE);
+}
+
+// Clicou num botão: mostra aquele site e recomeça a contagem
+botoesVitrine.forEach(function (botao, i) {
+  botao.addEventListener('click', function () {
+    mostrarSite(i);
+    ligarRelogio();
+  });
+});
+
+// Mouse em cima do celular: pausa (a pessoa está olhando). Saiu: continua
+const vitrine = document.querySelector('.vitrine');
+vitrine.addEventListener('mouseenter', function () { clearInterval(relogio); });
+vitrine.addEventListener('mouseleave', ligarRelogio);
+
+mostrarSite(0);
+ligarRelogio();
 
 
 /* ---------- 4. APARECER AO ROLAR ----------
