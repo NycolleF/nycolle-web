@@ -147,23 +147,36 @@
         <!-- <article> = um bloco que faz sentido sozinho (cada cartão é um modelo).
              A <div class="previa"> vai virar a "fotinho" colorida do modelo no CSS -->
         <article class="cartao">
-          <div class="previa previa-salao"></div>
+          <!-- Print do início do modelo. Clicar na imagem também abre o modelo.
+               aria-hidden e tabindex="-1": o link "Ver modelo" lá embaixo já faz o mesmo,
+               então o leitor de tela e a tecla Tab não passam duas vezes pelo mesmo lugar -->
+          <a class="previa" href="salao.html" aria-hidden="true" tabindex="-1">
+            <img src="img/portfolio/modelo-salao.jpg" alt="" width="960" height="600" loading="lazy">
+          </a>
+          <!-- Etiqueta dizendo de qual PACOTE este modelo é exemplo -->
+          <p class="tipo-site">Landing page</p>
           <h3>Salão de beleza</h3>
           <p>Serviços, antes e depois, equipe e agendamento.</p>
           <a href="salao.html">Ver modelo</a>
         </article>
 
         <article class="cartao">
-          <div class="previa previa-racao"></div>
+          <a class="previa" href="casa-de-racao.html" aria-hidden="true" tabindex="-1">
+            <img src="img/portfolio/modelo-casa-de-racao.jpg" alt="" width="960" height="600" loading="lazy">
+          </a>
+          <p class="tipo-site">Site simples · 4 páginas</p>
           <h3>Casa de ração e pet shop</h3>
-          <p>Produtos com pedido direto no WhatsApp, banho e tosa.</p>
+          <p>Início, produtos, banho e tosa, entrega e contato, cada um na sua página.</p>
           <a href="casa-de-racao.html">Ver modelo</a>
         </article>
 
         <article class="cartao">
-          <div class="previa previa-padaria"></div>
+          <a class="previa" href="padaria.html" aria-hidden="true" tabindex="-1">
+            <img src="img/portfolio/modelo-padaria.jpg" alt="" width="960" height="600" loading="lazy">
+          </a>
+          <p class="tipo-site">Site com pedidos</p>
           <h3>Padaria e confeitaria</h3>
-          <p>Cardápio, fornadas do dia e encomendas de festa.</p>
+          <p>O cliente monta o pedido no site (carrinho, bolo personalizado, entrega ou retirada) e ele chega pronto no WhatsApp.</p>
           <a href="padaria.html">Ver modelo</a>
         </article>
       </div>
@@ -193,6 +206,8 @@
             <li>Feita para celular</li>
             <li>Botão direto para o seu WhatsApp</li>
           </ul>
+          <!-- Link para um modelo que é exatamente deste tipo: o cliente VÊ o que está comprando -->
+          <a class="link-exemplo" href="salao.html">Ver exemplo: salão de beleza →</a>
         </article>
 
         <article class="cartao pacote">
@@ -203,6 +218,7 @@
             <li>Feito para celular</li>
             <li>Botão direto para o seu WhatsApp</li>
           </ul>
+          <a class="link-exemplo" href="casa-de-racao.html">Ver exemplo: casa de ração →</a>
         </article>
 
         <article class="cartao pacote">
