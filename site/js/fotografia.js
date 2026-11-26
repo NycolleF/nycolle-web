@@ -75,7 +75,7 @@ let ultimaPosicao = 0;
 function atualizarMenu() {
   // window.scrollY = quantos pixels a página já rolou.
   // classList.toggle('classe', condição) coloca a classe se for verdade e tira se for mentira.
-  // As classes vão no <body> para o menu E o selo "Modelo por Nycolle Web" poderem usar
+  // As classes vão no <body> para o menu E o selo "Site por Nyweb" poderem usar
   const posicao = window.scrollY;
   document.body.classList.toggle('rolou', posicao > 60);
 
@@ -501,7 +501,7 @@ if (!reduzirMovimento) {
 }
 
 
-/* ---------- 8c. SELO "MODELO POR NYCOLLE WEB" SOME NO FIM ----------
+/* ---------- 8c. SELO "SITE POR NYWEB" SOME NO FIM ----------
    Quando o rodapé aparece na tela, o selo se esconde
    para não ficar por cima dos links e do botão final */
 const vigiaFim = new IntersectionObserver(function (entradas) {
