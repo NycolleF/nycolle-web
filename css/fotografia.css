@@ -513,6 +513,13 @@ main > section {
   100% { opacity: 0; }
 }
 
+/* Com "reduzir movimento" ligado, a animação pula direto para o fim (foto invisível)
+   e o arco ficava vazio. Então, nesse caso, fica parada a primeira foto */
+@media (prefers-reduced-motion: reduce) {
+  .arco img { animation: none; }
+  .arco img:first-child { opacity: 1; }
+}
+
 /* Foto pequena "colada" no canto de baixo, com borda da cor do fundo */
 .abertura-detalhe {
   position: absolute;

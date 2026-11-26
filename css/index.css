@@ -250,6 +250,60 @@ main > section > h2 + p {
 }
 
 
+/* ===================== 3B. SITES NO AR ===================== */
+/* Um trabalho embaixo do outro: print grande de um lado, texto do outro.
+   O segundo inverte os lados (row-reverse), para a página não ficar repetitiva */
+.trabalhos {
+  display: grid;
+  gap: 48px;
+}
+
+.trabalho {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.trabalho:nth-child(even) .trabalho-print { order: 2; }
+
+/* O print parece uma janela de navegador: borda, cantos arredondados e sombra */
+.trabalho-print {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.trabalho-print img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.trabalho-print:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(35, 32, 43, 0.14);
+}
+
+.trabalho-tipo {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-marca);
+}
+.trabalho-texto h3 { margin-top: 0; }
+.trabalho-texto p:not(.trabalho-tipo) { color: var(--cor-texto-suave); }
+.link-trabalho { font-weight: 700; }
+
+/* No celular: print em cima, texto embaixo */
+@media (max-width: 760px) {
+  .trabalho { grid-template-columns: 1fr; gap: 18px; }
+  .trabalho:nth-child(even) .trabalho-print { order: 0; }
+}
+
+
 /* ===================== 4. MODELOS ===================== */
 /* A "fotinho" de cada modelo, feita só com cores (gradiente).
    Quando você tiver prints dos modelos, pode trocar por <img>. */
