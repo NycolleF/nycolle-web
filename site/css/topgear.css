@@ -825,6 +825,38 @@ main > .letreiro {
 .espaco-foto { aspect-ratio: 4 / 5; }
 .espaco-foto img { transform: scale(1.12); }
 
+/* Foto da sala que vira vídeo: play no meio e um bilhete à mão embaixo */
+.espaco-video {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+.espaco-video img { transform: none; transition: transform 0.8s var(--suave); }
+.espaco-video:hover img { transform: scale(1.05); }
+.espaco-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(11, 31, 51, 0.8), transparent 45%);
+  pointer-events: none;
+}
+.espaco-video .video-play { width: 76px; height: 76px; }
+.espaco-video .video-play::after { left: 30px; top: 24px; border-left-width: 22px; border-top-width: 14px; border-bottom-width: 14px; }
+.espaco-video-titulo {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+  z-index: 3;
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  color: var(--tg-dourado);
+  transform: rotate(-2deg);
+  transform-origin: left;
+}
+
 .espaco-itens {
   display: grid;
   gap: 14px;
@@ -943,7 +975,7 @@ main > .letreiro {
 
 .videos-trilho {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 18px;
 }
 
