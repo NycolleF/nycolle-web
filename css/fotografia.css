@@ -1603,7 +1603,7 @@ main > section {
 }
 
 
-/* ---------- 17. SELO "MODELO POR NYCOLLE WEB" ---------- */
+/* ---------- 17. SELO "SITE POR NYWEB" ---------- */
 .selo-modelo {
   position: fixed;
   right: 16px;
@@ -1661,7 +1661,7 @@ main > section {
   visibility: hidden;
 }
 
-/* No celular: menor, só "Nycolle Web →", para não cobrir o conteúdo */
+/* No celular: menor, só "Nyweb →", para não cobrir o conteúdo */
 @media (max-width: 599px) {
   .selo-modelo {
     right: 10px;
