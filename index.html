@@ -69,8 +69,15 @@
         <!-- Etiqueta acima do título: diz em 1 segundo o que você faz e onde -->
         <p class="selo-topo"><span class="pontinho" aria-hidden="true"></span> Sites para pequenos negócios · Rio Grande, RS</p>
         <!-- Só pode ter UM <h1> por página: é o assunto principal para o Google.
-             <em> = ênfase; o CSS deixa essas palavras na fonte itálica elegante -->
-        <h1>Seu negócio no <em>celular</em> do cliente, com um toque até o seu <span class="destaque">WhatsApp</span>.</h1>
+             O começo do título TROCA sozinho ("Sua oficina", "Seu salão"...), junto com o celular ao lado.
+             Para o Google e para o leitor de tela, o título é sempre "Seu negócio no celular...":
+             - .so-leitor: texto invisível na tela, mas lido pelo leitor de tela
+             - aria-hidden na parte que troca: o leitor de tela ignora (senão ficaria lendo cada troca) -->
+        <h1>
+          <span class="so-leitor">Seu negócio</span>
+          <span class="troca" aria-hidden="true"><span class="troca-texto" data-palavra>Seu negócio</span></span>
+          no celular do cliente, com um toque até o seu <span class="destaque">WhatsApp</span>.
+        </h1>
         <p>Crio sites e landing pages simples, rápidos e bonitos para pequenos negócios de Rio Grande e região. Você recebe pronto, com preço fechado.</p>
 
         <div class="hero-botoes">
@@ -89,25 +96,47 @@
         </ul>
       </div>
 
-      <!-- Janela de navegador "desenhada". As mensagens aparecem uma por uma (animação no CSS).
-           aria-hidden="true" esconde dos leitores de tela, porque é só enfeite (as mensagens são ilustração, não conversa real) -->
-      <div class="hero-ilustracao" aria-hidden="true">
-        <div class="janela">
-          <div class="janela-barra">
-            <span class="bolinha"></span><span class="bolinha"></span><span class="bolinha"></span>
-            <span class="janela-endereco">seunegocio.com.br</span>
+      <!-- ===== A VITRINE: um celular mostrando os seus sites de verdade =====
+           O JavaScript troca o site a cada poucos segundos (e o começo do título junto).
+           Os prints são das páginas inteiras: o CSS faz a tela "rolar" de cima até embaixo -->
+      <div class="vitrine">
+        <!-- O celular é um link: tocar nele abre o site que está aparecendo (o JS troca o href) -->
+        <a class="celular" href="topgear.html" data-celular aria-label="Abrir o site que aparece no celular">
+          <div class="celular-tela">
+            <!-- alt="" porque a imagem é enfeite: quem usa leitor de tela tem os botões abaixo -->
+            <img class="tela-site ativo" src="img/portfolio/celular-topgear.jpg" alt="" width="500" height="2200">
+            <img class="tela-site" src="img/portfolio/celular-fotografia.jpg" alt="" width="500" height="1080">
+            <img class="tela-site" src="img/portfolio/celular-salao.jpg" alt="" width="500" height="2200">
+            <img class="tela-site" src="img/portfolio/celular-casa-de-racao.jpg" alt="" width="500" height="2200">
+            <img class="tela-site" src="img/portfolio/celular-padaria.jpg" alt="" width="500" height="2200">
           </div>
-          <div class="janela-conversa">
-            <p class="msg msg-cliente">Oi! Vi o site de vocês. Ainda tem horário amanhã?</p>
-            <!-- Os três pontinhos de "digitando..." -->
-            <p class="msg msg-loja digitando"><span></span><span></span><span></span></p>
-            <p class="msg msg-loja">Tem sim! Às 10h ou às 15h. Qual fica melhor?</p>
-            <p class="msg msg-cliente">10h, por favor 😊</p>
+        </a>
+
+        <!-- Notificação do WhatsApp que "chega" em cima do celular. É ilustração: aria-hidden -->
+        <div class="notificacao so-js" data-notificacao aria-hidden="true">
+          <span class="notif-icone">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>
+          </span>
+          <div>
+            <p class="notif-topo"><strong data-notificacao-nome>TopGear</strong> · agora</p>
+            <p class="notif-texto" data-notificacao-texto>Oi! Vi o site de vocês. Dá para revisar o carro amanhã?</p>
           </div>
         </div>
-        <!-- Cartõezinhos "flutuando" em volta da janela -->
-        <p class="flutuante flutuante-1"><span>📱</span> Abre rápido no celular</p>
-        <p class="flutuante flutuante-2"><span>💬</span> Novo cliente no WhatsApp</p>
+
+        <!-- Etiqueta que diz se é um site no ar (cliente de verdade) ou um modelo -->
+        <p class="flutuante etiqueta-site so-js" aria-hidden="true" data-etiqueta>✅ Site no ar</p>
+
+        <!-- Botões para escolher qual site ver. Cada um guarda os dados nos atributos data-*:
+             data-palavra = como o título começa | data-pagina = página que o celular abre
+             data-nome = quem manda a mensagem | data-msg = a mensagem da notificação
+             data-tipo = "Site no ar" (cliente real) ou "Modelo" -->
+        <div class="vitrine-botoes so-js" role="group" aria-label="Escolha um site para ver no celular">
+          <button type="button" aria-pressed="true" data-palavra="Sua oficina" data-pagina="topgear.html" data-nome="Cliente da TopGear" data-tipo="✅ Site no ar · TopGear" data-msg="Oi! Vi o site de vocês. Dá para revisar o carro amanhã?">🔧 Oficina</button>
+          <button type="button" aria-pressed="false" data-palavra="Seu estúdio" data-pagina="fotografia.html" data-nome="Cliente da Bárbara" data-tipo="✅ Site no ar · Bárbara Matheus" data-msg="Oi, Bárbara! Ainda tem data para ensaio de gestante?">📷 Fotógrafa</button>
+          <button type="button" aria-pressed="false" data-palavra="Seu salão" data-pagina="salao.html" data-nome="Cliente do salão" data-tipo="🎨 Modelo · Landing page" data-msg="Oi! Tem horário para escova no sábado?">💇 Salão</button>
+          <button type="button" aria-pressed="false" data-palavra="Seu pet shop" data-pagina="casa-de-racao.html" data-nome="Cliente do pet shop" data-tipo="🎨 Modelo · Site simples" data-msg="Oi! Vocês entregam ração no Cassino hoje?">🐾 Pet shop</button>
+          <button type="button" aria-pressed="false" data-palavra="Sua padaria" data-pagina="padaria.html" data-nome="Pedido pelo site" data-tipo="🎨 Modelo · Site com pedidos" data-msg="10 pães franceses e 1 cuca de uva, para buscar às 17h 🥖">🥖 Padaria</button>
+        </div>
       </div>
     </section>
 

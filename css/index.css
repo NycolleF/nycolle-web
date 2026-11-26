@@ -24,7 +24,7 @@ h3,
 }
 
 h1 {
-  font-size: clamp(2.3rem, 5vw + 1rem, 3.9rem);
+  font-size: clamp(2.2rem, 4vw + 1rem, 3.4rem);
   line-height: 1.05;
 }
 
@@ -176,7 +176,9 @@ main > section > h2 + p {
      verde embaixo à esquerda. radial-gradient = gradiente em círculo */
   background:
     radial-gradient(circle at 85% 10%, rgba(180, 35, 90, 0.16), transparent 40%),
-    radial-gradient(circle at 5% 95%, rgba(15, 122, 63, 0.12), transparent 40%);
+    radial-gradient(circle at 5% 95%, rgba(15, 122, 63, 0.12), transparent 40%),
+    /* Pontinhos bem clarinhos repetidos a cada 22px, como papel pontilhado */
+    radial-gradient(rgba(35, 32, 43, 0.07) 1.2px, transparent 1.6px) 0 0 / 22px 22px;
 }
 
 /* Etiqueta "Sites para pequenos negócios · Rio Grande" */
@@ -238,42 +240,191 @@ main > section > h2 + p {
   font-weight: 800;
 }
 
-/* Área da ilustração: a janela + os cartões flutuantes em volta */
-.hero-ilustracao {
-  position: relative;
-  padding: 24px 0;
+/* --- O título que troca ("Sua oficina", "Seu salão"...) --- */
+
+/* Texto só para leitor de tela: existe, mas não aparece.
+   (É a receita padrão: tamanho de 1px, recortado, fora do fluxo) */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
+/* A parte que troca fica numa linha só dela: assim o resto do título não "pula" */
+.troca {
+  display: block;
+  white-space: nowrap;
+  font-family: var(--fonte-enfeite);
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--cor-marca);
+}
+
+.troca-texto {
+  display: inline-block;
+}
+
+/* A cada troca, a palavra nova sobe e aparece */
+.troca-texto.entrando {
+  animation: entrar-palavra 0.6s ease-out;
+}
+
+@keyframes entrar-palavra {
+  from { opacity: 0; transform: translateY(0.4em); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+
+
+/* --- A vitrine: celular + notificação + botões --- */
+.vitrine {
+  position: relative;
+  padding-top: 40px;       /* espaço para a notificação "chegar" em cima */
+}
+
+/* O celular, desenhado só com CSS: moldura escura, cantos bem redondos e levemente inclinado */
+.celular {
+  position: relative;
+  display: block;
+  width: min(280px, 72vw);
+  aspect-ratio: 9 / 19;
+  margin-inline: auto;
+  padding: 10px;
+  border-radius: 46px;
+  background: #1a1720;
+  box-shadow:
+    0 40px 70px -20px rgba(35, 32, 43, 0.45),   /* sombra grande e suave no chão */
+    inset 0 0 0 2px #3d3744;                     /* brilho fininho na borda */
+  rotate: -4deg;
+  transition: rotate 0.4s ease;
+}
+
+.celular:hover {
+  rotate: 0deg;            /* passou o mouse: o celular "endireita" */
+}
+
+/* A "ilha" preta no alto da tela (onde fica a câmera) */
+.celular::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  z-index: 2;
+  width: 76px;
+  height: 22px;
+  border-radius: 999px;
+  background: #1a1720;
+  transform: translateX(-50%);
+}
+
+.celular-tela {
+  position: relative;
+  height: 100%;
+  border-radius: 36px;
+  overflow: hidden;        /* corta os prints nos cantos arredondados */
+  background: #fff;
+}
+
+/* Os 5 prints ficam um em cima do outro; só o "ativo" aparece */
+.tela-site {
+  position: absolute;
+  inset: 0;                /* inset: 0 = encosta nos quatro lados */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* preenche a tela sem esticar... */
+  object-position: 50% 0%; /* ...mostrando o TOPO do print */
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+/* O print ativo aparece e "rola" do topo (0%) até o fim (100%), como alguém descendo a página */
+.tela-site.ativo {
+  opacity: 1;
+  animation: rolar-tela 5s ease-in-out 0.8s forwards;
+}
+
+@keyframes rolar-tela {
+  to { object-position: 50% 100%; }
+}
+
+/* Quem pediu menos movimento: a tela fica parada no topo */
+@media (prefers-reduced-motion: reduce) {
+  .tela-site.ativo { animation: none; }
+}
+
+/* A notificação do WhatsApp, "de vidro", em cima do celular */
+.notificacao {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+  width: min(270px, 80%);
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 16px 40px rgba(35, 32, 43, 0.18);
+  opacity: 0;
+  transform: translateY(-12px) scale(0.96);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.notificacao.mostrar {
+  opacity: 1;
+  transform: none;
+}
+
+.notif-icone {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #25d366;     /* verde oficial do ícone do WhatsApp (aqui é só enfeite, sem texto) */
+  color: #fff;
+}
+
+.notif-topo {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--cor-texto-suave);
+}
+
+.notif-topo strong {
+  color: var(--cor-texto);
+}
+
+.notif-texto {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+/* Cartãozinho flutuante (a etiqueta "Site no ar" / "Modelo") */
 .flutuante {
   position: absolute;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin: 0;
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
   background: var(--cor-superficie);
   box-shadow: 0 12px 30px rgba(35, 32, 43, 0.14);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   white-space: nowrap;
   animation: flutuar 5s ease-in-out infinite;  /* sobe e desce devagar, sem parar */
 }
 
-.flutuante span {
-  font-size: 1.2rem;
-}
-
-.flutuante-1 {
-  top: 0;
-  right: -8px;
-}
-
-.flutuante-2 {
-  bottom: 0;
-  left: -8px;
-  animation-delay: -2.5s;   /* começa no meio do movimento: os dois não sobem juntos */
+.etiqueta-site {
+  right: 0;
+  bottom: 120px;
 }
 
 @keyframes flutuar {
@@ -281,124 +432,50 @@ main > section > h2 + p {
   50%      { transform: translateY(-10px); }
 }
 
-.hero-botoes {
+/* Botões embaixo do celular para escolher o site */
+.vitrine-botoes {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-/* --- A janela de navegador desenhada --- */
-.janela {
-  background: var(--cor-superficie);
-  border-radius: var(--raio);
-  box-shadow: var(--sombra);
-  overflow: hidden; /* corta o que passar dos cantos arredondados */
-  border: 1px solid var(--cor-borda);
-}
-
-.janela-barra {
-  display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 10px 14px;
-  background: #f1ece6;
-  border-bottom: 1px solid var(--cor-borda);
+  margin-top: 28px;
 }
 
-.bolinha {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%; /* 50% transforma o quadrado em círculo */
-  background: #d9d1c8;
-}
-
-.janela-endereco {
-  margin-left: 10px;
-  padding: 2px 12px;
+.vitrine-botoes button {
+  padding: 6px 11px;
+  border: 1px solid var(--cor-borda);
   border-radius: 999px;
   background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font: inherit;
   font-size: 0.8rem;
-  color: var(--cor-texto-suave);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.janela-conversa {
-  display: flex;
-  flex-direction: column; /* uma mensagem embaixo da outra */
-  gap: 10px;
-  padding: 24px 18px;
-  min-height: 240px;
-  background: var(--cor-marca-clara);
+.vitrine-botoes button:hover {
+  border-color: var(--cor-marca);
 }
 
-.msg {
-  max-width: 80%;
-  margin: 0;
-  padding: 10px 14px;
-  border-radius: 16px;
-  font-size: 0.95rem;
-  line-height: 1.4;
+/* O botão do site que está aparecendo fica framboesa */
+.vitrine-botoes button[aria-pressed="true"] {
+  background: var(--cor-marca);
+  border-color: var(--cor-marca);
+  color: #fff;
 }
 
-/* Mensagem do cliente: à esquerda, balão branco */
-.msg-cliente {
-  align-self: flex-start;
-  background: var(--cor-superficie);
-  border-bottom-left-radius: 4px;
-}
-
-/* Resposta da loja: à direita, balão verde (como no WhatsApp) */
-.msg-loja {
-  align-self: flex-end;
-  background: #d6f5dd;
-  border-bottom-right-radius: 4px;
-}
-
-/* --- Animação da conversa (o JavaScript coloca a classe "mostrar" em cada balão) ---
-   .js na frente = só esconde se o JavaScript estiver funcionando;
-   sem JS, a conversa aparece inteira, parada */
-.js .janela-conversa .msg {
-  opacity: 0;
-  transform: translateY(10px) scale(0.97);
-  transition: opacity 0.4s, transform 0.4s;
-}
-
-.js .janela-conversa .msg.mostrar {
-  opacity: 1;
-  transform: none;
-}
-
-/* O balão dos três pontinhos só ocupa espaço enquanto está "digitando" */
-.digitando {
+/* Sem JavaScript, os extras da vitrine somem e fica só o celular com o primeiro site */
+.sem-js .so-js {
   display: none;
-  gap: 4px;
 }
 
-.js .janela-conversa .digitando.mostrar {
-  display: flex;
-}
-
-.digitando span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #6aa57d;
-  animation: pular 1s infinite;
-}
-
-.digitando span:nth-child(2) { animation-delay: 0.15s; }
-.digitando span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes pular {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30%           { transform: translateY(-4px); opacity: 1; }
-}
-
-/* Tela grande: texto à esquerda, janela à direita */
+/* Tela grande: texto à esquerda, celular à direita */
 @media (min-width: 800px) {
   .hero {
-    grid-template-columns: 1.2fr 1fr; /* a coluna do texto é um pouco maior */
-    padding-top: 80px;
+    grid-template-columns: 1.15fr 1fr; /* a coluna do texto é um pouco maior */
+    padding-top: 72px;
   }
 }
 
